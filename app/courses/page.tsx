@@ -1,7 +1,10 @@
 import Link from 'next/link'
-import Image from 'next/image'
 import Navbar from '@/components/Navbar'
+import PageHero from '@/components/PageHero'
 import Footer from '@/components/Footer'
+
+// Courses page: open books, academic atmosphere, library feel
+const HERO_IMAGE = 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=1800&q=85&auto=format&fit=crop'
 
 const courses = [
   {
@@ -59,35 +62,14 @@ export default function CoursesPage() {
     <div className="shell">
       <header style={{ position: 'relative' }}>
         <Navbar />
-        <div className="mobile-links">
-          <Link href="/">Home</Link>
-          <Link href="/about">About</Link>
-          <Link href="/courses" className="active">Courses</Link>
-          <Link href="/contact">Contact</Link>
-          <Link href="/login">Portal</Link>
-        </div>
-        <section className="hero" style={{ height: '70vh', minHeight: '480px', maxHeight: '640px' }}>
-          <Image
-            src="/images/hero.jpg"
-            alt="Christ Study Centre Courses"
-            fill
-            priority
-            className="hero-image"
-            style={{ objectFit: 'cover' }}
-          />
-          <div className="hero-inner">
-            <div className="hero-eyebrow">What we offer</div>
-            <h1 className="hero-title">
-              Courses &<br /><em>Programmes</em>
-            </h1>
-            <p className="hero-sub">
-              Comprehensive coaching for CBSE, ICSE & SCERT students from Grade III through XII.
-            </p>
-          </div>
-          <svg className="hero-curve" viewBox="0 0 1440 90" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0,90 L0,40 Q720,-30 1440,40 L1440,90 Z" fill="#0A1628" />
-          </svg>
-        </section>
+        <PageHero
+          size="mid"
+          eyebrow="What we offer"
+          title={<>Courses &<br /><em>Programmes</em></>}
+          subtitle="Comprehensive coaching for CBSE, ICSE & SCERT students from Grade III through XII."
+          image={HERO_IMAGE}
+          imageAlt="Books and study materials"
+        />
       </header>
 
       <div className="stat-strip">
@@ -97,7 +79,6 @@ export default function CoursesPage() {
         <div className="stat"><div className="num">1:8</div><div className="lbl">Teacher to<br />student ratio</div></div>
       </div>
 
-      {/* Core Programmes */}
       <section>
         <div className="section-head">
           <div>
@@ -105,7 +86,7 @@ export default function CoursesPage() {
             <h2 className="section-title">All grade levels</h2>
           </div>
           <p>
-            Each programme is built around the specific demands of its grade band. The syllabus, pacing, 
+            Each programme is built around the specific demands of its grade band. The syllabus, pacing,
             and exam strategy all shift as the student progresses.
           </p>
         </div>
@@ -132,43 +113,30 @@ export default function CoursesPage() {
               <div className="course-detail-body">
                 <div style={{ marginBottom: '24px' }}>
                   <div style={{
-                    fontSize: '10px',
-                    fontFamily: 'var(--font-mono)',
-                    letterSpacing: '0.16em',
-                    textTransform: 'uppercase',
-                    color: 'var(--gold)',
-                    marginBottom: '12px',
+                    fontSize: '10px', fontFamily: 'var(--font-mono)', letterSpacing: '0.16em',
+                    textTransform: 'uppercase', color: 'var(--gold)', marginBottom: '12px',
                   }}>Subjects</div>
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
                     {course.subjects.map((s) => (
                       <span key={s} style={{
-                        fontSize: '12.5px',
-                        padding: '4px 12px',
+                        fontSize: '12.5px', padding: '4px 12px',
                         background: 'rgba(201,168,76,0.08)',
-                        border: '1px solid var(--line)',
-                        color: 'var(--navy)',
+                        border: '1px solid var(--line)', color: 'var(--navy)',
                       }}>{s}</span>
                     ))}
                   </div>
                 </div>
                 <div>
                   <div style={{
-                    fontSize: '10px',
-                    fontFamily: 'var(--font-mono)',
-                    letterSpacing: '0.16em',
-                    textTransform: 'uppercase',
-                    color: 'var(--gold)',
-                    marginBottom: '12px',
+                    fontSize: '10px', fontFamily: 'var(--font-mono)', letterSpacing: '0.16em',
+                    textTransform: 'uppercase', color: 'var(--gold)', marginBottom: '12px',
                   }}>What you get</div>
                   <ul style={{ listStyle: 'none', padding: 0, display: 'flex', flexDirection: 'column', gap: '10px' }}>
                     {course.features.map((f, i) => (
                       <li key={f} style={{ display: 'flex', gap: '14px', fontSize: '14px', lineHeight: '1.65', color: '#4a4a3e' }}>
                         <span style={{
-                          fontFamily: 'var(--font-mono)',
-                          fontSize: '11px',
-                          color: 'var(--gold)',
-                          flexShrink: 0,
-                          paddingTop: '2px',
+                          fontFamily: 'var(--font-mono)', fontSize: '11px', color: 'var(--gold)',
+                          flexShrink: 0, paddingTop: '2px',
                         }}>{String(i + 1).padStart(2, '0')}</span>
                         {f}
                       </li>
@@ -181,17 +149,13 @@ export default function CoursesPage() {
         </div>
       </section>
 
-      {/* Special Programmes */}
       <section className="panel-dark">
         <div className="section-head">
           <div>
             <div className="eyebrow">Beyond regular classes</div>
             <h2 className="section-title">Special<br />programmes</h2>
           </div>
-          <p>
-            For students who need a different pace or format. These programmes run alongside or independent 
-            of the regular batch schedule.
-          </p>
+          <p>For students who need a different pace or format. These run alongside or independent of the regular batch schedule.</p>
         </div>
         <div className="check-grid">
           <div className="check-item">
@@ -225,7 +189,6 @@ export default function CoursesPage() {
         </div>
       </section>
 
-      {/* Timings */}
       <section>
         <div className="section-head">
           <div>
@@ -233,7 +196,7 @@ export default function CoursesPage() {
             <h2 className="section-title">Class timings</h2>
           </div>
           <p>
-            Batches run on weekday evenings so students can attend after school. Flexible one-on-one 
+            Batches run on weekday evenings so students can attend after school. Flexible one-on-one
             slots are available on request.
           </p>
         </div>
@@ -246,25 +209,20 @@ export default function CoursesPage() {
           ].map((t) => (
             <div key={t.label} className="ledger-row" style={{ gridTemplateColumns: '1fr auto' }}>
               <h3 style={{ fontSize: '17px', fontFamily: 'var(--font-body)', fontWeight: 500 }}>{t.label}</h3>
-              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '13px', color: 'var(--gold)' }}>{t.value}</div>
+              <div style={{ fontFamily: 'var(--font-mono)', fontSize: '13px', color: 'var(--gold)', whiteSpace: 'nowrap' }}>{t.value}</div>
             </div>
           ))}
         </div>
       </section>
 
-      {/* CTA */}
       <section className="cta" style={{ borderBottom: '1px solid var(--line-dark)' }}>
         <div className="cta-inner">
           <div className="eyebrow">Limited seats this term</div>
           <h2>Enrol<br /><em>today</em></h2>
-          <p>
-            Seats fill quickly each term. Reach out now to find the right batch for your child.
-          </p>
+          <p>Seats fill quickly each term. Reach out now to find the right batch for your child.</p>
           <div className="cta-actions">
             <Link href="/contact" className="btn btn-solid">Get in touch &nbsp;→</Link>
-            <a href="https://wa.me/919747110790" target="_blank" rel="noopener noreferrer" className="btn">
-              WhatsApp us
-            </a>
+            <a href="https://wa.me/919747110790" target="_blank" rel="noopener noreferrer" className="btn">WhatsApp us</a>
           </div>
         </div>
       </section>
