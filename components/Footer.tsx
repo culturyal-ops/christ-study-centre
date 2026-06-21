@@ -4,9 +4,9 @@ export default function Footer() {
   return (
     <footer>
       <div className="footer-grid">
-        <div>
-          <div className="brand-text" style={{ color: 'white' }}>Christ Study Centre</div>
-          <p style={{ marginTop: '14px', fontSize: '13.5px', lineHeight: '1.7', color: 'rgba(255,255,255,0.6)', maxWidth: '260px' }}>
+        <div className="footer-brand">
+          <div className="brand-text">Christ Study Centre</div>
+          <p>
             Quality tuition for CBSE, ICSE & SCERT students. Grades III–XII. Twelve years of excellence in Pala.
           </p>
         </div>

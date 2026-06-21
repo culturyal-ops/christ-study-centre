@@ -1,159 +1,174 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
-import { Award, Target, Eye, GraduationCap, Building2, BookOpenCheck, Wifi, ArrowRight } from 'lucide-react'
 
 export default function AboutPage() {
   return (
-    <>
-      <Navbar />
-
-      {/* Hero */}
-      <section className="navy-bg text-white">
-        <div className="container-narrow section-spacing text-center">
-          <p className="text-sm uppercase tracking-widest text-gray-400 mb-6">Est. 2013 · 12 Years</p>
-          <h1 className="text-display mb-6">About Christ Study Centre</h1>
-          <p className="text-lg text-gray-400 max-w-2xl mx-auto">
-            Transforming education in Pala, Kerala with personalized coaching and proven results.
-          </p>
+    <div className="shell">
+      <header style={{ position: 'relative' }}>
+        <Navbar />
+        <div className="mobile-links">
+          <Link href="/">Home</Link>
+          <Link href="/about" className="active">About</Link>
+          <Link href="/courses">Courses</Link>
+          <Link href="/contact">Contact</Link>
+          <Link href="/login">Portal</Link>
         </div>
-      </section>
+        <section className="hero" style={{ height: '70vh', minHeight: '480px', maxHeight: '640px' }}>
+          <Image
+            src="/images/study centre.jpg"
+            alt="Christ Study Centre"
+            fill
+            priority
+            className="hero-image"
+            style={{ objectFit: 'cover' }}
+          />
+          <div className="hero-inner">
+            <div className="hero-eyebrow">Est. 2013 · 12 Years</div>
+            <h1 className="hero-title">
+              About Christ <em>Study Centre</em>
+            </h1>
+            <p className="hero-sub">
+              Transforming education in Pala, Kerala with personal coaching and proven results.
+            </p>
+          </div>
+          <svg className="hero-curve" viewBox="0 0 1440 90" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0,90 L0,40 Q720,-30 1440,40 L1440,90 Z" fill="#0A1628" />
+          </svg>
+        </section>
+      </header>
+
+      <div className="stat-strip">
+        <div className="stat"><div className="num">2013</div><div className="lbl">Founded in<br />Pala, Kerala</div></div>
+        <div className="stat"><div className="num">12+</div><div className="lbl">Years of<br />excellence</div></div>
+        <div className="stat"><div className="num">500+</div><div className="lbl">Students<br />coached</div></div>
+        <div className="stat"><div className="num">3</div><div className="lbl">Boards<br />covered</div></div>
+      </div>
 
       {/* Our Story */}
-      <section className="section-spacing">
-        <div className="container">
-          <div className="grid md:grid-cols-2 gap-16 items-center">
-            <div>
-              <p className="text-sm uppercase tracking-widest text-gray-600 mb-4">Our Story</p>
-              <h2 className="text-h2 mb-8">From a Small Centre to a Trusted Name</h2>
-              
-              <div className="space-y-4 text-gray-600 leading-relaxed">
-                <p>
-                  Christ Study Centre was founded in 2013 with a single mission—provide quality
-                  education to every student in Pala, regardless of their school background. Over 12 years
-                  we have grown from a small tutoring room to a fully-equipped institution that hundreds
-                  of families trust every year.
-                </p>
-                <p>
-                  We cover Grades III to XII across CBSE, ICSE, and SCERT boards. Our team of experienced
-                  teachers knows exactly what examiners look for and builds students toward those outcomes
-                  systematically.
-                </p>
-                <p>
-                  Students don't just pass here—they understand.
-                </p>
-              </div>
-            </div>
-
-            <div className="grid grid-cols-2 gap-4">
-              {[
-                { value: '2013', label: 'Founded' },
-                { value: '12+', label: 'Years' },
-                { value: '500+', label: 'Students' },
-                { value: '3', label: 'Boards' },
-              ].map((stat) => (
-                <div key={stat.label} className="card p-6 text-center">
-                  <div className="serif text-4xl font-semibold gold-text mb-2">{stat.value}</div>
-                  <div className="text-sm uppercase tracking-wider text-gray-600">{stat.label}</div>
-                </div>
-              ))}
-            </div>
+      <section>
+        <div className="split">
+          <div className="photo-slot">
+            <Image
+              src="/images/image.jpg"
+              alt="Christ Study Centre"
+              fill
+              style={{ objectFit: 'cover' }}
+            />
+          </div>
+          <div className="story">
+            <div className="eyebrow">Our story</div>
+            <h2 className="section-title">From a small centre<br />to Pala's trusted name</h2>
+            <p>
+              Christ Study Centre was founded in 2013 with a single mission. Provide quality education to every student 
+              in Pala, regardless of their school background.
+            </p>
+            <p>
+              Over 12 years we've grown from a small tutoring room to a fully-equipped institution that hundreds of 
+              families trust every year. We cover Grades III to XII across CBSE, ICSE, and SCERT boards.
+            </p>
+            <p>
+              Our teachers know exactly what examiners look for and build students toward those outcomes systematically. 
+              Students don't just pass here. They understand.
+            </p>
+            <blockquote>
+              "They didn't just teach my daughter the syllabus. They taught her how to sit an exam without fear."
+              <span>— Parent, Class X batch</span>
+            </blockquote>
           </div>
         </div>
       </section>
 
       {/* Mission & Vision */}
-      <section className="section-spacing bg-gray-50">
-        <div className="container-narrow">
-          <div className="text-center mb-16">
-            <p className="text-sm uppercase tracking-widest text-gray-600 mb-4">Purpose & Direction</p>
-            <h2 className="text-h2">Mission & Vision</h2>
+      <section className="panel-dark">
+        <div className="section-head">
+          <div>
+            <div className="eyebrow">Purpose</div>
+            <h2 className="section-title">Mission<br />& Vision</h2>
           </div>
-
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="card p-10">
-              <Target className="w-10 h-10 text-[#D4AF37] mb-6" />
-              <h3 className="serif text-2xl font-semibold mb-4">Our Mission</h3>
-              <p className="text-gray-600 leading-relaxed">
-                To empower students with quality education, personal attention, and comprehensive support
-                that enables them to excel academically and build strong foundations for their careers.
-              </p>
-            </div>
-
-            <div className="card p-10">
-              <Eye className="w-10 h-10 text-[#D4AF37] mb-6" />
-              <h3 className="serif text-2xl font-semibold mb-4">Our Vision</h3>
-              <p className="text-gray-600 leading-relaxed">
-                To be the most trusted educational institution in Pala, recognised for academic excellence,
-                innovative teaching methods, and holistic student development.
-              </p>
-            </div>
+          <p>
+            Two ideas that have guided every decision at Christ Study Centre since day one.
+          </p>
+        </div>
+        <div className="check-grid">
+          <div className="check-item" style={{ flexDirection: 'column', gap: '12px' }}>
+            <span className="mark" style={{ fontSize: '13px', letterSpacing: '0.1em' }}>Mission</span>
+            <p style={{ fontSize: '16px', lineHeight: '1.7' }}>
+              To empower students with quality education, personal attention, and comprehensive support that enables 
+              them to excel academically and build strong foundations for their careers.
+            </p>
+          </div>
+          <div className="check-item" style={{ flexDirection: 'column', gap: '12px' }}>
+            <span className="mark" style={{ fontSize: '13px', letterSpacing: '0.1em' }}>Vision</span>
+            <p style={{ fontSize: '16px', lineHeight: '1.7' }}>
+              To be the most trusted educational institution in Pala, recognised for academic excellence, 
+              innovative teaching, and holistic student development.
+            </p>
           </div>
         </div>
       </section>
 
       {/* Facilities */}
-      <section className="section-spacing">
-        <div className="container">
-          <div className="text-center mb-16">
-            <p className="text-sm uppercase tracking-widest text-gray-600 mb-4">Infrastructure</p>
-            <h2 className="text-h2">Our Facilities</h2>
+      <section>
+        <div className="section-head">
+          <div>
+            <div className="eyebrow">Infrastructure</div>
+            <h2 className="section-title">Our facilities</h2>
           </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              {
-                icon: Building2,
-                title: 'Modern Classrooms',
-                desc: 'Air-conditioned rooms designed for focused, distraction-free learning.',
-              },
-              {
-                icon: GraduationCap,
-                title: 'Expert Faculty',
-                desc: 'Experienced subject specialists with a passion for helping students.',
-              },
-              {
-                icon: BookOpenCheck,
-                title: 'Progress Tracking',
-                desc: 'Digital attendance and marks system to monitor student progress.',
-              },
-              {
-                icon: Wifi,
-                title: 'Online & Offline',
-                desc: 'Flexible learning modes—attend in person or join live from home.',
-              },
-            ].map(({ icon: Icon, title, desc }) => (
-              <div key={title} className="text-center">
-                <div className="w-16 h-16 mx-auto mb-6 flex items-center justify-center border border-gray-200">
-                  <Icon className="w-7 h-7 text-[#D4AF37]" />
-                </div>
-                <h3 className="serif text-lg font-semibold mb-3">{title}</h3>
-                <p className="text-sm text-gray-600 leading-relaxed">{desc}</p>
-              </div>
-            ))}
+          <p>
+            Every room, every resource, every system at Christ Study Centre is built around one goal. 
+            Your child's academic success.
+          </p>
+        </div>
+        <div className="ledger">
+          <div className="ledger-row">
+            <div className="idx">01</div>
+            <h3>Modern Classrooms</h3>
+            <div className="ledger-desc">
+              Air-conditioned rooms designed for focused, distraction-free learning with comfortable seating and clear boards.
+            </div>
+          </div>
+          <div className="ledger-row">
+            <div className="idx">02</div>
+            <h3>Expert Faculty</h3>
+            <div className="ledger-desc">
+              Experienced subject specialists with a deep knowledge of board syllabi and a genuine commitment to student success.
+            </div>
+          </div>
+          <div className="ledger-row">
+            <div className="idx">03</div>
+            <h3>Progress Tracking</h3>
+            <div className="ledger-desc">
+              Digital attendance and marks system so teachers, students, and parents always know where things stand.
+            </div>
+          </div>
+          <div className="ledger-row">
+            <div className="idx">04</div>
+            <h3>Online & Offline</h3>
+            <div className="ledger-desc">
+              Flexible learning modes. Attend in person or join live sessions from home. Same teacher, same standard.
+            </div>
           </div>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="section-spacing bg-gray-50">
-        <div className="container-narrow text-center">
-          <h2 className="text-h2 mb-6">Ready to Start?</h2>
-          <p className="text-gray-600 mb-10">
-            Join hundreds of students who trust Christ Study Centre for their academic journey.
+      <section className="cta" style={{ borderBottom: '1px solid var(--line-dark)' }}>
+        <div className="cta-inner">
+          <div className="eyebrow">Ready to start</div>
+          <h2>Join hundreds of<br /><em>families</em> who trust us</h2>
+          <p>
+            Find out which programme fits your child. We'll walk you through everything.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/courses" className="btn btn-primary">
-              View Courses <ArrowRight className="w-4 h-4" />
-            </Link>
-            <Link href="/contact" className="btn btn-secondary">
-              Contact Us
-            </Link>
+          <div className="cta-actions">
+            <Link href="/courses" className="btn btn-solid">View courses &nbsp;→</Link>
+            <Link href="/contact" className="btn">Contact us</Link>
           </div>
         </div>
       </section>
 
       <Footer />
-    </>
+    </div>
   )
 }
