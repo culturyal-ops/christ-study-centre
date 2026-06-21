@@ -140,12 +140,12 @@ export default function ContactPage() {
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <Button asChild variant="outline" className="w-full">
-                    <a href="https://wa.me/919747110790" target="_blank" rel="noopener noreferrer">
+                  <a href="https://wa.me/919747110790" target="_blank" rel="noopener noreferrer" className="block">
+                    <Button variant="outline" className="w-full">
                       <MessageCircle className="mr-2 h-4 w-4" />
                       Chat with us on WhatsApp
-                    </a>
-                  </Button>
+                    </Button>
+                  </a>
                 </CardContent>
               </Card>
             </div>

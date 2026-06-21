@@ -213,14 +213,14 @@ export default function CoursesPage() {
             Limited seats available. Contact us now to secure your spot.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" variant="secondary" asChild>
-              <Link href="/contact">Get in Touch</Link>
-            </Button>
-            <Button size="lg" variant="outline" className="bg-white/10 hover:bg-white/20 text-white border-white" asChild>
-              <a href="https://wa.me/919747110790" target="_blank" rel="noopener noreferrer">
+            <Link href="/contact">
+              <Button size="lg" variant="secondary">Get in Touch</Button>
+            </Link>
+            <a href="https://wa.me/919747110790" target="_blank" rel="noopener noreferrer">
+              <Button size="lg" variant="outline" className="bg-white/10 hover:bg-white/20 text-white border-white">
                 WhatsApp Us
-              </a>
-            </Button>
+              </Button>
+            </a>
           </div>
         </div>
       </section>

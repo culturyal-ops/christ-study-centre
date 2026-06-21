@@ -159,12 +159,12 @@ export default function AboutPage() {
             Join hundreds of students who trust Christ Study Centre for their education
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" variant="secondary" asChild>
-              <Link href="/courses">View Courses</Link>
-            </Button>
-            <Button size="lg" variant="outline" className="bg-white/10 hover:bg-white/20 text-white border-white" asChild>
-              <Link href="/contact">Contact Us</Link>
-            </Button>
+            <Link href="/courses">
+              <Button size="lg" variant="secondary">View Courses</Button>
+            </Link>
+            <Link href="/contact">
+              <Button size="lg" variant="outline" className="bg-white/10 hover:bg-white/20 text-white border-white">Contact Us</Button>
+            </Link>
           </div>
         </div>
       </section>

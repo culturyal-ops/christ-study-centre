@@ -26,15 +26,17 @@ export default function HomePage() {
             Expert teachers, proven results, personalized attention.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" variant="secondary" asChild>
-              <Link href="/courses">Explore Courses</Link>
-            </Button>
-            <Button size="lg" variant="outline" className="bg-white/10 hover:bg-white/20 text-white border-white" asChild>
-              <a href="https://wa.me/919747110790" target="_blank" rel="noopener noreferrer">
+            <Link href="/courses">
+              <Button size="lg" variant="secondary">
+                Explore Courses
+              </Button>
+            </Link>
+            <a href="https://wa.me/919747110790" target="_blank" rel="noopener noreferrer">
+              <Button size="lg" variant="outline" className="bg-white/10 hover:bg-white/20 text-white border-white">
                 <MessageCircle className="mr-2 h-5 w-5" />
                 WhatsApp Us
-              </a>
-            </Button>
+              </Button>
+            </a>
           </div>
         </div>
       </section>
@@ -125,12 +127,12 @@ export default function HomePage() {
             </Card>
           </div>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" asChild>
-              <Link href="/contact">Contact Us</Link>
-            </Button>
-            <Button size="lg" variant="outline" asChild>
-              <Link href="/about">Learn More About Us</Link>
-            </Button>
+            <Link href="/contact">
+              <Button size="lg">Contact Us</Button>
+            </Link>
+            <Link href="/about">
+              <Button size="lg" variant="outline">Learn More About Us</Button>
+            </Link>
           </div>
         </div>
       </section>
