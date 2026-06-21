@@ -1,22 +1,22 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const cormorant = Cormorant_Garamond({
+  variable: "--font-cormorant",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
-  title: "Christ Study Centre – Premium Coaching in Pala, Kerala",
+  title: "Christ Study Centre – Pala, Kerala",
   description:
-    "12+ years of quality tuition for CBSE, ICSE & SCERT students from Grade III to XII in Pala, Kerala. Expert teachers, personalised attention, proven results.",
-  keywords: "tuition centre pala, CBSE coaching pala, ICSE tuition kerala, SCERT coaching pala, christ study centre",
+    "Quality tuition for CBSE, ICSE & SCERT students. Grades III–XII. 12 years of excellence.",
 };
 
 export default function RootLayout({
@@ -27,9 +27,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${inter.variable} ${cormorant.variable} antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body>{children}</body>
     </html>
   );
 }

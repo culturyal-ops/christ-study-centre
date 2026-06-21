@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
-import { Menu, X, GraduationCap } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
 
 const navLinks = [
   { href: '/', label: 'Home' },
@@ -17,50 +17,24 @@ export default function Navbar() {
   const [open, setOpen] = useState(false)
 
   return (
-    <header
-      className="sticky top-0 z-50 w-full"
-      style={{
-        background: 'rgba(12, 30, 60, 0.92)',
-        backdropFilter: 'blur(20px)',
-        WebkitBackdropFilter: 'blur(20px)',
-        borderBottom: '1px solid rgba(201, 168, 76, 0.2)',
-      }}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+    <header className="sticky top-0 z-50 bg-white border-b border-gray-200">
+      <div className="container">
+        <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5 group">
-            <div
-              className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0"
-              style={{ background: 'linear-gradient(135deg, #C9A84C 0%, #E8C97A 100%)' }}
-            >
-              <GraduationCap className="w-5 h-5 text-[#0C1E3C]" />
-            </div>
-            <div className="leading-tight">
-              <div
-                className="font-bold text-base tracking-wide"
-                style={{ color: '#E8C97A', letterSpacing: '0.06em' }}
-              >
-                CHRIST
-              </div>
-              <div className="text-[10px] text-white/50 uppercase tracking-widest -mt-0.5">
-                Study Centre
-              </div>
-            </div>
+          <Link href="/" className="serif text-2xl font-semibold tracking-tight text-[#0A1628]">
+            Christ Study Centre
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-1">
+          <nav className="hidden md:flex items-center gap-8">
             {navLinks.map((link) => {
               const active = pathname === link.href
               return (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`nav-link px-4 py-2 text-sm font-medium rounded-md transition-colors ${
-                    active
-                      ? 'text-[#E8C97A] active'
-                      : 'text-white/70 hover:text-white'
+                  className={`nav-link text-sm font-medium ${
+                    active ? 'active text-[#0A1628]' : 'text-gray-600 hover:text-[#0A1628]'
                   }`}
                 >
                   {link.label}
@@ -70,27 +44,24 @@ export default function Navbar() {
           </nav>
 
           {/* Desktop CTA */}
-          <div className="hidden md:flex items-center gap-3">
-            <Link
-              href="/login"
-              className="btn-outline-gold text-sm px-4 py-2 rounded-lg"
-            >
-              Portal Login
+          <div className="hidden md:flex items-center gap-4">
+            <Link href="/login" className="text-sm font-medium text-gray-600 hover:text-[#0A1628]">
+              Portal
             </Link>
             <a
               href="https://wa.me/919747110790"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-gold text-sm px-5 py-2 rounded-lg"
+              className="btn btn-primary"
             >
-              Enquire Now
+              Enquire
             </a>
           </div>
 
-          {/* Mobile menu button */}
+          {/* Mobile toggle */}
           <button
             onClick={() => setOpen(!open)}
-            className="md:hidden p-2 rounded-md text-white/70 hover:text-white"
+            className="md:hidden p-2 text-gray-600"
           >
             {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
@@ -99,46 +70,40 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {open && (
-        <div
-          className="md:hidden px-4 pb-4 pt-2 space-y-1"
-          style={{
-            background: 'rgba(12, 30, 60, 0.98)',
-            borderTop: '1px solid rgba(201, 168, 76, 0.15)',
-          }}
-        >
-          {navLinks.map((link) => {
-            const active = pathname === link.href
-            return (
+        <div className="md:hidden border-t border-gray-200 bg-white">
+          <div className="container py-4 space-y-3">
+            {navLinks.map((link) => {
+              const active = pathname === link.href
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setOpen(false)}
+                  className={`block py-2 text-sm font-medium ${
+                    active ? 'text-[#0A1628]' : 'text-gray-600'
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              )
+            })}
+            <div className="pt-3 flex flex-col gap-2">
               <Link
-                key={link.href}
-                href={link.href}
+                href="/login"
                 onClick={() => setOpen(false)}
-                className={`block px-4 py-2.5 rounded-lg text-sm font-medium ${
-                  active
-                    ? 'text-[#E8C97A] bg-white/5'
-                    : 'text-white/70 hover:text-white hover:bg-white/5'
-                }`}
+                className="btn btn-secondary w-full justify-center"
               >
-                {link.label}
+                Portal
               </Link>
-            )
-          })}
-          <div className="pt-2 flex flex-col gap-2">
-            <Link
-              href="/login"
-              onClick={() => setOpen(false)}
-              className="btn-outline-gold text-sm px-4 py-2.5 rounded-lg text-center"
-            >
-              Portal Login
-            </Link>
-            <a
-              href="https://wa.me/919747110790"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-gold text-sm px-5 py-2.5 rounded-lg text-center"
-            >
-              Enquire Now
-            </a>
+              <a
+                href="https://wa.me/919747110790"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-primary w-full justify-center"
+              >
+                Enquire
+              </a>
+            </div>
           </div>
         </div>
       )}

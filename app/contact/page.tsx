@@ -1,10 +1,9 @@
 'use client'
 
 import { useState } from 'react'
-import Link from 'next/link'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
-import { Phone, MapPin, MessageCircle, Mail, ArrowRight, Clock } from 'lucide-react'
+import { Phone, MapPin, Mail, Clock, ArrowRight } from 'lucide-react'
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -49,211 +48,144 @@ export default function ContactPage() {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }))
   }
 
-  const contactInfo = [
-    {
-      icon: MapPin,
-      title: 'Visit Us',
-      lines: ['52A, RV Road, Njondimakkal', 'Pala 686575, Kerala, India'],
-      href: null,
-    },
-    {
-      icon: Phone,
-      title: 'Call Us',
-      lines: ['+91 9747 110 790', '+91 9188 650 790', '+91 9847 877 507'],
-      href: 'tel:+919747110790',
-    },
-    {
-      icon: Mail,
-      title: 'Email',
-      lines: ['christstudycentrepala@gmail.com'],
-      href: 'mailto:christstudycentrepala@gmail.com',
-    },
-    {
-      icon: Clock,
-      title: 'Hours',
-      lines: ['Mon – Sat: 4:00 PM – 8:00 PM', 'Sunday: Closed'],
-      href: null,
-    },
-  ]
-
   return (
-    <div className="min-h-screen" style={{ background: '#FAF6EF' }}>
+    <>
       <Navbar />
 
-      {/* ── Hero ── */}
-      <section
-        className="relative py-28 px-4 overflow-hidden"
-        style={{ background: 'linear-gradient(160deg, #060F1E 0%, #0C1E3C 50%, #132847 100%)' }}
-      >
-        <div
-          className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full pointer-events-none"
-          style={{ background: 'radial-gradient(circle, rgba(201,168,76,0.09) 0%, transparent 65%)' }}
-        />
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            backgroundImage: 'radial-gradient(circle at 1px 1px, rgba(201,168,76,0.05) 1px, transparent 0)',
-            backgroundSize: '40px 40px',
-          }}
-        />
-
-        <div className="relative max-w-4xl mx-auto text-center">
-          <p className="text-xs font-semibold uppercase tracking-widest mb-4" style={{ color: '#C9A84C' }}>
-            We'd Love to Hear From You
-          </p>
-          <h1 className="text-5xl md:text-6xl font-black text-white mb-5" style={{ letterSpacing: '-0.02em' }}>
-            Get in{' '}
-            <span className="gold-text">Touch</span>
-          </h1>
-          <p className="text-lg text-white/55 max-w-xl mx-auto">
-            Questions about admissions, courses, or schedules — we're here to help.
+      {/* Hero */}
+      <section className="navy-bg text-white">
+        <div className="container-narrow section-spacing text-center">
+          <p className="text-sm uppercase tracking-widest text-gray-400 mb-6">Get in Touch</p>
+          <h1 className="text-display mb-6">Contact Us</h1>
+          <p className="text-lg text-gray-400 max-w-xl mx-auto">
+            Questions about admissions, courses, or schedules—we're here to help.
           </p>
         </div>
-
-        <div className="absolute bottom-0 left-0 right-0 h-16 pointer-events-none" style={{ background: 'linear-gradient(to top, #FAF6EF, transparent)' }} />
       </section>
 
-      {/* ── Main Section ── */}
-      <section className="py-24 px-4" style={{ background: '#FAF6EF' }}>
-        <div className="max-w-6xl mx-auto">
+      {/* Main */}
+      <section className="section-spacing">
+        <div className="container">
           <div className="grid lg:grid-cols-5 gap-12">
-
-            {/* Contact Info — 2 cols */}
-            <div className="lg:col-span-2 space-y-5">
-              <div className="mb-8">
-                <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: '#C9A84C' }}>Contact Info</p>
-                <h2 className="text-3xl font-black" style={{ color: '#0C1E3C', letterSpacing: '-0.02em' }}>
-                  Reach Out
-                </h2>
+            
+            {/* Info */}
+            <div className="lg:col-span-2 space-y-6">
+              <div className="card p-6">
+                <MapPin className="w-5 h-5 text-[#D4AF37] mb-3" />
+                <h3 className="text-xs font-semibold uppercase tracking-wider mb-2">Location</h3>
+                <p className="text-sm text-gray-600 leading-relaxed">
+                  52A, RV Road, Njondimakkal<br />
+                  Pala 686575, Kerala, India
+                </p>
               </div>
 
-              {contactInfo.map(({ icon: Icon, title, lines, href }) => (
-                <div
-                  key={title}
-                  className="rounded-2xl p-5 flex gap-4 items-start card-hover"
-                  style={{ background: 'white', border: '1px solid rgba(201,168,76,0.15)', boxShadow: '0 2px 12px rgba(12,30,60,0.05)' }}
-                >
-                  <div
-                    className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
-                    style={{ background: 'linear-gradient(135deg, rgba(201,168,76,0.15), rgba(232,201,122,0.2))' }}
-                  >
-                    <Icon className="w-4.5 h-4.5" style={{ color: '#C9A84C' }} />
-                  </div>
-                  <div>
-                    <p className="text-xs font-bold uppercase tracking-widest mb-1.5" style={{ color: '#0C1E3C' }}>{title}</p>
-                    {lines.map((line) => (
-                      href ? (
-                        <a key={line} href={href} className="block text-sm leading-relaxed hover:underline" style={{ color: '#4A5568' }}>
-                          {line}
-                        </a>
-                      ) : (
-                        <p key={line} className="text-sm leading-relaxed" style={{ color: '#4A5568' }}>{line}</p>
-                      )
-                    ))}
-                  </div>
+              <div className="card p-6">
+                <Phone className="w-5 h-5 text-[#D4AF37] mb-3" />
+                <h3 className="text-xs font-semibold uppercase tracking-wider mb-2">Phone</h3>
+                <div className="space-y-1 text-sm text-gray-600">
+                  <a href="tel:+919747110790" className="block hover:text-[#D4AF37]">+91 9747 110 790</a>
+                  <a href="tel:+919188650790" className="block hover:text-[#D4AF37]">+91 9188 650 790</a>
+                  <a href="tel:+919847877507" className="block hover:text-[#D4AF37]">+91 9847 877 507</a>
                 </div>
-              ))}
+              </div>
 
-              <a
-                href="https://wa.me/919747110790"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 w-full rounded-2xl py-4 font-bold text-sm btn-gold"
-              >
-                <MessageCircle className="w-4 h-4" />
-                Chat on WhatsApp
-              </a>
+              <div className="card p-6">
+                <Mail className="w-5 h-5 text-[#D4AF37] mb-3" />
+                <h3 className="text-xs font-semibold uppercase tracking-wider mb-2">Email</h3>
+                <a href="mailto:christstudycentrepala@gmail.com" className="text-sm text-gray-600 hover:text-[#D4AF37]">
+                  christstudycentrepala@gmail.com
+                </a>
+              </div>
+
+              <div className="card p-6">
+                <Clock className="w-5 h-5 text-[#D4AF37] mb-3" />
+                <h3 className="text-xs font-semibold uppercase tracking-wider mb-2">Hours</h3>
+                <div className="text-sm text-gray-600 space-y-1">
+                  <p>Mon – Sat: 4:00 PM – 8:00 PM</p>
+                  <p>Sunday: Closed</p>
+                </div>
+              </div>
             </div>
 
-            {/* Form — 3 cols */}
+            {/* Form */}
             <div className="lg:col-span-3">
-              <div
-                className="rounded-3xl p-10"
-                style={{
-                  background: '#0C1E3C',
-                  boxShadow: '0 32px 80px rgba(12,30,60,0.2)',
-                }}
-              >
-                <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: '#C9A84C' }}>
-                  Send a Message
-                </p>
-                <h3 className="text-2xl font-black text-white mb-8" style={{ letterSpacing: '-0.01em' }}>
-                  We'll get back to you soon
-                </h3>
+              <div className="card p-10">
+                <h2 className="serif text-3xl font-semibold mb-2">Send a Message</h2>
+                <p className="text-sm text-gray-600 mb-8">We'll get back to you soon</p>
 
                 <form onSubmit={handleSubmit} className="space-y-5">
                   <div className="grid sm:grid-cols-2 gap-5">
-                    <div className="space-y-2">
-                      <label className="text-xs font-semibold uppercase tracking-widest text-white/50">Full Name *</label>
+                    <div>
+                      <label className="block text-xs font-semibold uppercase tracking-wider mb-2 text-gray-700">
+                        Full Name *
+                      </label>
                       <input
                         name="name"
                         type="text"
-                        placeholder="Your name"
                         value={formData.name}
                         onChange={handleChange}
                         required
                         disabled={isSubmitting}
-                        className="w-full px-4 py-3 rounded-xl text-sm text-white input-premium"
+                        className="w-full px-4 py-3 border border-gray-300 text-sm focus:border-[#D4AF37] focus:outline-none"
                       />
                     </div>
-                    <div className="space-y-2">
-                      <label className="text-xs font-semibold uppercase tracking-widest text-white/50">Phone *</label>
+                    <div>
+                      <label className="block text-xs font-semibold uppercase tracking-wider mb-2 text-gray-700">
+                        Phone *
+                      </label>
                       <input
                         name="phone"
                         type="tel"
-                        placeholder="Your number"
                         value={formData.phone}
                         onChange={handleChange}
                         required
                         disabled={isSubmitting}
-                        className="w-full px-4 py-3 rounded-xl text-sm text-white input-premium"
+                        className="w-full px-4 py-3 border border-gray-300 text-sm focus:border-[#D4AF37] focus:outline-none"
                       />
                     </div>
                   </div>
 
-                  <div className="space-y-2">
-                    <label className="text-xs font-semibold uppercase tracking-widest text-white/50">Email</label>
+                  <div>
+                    <label className="block text-xs font-semibold uppercase tracking-wider mb-2 text-gray-700">
+                      Email
+                    </label>
                     <input
                       name="email"
                       type="email"
-                      placeholder="your@email.com"
                       value={formData.email}
                       onChange={handleChange}
                       disabled={isSubmitting}
-                      className="w-full px-4 py-3 rounded-xl text-sm text-white input-premium"
+                      className="w-full px-4 py-3 border border-gray-300 text-sm focus:border-[#D4AF37] focus:outline-none"
                     />
                   </div>
 
-                  <div className="space-y-2">
-                    <label className="text-xs font-semibold uppercase tracking-widest text-white/50">Message *</label>
+                  <div>
+                    <label className="block text-xs font-semibold uppercase tracking-wider mb-2 text-gray-700">
+                      Message *
+                    </label>
                     <textarea
                       name="message"
-                      placeholder="Tell us about your inquiry..."
                       value={formData.message}
                       onChange={handleChange}
                       required
                       disabled={isSubmitting}
                       rows={5}
-                      className="w-full px-4 py-3 rounded-xl text-sm text-white input-premium resize-none"
+                      className="w-full px-4 py-3 border border-gray-300 text-sm resize-none focus:border-[#D4AF37] focus:outline-none"
                     />
                   </div>
 
                   {submitMessage && (
-                    <div className="text-sm px-4 py-3 rounded-xl" style={{ background: 'rgba(201,168,76,0.12)', color: '#E8C97A', border: '1px solid rgba(201,168,76,0.3)' }}>
+                    <div className="text-sm px-4 py-3 bg-green-50 text-green-800 border border-green-200">
                       {submitMessage}
                     </div>
                   )}
                   {submitError && (
-                    <div className="text-sm px-4 py-3 rounded-xl" style={{ background: 'rgba(239,68,68,0.12)', color: '#FCA5A5', border: '1px solid rgba(239,68,68,0.3)' }}>
+                    <div className="text-sm px-4 py-3 bg-red-50 text-red-800 border border-red-200">
                       {submitError}
                     </div>
                   )}
 
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="w-full btn-gold py-3.5 rounded-xl text-sm font-bold inline-flex items-center justify-center gap-2 disabled:opacity-60"
-                  >
+                  <button type="submit" disabled={isSubmitting} className="btn btn-primary w-full justify-center">
                     {isSubmitting ? 'Sending…' : (
                       <>Send Message <ArrowRight className="w-4 h-4" /></>
                     )}
@@ -265,34 +197,29 @@ export default function ContactPage() {
         </div>
       </section>
 
-      {/* ── Map ── */}
-      <section className="px-4 pb-24" style={{ background: '#FAF6EF' }}>
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-10">
-            <p className="text-xs font-semibold uppercase tracking-widest mb-2" style={{ color: '#C9A84C' }}>Location</p>
-            <h2 className="text-3xl font-black" style={{ color: '#0C1E3C', letterSpacing: '-0.02em' }}>Find Us on the Map</h2>
+      {/* Map */}
+      <section className="pb-24 px-4">
+        <div className="container">
+          <div className="text-center mb-12">
+            <p className="text-sm uppercase tracking-widest text-gray-600 mb-4">Location</p>
+            <h2 className="text-h3">Find Us on the Map</h2>
           </div>
-          <div
-            className="rounded-3xl overflow-hidden"
-            style={{ boxShadow: '0 16px 48px rgba(12,30,60,0.12)', border: '1px solid rgba(201,168,76,0.2)' }}
-          >
-            <div className="aspect-video w-full">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3934.1!2d76.68!3d9.71!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zOcKwNDInMzYuMCJOIDc2wrA0MCc0OC4wIkU!5e0!3m2!1sen!2sin!4v1234567890"
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="Christ Study Centre Location"
-              />
-            </div>
+          <div className="aspect-video w-full border border-gray-200">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3934.1!2d76.68!3d9.71!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zOcKwNDInMzYuMCJOIDc2wrA0MCc0OC4wIkU!5e0!3m2!1sen!2sin!4v1234567890"
+              width="100%"
+              height="100%"
+              style={{ border: 0 }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="Christ Study Centre Location"
+            />
           </div>
         </div>
       </section>
 
       <Footer />
-    </div>
+    </>
   )
 }
