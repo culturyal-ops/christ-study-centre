@@ -21,15 +21,6 @@ declare module 'next-auth' {
   }
 }
 
-declare module 'next-auth/jwt' {
-  interface JWT {
-    id: string
-    username: string
-    role: Role
-    studentId?: string
-  }
-}
-
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
     Credentials({
@@ -80,10 +71,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       return token
     },
     async session({ session, token }) {
-      session.user.id = token.id
-      session.user.username = token.username
-      session.user.role = token.role
-      session.user.studentId = token.studentId
+      if (token) {
+        session.user.id = token.id as string
+        session.user.username = token.username as string
+        session.user.role = token.role as Role
+        session.user.studentId = token.studentId as string | undefined
+      }
       return session
     },
     authorized({ auth, request: { nextUrl } }) {
