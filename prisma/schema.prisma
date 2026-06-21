@@ -1,0 +1,149 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Role {
+  ADMIN
+  STUDENT
+}
+
+enum Board {
+  CBSE
+  ICSE
+  SCERT
+}
+
+enum AttendanceStatus {
+  PRESENT
+  ABSENT
+  LATE
+}
+
+enum PaymentStatus {
+  PAID
+  PENDING
+  OVERDUE
+  PARTIAL
+}
+
+model User {
+  id           String   @id @default(cuid())
+  username     String   @unique
+  passwordHash String
+  role         Role
+  createdAt    DateTime @default(now())
+  student      Student?
+}
+
+model Student {
+  id               String             @id @default(cuid())
+  user             User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId           String             @unique
+  fullName         String
+  grade            String // e.g. "8", "Plus 1", "Plus 2"
+  board            Board
+  guardianName     String?
+  guardianPhone    String
+  enrolledSubjects Subject[]          @relation("StudentSubjects")
+  enrollmentDate   DateTime           @default(now())
+  attendance       AttendanceRecord[]
+  marks            MarkEntry[]
+  payments         Payment[]
+  feePlans         FeePlan[]
+}
+
+model Subject {
+  id             String           @id @default(cuid())
+  name           String           @unique
+  students       Student[]        @relation("StudentSubjects")
+  sessions       ClassSession[]
+  exams          Exam[]
+  timetableSlots TimetableSlot[]
+}
+
+model ClassSession {
+  id         String             @id @default(cuid())
+  subject    Subject            @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  subjectId  String
+  date       DateTime
+  grade      String
+  attendance AttendanceRecord[]
+  createdAt  DateTime           @default(now())
+}
+
+model AttendanceRecord {
+  id        String           @id @default(cuid())
+  student   Student          @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  studentId String
+  session   ClassSession     @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  sessionId String
+  status    AttendanceStatus
+  markedAt  DateTime         @default(now())
+
+  @@unique([studentId, sessionId])
+}
+
+model Exam {
+  id        String      @id @default(cuid())
+  name      String
+  subject   Subject     @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  subjectId String
+  grade     String
+  date      DateTime
+  maxMarks  Int
+  marks     MarkEntry[]
+  createdAt DateTime    @default(now())
+}
+
+model MarkEntry {
+  id        String  @id @default(cuid())
+  student   Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  studentId String
+  exam      Exam    @relation(fields: [examId], references: [id], onDelete: Cascade)
+  examId    String
+  score     Float
+  remarks   String?
+
+  @@unique([studentId, examId])
+}
+
+model FeePlan {
+  id          String        @id @default(cuid())
+  student     Student       @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  studentId   String
+  amount      Float
+  dueDate     DateTime
+  description String
+  status      PaymentStatus @default(PENDING)
+  payments    Payment[]
+  createdAt   DateTime      @default(now())
+}
+
+model Payment {
+  id         String   @id @default(cuid())
+  student    Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  studentId  String
+  feePlan    FeePlan  @relation(fields: [feePlanId], references: [id], onDelete: Cascade)
+  feePlanId  String
+  amountPaid Float
+  paidOn     DateTime @default(now())
+  method     String? // "Cash", "UPI", "Bank Transfer"
+}
+
+model TimetableSlot {
+  id          String  @id @default(cuid())
+  grade       String
+  dayOfWeek   Int // 0-6 (Sunday-Saturday)
+  startTime   String // "16:00"
+  endTime     String // "17:00"
+  subject     Subject @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+  subjectId   String
+  teacherName String?
+}
