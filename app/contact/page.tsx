@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import Link from 'next/link'
 import Navbar from '@/components/Navbar'
 import PageHero from '@/components/PageHero'
 import Footer from '@/components/Footer'
@@ -18,7 +17,6 @@ export default function ContactPage() {
     preferredTime: '',
     additionalDetails: '',
   })
-  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const handleWhatsAppEnquiry = () => {
     const message = `*Admission Enquiry - Christ Study Centre*
@@ -281,7 +279,7 @@ ${formData.additionalDetails ? `Additional Details:\n${formData.additionalDetail
       </section>
 
       {/* Quick Contact */}
-      <section style={{ padding: '80px 56px', background: 'var(--cream-deep)', borderBottom: '1px solid var(--line)' }}>
+      <section style={{ background: 'var(--cream-deep)' }}>
         <div className="section-head" style={{ marginBottom: '40px' }}>
           <div>
             <div className="eyebrow">Quick contact</div>
@@ -324,27 +322,25 @@ ${formData.additionalDetails ? `Additional Details:\n${formData.additionalDetail
       </section>
 
       {/* Map */}
-      <section style={{ padding: '0 56px 96px', borderBottom: '1px solid var(--line)' }}>
-        <div style={{ borderTop: '1px solid var(--line)', paddingTop: '64px' }}>
-          <div className="section-head">
-            <div>
-              <div className="eyebrow">Location</div>
-              <h2 className="section-title">Find us<br />on the map</h2>
-            </div>
-            <p>52A, RV Road, Njondimakkal, Pala 686575, Kerala. Near the town centre, easy to reach by road.</p>
+      <section>
+        <div className="section-head">
+          <div>
+            <div className="eyebrow">Location</div>
+            <h2 className="section-title">Find us<br />on the map</h2>
           </div>
-          <div style={{ width: '100%', aspectRatio: '16/7', border: '1px solid var(--line)', overflow: 'hidden' }}>
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3934.1!2d76.68!3d9.71!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zOcKwNDInMzYuMCJOIDc2wrA0MCc0OC4wIkU!5e0!3m2!1sen!2sin!4v1234567890"
-              width="100%"
-              height="100%"
-              style={{ border: 0, display: 'block', filter: 'grayscale(0.15) contrast(1.05)' }}
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              title="Christ Study Centre Location"
-            />
-          </div>
+          <p>52A, RV Road, Njondimakkal, Pala 686575, Kerala. Near the town centre, easy to reach by road.</p>
+        </div>
+        <div style={{ width: '100%', aspectRatio: '16/7', border: '1px solid var(--line)', overflow: 'hidden' }}>
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3934.1!2d76.68!3d9.71!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zOcKwNDInMzYuMCJOIDc2wrA0MCc0OC4wIkU!5e0!3m2!1sen!2sin!4v1234567890"
+            width="100%"
+            height="100%"
+            style={{ border: 0, display: 'block', filter: 'grayscale(0.15) contrast(1.05)' }}
+            allowFullScreen
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            title="Christ Study Centre Location"
+          />
         </div>
       </section>
 
