@@ -1,7 +1,14 @@
 import { PrismaClient, Board, AttendanceStatus, PaymentStatus } from '@prisma/client'
-import bcrypt from 'bcrypt'
+import { PrismaNeon } from '@prisma/adapter-neon'
+import { Pool, neonConfig } from '@neondatabase/serverless'
+import bcryptjs from 'bcryptjs'
+import ws from 'ws'
 
-const prisma = new PrismaClient()
+neonConfig.webSocketConstructor = ws
+
+const pool = new Pool({ connectionString: process.env.DATABASE_URL })
+const adapter = new PrismaNeon(pool as any)
+const prisma = new PrismaClient({ adapter })
 
 async function main() {
   console.log('🌱 Starting seed...')
