@@ -86,6 +86,36 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       session.user.studentId = token.studentId
       return session
     },
+    authorized({ auth, request: { nextUrl } }) {
+      const isLoggedIn = !!auth?.user
+      const { pathname } = nextUrl
+
+      // Public routes
+      const publicRoutes = ['/', '/about', '/courses', '/contact', '/login']
+      const isPublicRoute = publicRoutes.some((route) => pathname === route)
+
+      if (isPublicRoute) {
+        return true
+      }
+
+      // Require authentication
+      if (!isLoggedIn) {
+        return false
+      }
+
+      // Role-based access
+      const role = auth.user.role
+
+      if (pathname.startsWith('/admin') && role !== 'ADMIN') {
+        return Response.redirect(new URL('/student/dashboard', nextUrl))
+      }
+
+      if (pathname.startsWith('/student') && role !== 'STUDENT') {
+        return Response.redirect(new URL('/admin/dashboard', nextUrl))
+      }
+
+      return true
+    },
   },
   pages: {
     signIn: '/login',
