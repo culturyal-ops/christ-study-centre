@@ -80,7 +80,7 @@ export default function CoursesPage() {
       </div>
 
       <section>
-        <div className="section-head">
+        <div className="section-head animate-fade-in">
           <div>
             <div className="eyebrow">Core programmes</div>
             <h2 className="section-title">All grade levels</h2>
@@ -92,8 +92,8 @@ export default function CoursesPage() {
         </div>
 
         <div className="courses-detail-grid">
-          {courses.map((course) => (
-            <div key={course.title} className="course-detail-card">
+          {courses.map((course, idx) => (
+            <div key={course.title} className={`course-detail-card animate-fade-in animate-delay-${Math.min(idx + 1, 4)}`}>
               <div className="course-detail-header">
                 <h3>{course.title}</h3>
                 <div className="grade">{course.grades}</div>

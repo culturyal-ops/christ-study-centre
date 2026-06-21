@@ -32,7 +32,7 @@ export default function HomePage() {
       </div>
 
       <section>
-        <div className="section-head">
+        <div className="section-head animate-fade-in">
           <div>
             <div className="eyebrow">Why parents choose us</div>
             <h2 className="section-title">Not a coaching factory.<br />A second classroom.</h2>
@@ -43,22 +43,22 @@ export default function HomePage() {
           </p>
         </div>
         <div className="ledger">
-          <div className="ledger-row">
+          <div className="ledger-row animate-fade-in animate-delay-1">
             <div className="idx">01</div>
             <h3>Small batches, by design</h3>
             <div className="ledger-desc">Capped class sizes so every student is seen, corrected, and pushed. Not lost in a crowd of fifty.</div>
           </div>
-          <div className="ledger-row">
+          <div className="ledger-row animate-fade-in animate-delay-2">
             <div className="idx">02</div>
             <h3>Board-mapped curriculum</h3>
             <div className="ledger-desc">CBSE, ICSE and SCERT syllabi taught to the exam, with weekly worksheets and monthly mock tests.</div>
           </div>
-          <div className="ledger-row">
+          <div className="ledger-row animate-fade-in animate-delay-3">
             <div className="idx">03</div>
             <h3>Twelve years of results</h3>
             <div className="ledger-desc">A decade-plus track record across hundreds of families in Pala. Ask any parent on RV Road.</div>
           </div>
-          <div className="ledger-row">
+          <div className="ledger-row animate-fade-in animate-delay-4">
             <div className="idx">04</div>
             <h3>One-on-one when it matters</h3>
             <div className="ledger-desc">Dedicated doubt-clearing sessions, not a generic helpline. A teacher who knows the student's gaps.</div>
@@ -68,10 +68,10 @@ export default function HomePage() {
 
       <section>
         <div className="split">
-          <div className="photo-slot">
+          <div className="photo-slot animate-fade-in">
             <Image src="/images/study centre.jpg" alt="Christ Study Centre Building" fill style={{ objectFit: 'cover' }} />
           </div>
-          <div className="story">
+          <div className="story animate-fade-in animate-delay-1">
             <div className="eyebrow">Our story</div>
             <h2 className="section-title">From one rented room<br />to Pala's trusted name</h2>
             <p>Christ Study Centre opened in 2013 with a single mission: give every student in Pala access to serious, structured coaching. Regardless of which school they came from.</p>
@@ -85,7 +85,7 @@ export default function HomePage() {
       </section>
 
       <section>
-        <div className="section-head">
+        <div className="section-head animate-fade-in">
           <div>
             <div className="eyebrow">Campus</div>
             <h2 className="section-title">A space built<br />for focus</h2>
@@ -93,14 +93,14 @@ export default function HomePage() {
           <p>Every room is designed around one goal. A child who can sit still and think clearly.</p>
         </div>
         <div className="photo-grid">
-          <div className="photo-card">
+          <div className="photo-card animate-fade-in animate-delay-1">
             <div className="photo-frame">
               <Image src="/images/image.jpg" alt="Study Centre Classroom" fill style={{ objectFit: 'cover' }} />
             </div>
             <h4>Modern Classrooms</h4>
             <span>Air-conditioned & spacious</span>
           </div>
-          <div className="photo-card">
+          <div className="photo-card animate-fade-in animate-delay-2">
             <div className="photo-frame" style={{ background: 'var(--navy-mid)' }}>
               <Image
                 src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=800&q=80&auto=format&fit=crop"
@@ -112,7 +112,7 @@ export default function HomePage() {
             <h4>Small Batches</h4>
             <span>8–10 students per class</span>
           </div>
-          <div className="photo-card">
+          <div className="photo-card animate-fade-in animate-delay-3">
             <div className="photo-frame" style={{ background: 'var(--navy-mid)' }}>
               <Image
                 src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=800&q=80&auto=format&fit=crop"
@@ -146,7 +146,7 @@ export default function HomePage() {
       </section>
 
       <section>
-        <div className="section-head">
+        <div className="section-head animate-fade-in">
           <div>
             <div className="eyebrow">Programmes</div>
             <h2 className="section-title">Courses by stage</h2>
@@ -154,19 +154,19 @@ export default function HomePage() {
           <p>Structured progression from foundation years through board-exam preparation, each with its own pace and material.</p>
         </div>
         <div className="course-grid">
-          <div className="course-card">
+          <div className="course-card animate-fade-in animate-delay-1">
             <div className="grade">Grades III – V</div>
             <h3>Foundation</h3>
             <p>Building reading, reasoning and number-sense fundamentals before the syllabus gets demanding.</p>
             <Link href="/courses" className="more">View structure →</Link>
           </div>
-          <div className="course-card">
+          <div className="course-card animate-fade-in animate-delay-2">
             <div className="grade">Grades VI – X</div>
             <h3>Core curriculum</h3>
             <p>Full CBSE / ICSE / SCERT subject coverage, with board-pattern testing from Class VIII onward.</p>
             <Link href="/courses" className="more">View structure →</Link>
           </div>
-          <div className="course-card">
+          <div className="course-card animate-fade-in animate-delay-3">
             <div className="grade">Grades XI – XII</div>
             <h3>Board intensive</h3>
             <p>Exam-focused preparation, previous-year paper drills, and weekly performance tracking.</p>

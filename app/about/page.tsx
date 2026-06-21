@@ -31,10 +31,10 @@ export default function AboutPage() {
 
       <section>
         <div className="split">
-          <div className="photo-slot">
+          <div className="photo-slot animate-fade-in">
             <Image src="/images/image.jpg" alt="Christ Study Centre" fill style={{ objectFit: 'cover' }} />
           </div>
-          <div className="story">
+          <div className="story animate-fade-in animate-delay-1">
             <div className="eyebrow">Our story</div>
             <h2 className="section-title">From a small centre<br />to Pala's trusted name</h2>
             <p>
@@ -84,7 +84,7 @@ export default function AboutPage() {
       </section>
 
       <section>
-        <div className="section-head">
+        <div className="section-head animate-fade-in">
           <div>
             <div className="eyebrow">Infrastructure</div>
             <h2 className="section-title">Our facilities</h2>
@@ -92,22 +92,22 @@ export default function AboutPage() {
           <p>Every room, every resource, every system at Christ Study Centre is built around one goal. Your child's academic success.</p>
         </div>
         <div className="ledger">
-          <div className="ledger-row">
+          <div className="ledger-row animate-fade-in animate-delay-1">
             <div className="idx">01</div>
             <h3>Modern Classrooms</h3>
             <div className="ledger-desc">Air-conditioned rooms designed for focused, distraction-free learning with comfortable seating and clear boards.</div>
           </div>
-          <div className="ledger-row">
+          <div className="ledger-row animate-fade-in animate-delay-2">
             <div className="idx">02</div>
             <h3>Expert Faculty</h3>
             <div className="ledger-desc">Experienced subject specialists with a deep knowledge of board syllabi and a genuine commitment to student success.</div>
           </div>
-          <div className="ledger-row">
+          <div className="ledger-row animate-fade-in animate-delay-3">
             <div className="idx">03</div>
             <h3>Progress Tracking</h3>
             <div className="ledger-desc">Digital attendance and marks system so teachers, students, and parents always know where things stand.</div>
           </div>
-          <div className="ledger-row">
+          <div className="ledger-row animate-fade-in animate-delay-4">
             <div className="idx">04</div>
             <h3>Online & Offline</h3>
             <div className="ledger-desc">Flexible learning modes. Attend in person or join live sessions from home. Same teacher, same standard.</div>
