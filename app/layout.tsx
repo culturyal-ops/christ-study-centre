@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Cormorant_Garamond } from "next/font/google";
+import { Inter, Fraunces } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
@@ -7,16 +7,16 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
-const cormorant = Cormorant_Garamond({
-  variable: "--font-cormorant",
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["300", "400", "600"],
 });
 
 export const metadata: Metadata = {
-  title: "Christ Study Centre – Pala, Kerala",
+  title: "Christ Study Centre — Pala, Kerala",
   description:
-    "Quality tuition for CBSE, ICSE & SCERT students. Grades III–XII. 12 years of excellence.",
+    "CBSE, ICSE & SCERT coaching for grades III–XII. Established 2013.",
 };
 
 export default function RootLayout({
@@ -27,7 +27,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${cormorant.variable} antialiased`}
+      className={`${inter.variable} ${fraunces.variable} antialiased`}
     >
       <body>{children}</body>
     </html>

@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+import Crest from '@/components/Crest'
 import { BookOpen, Users, Award, Clock, CheckCircle, ArrowRight } from 'lucide-react'
 
 export default function HomePage() {
@@ -8,235 +9,201 @@ export default function HomePage() {
     <>
       <Navbar />
 
-      {/* Hero */}
-      <section className="navy-bg text-white">
-        <div className="container-narrow section-spacing text-center">
-          <p className="text-sm uppercase tracking-widest text-gray-400 mb-6">Est. 2013 · 12 Years of Excellence</p>
-          
-          <h1 className="text-display mb-8">
-            Where Students <span className="gold-text">Excel</span>
-          </h1>
-
-          <p className="text-lg md:text-xl text-gray-400 mb-12 max-w-2xl mx-auto">
-            Premium coaching for CBSE, ICSE & SCERT · Grades III–XII<br />
-            Pala, Kerala's most trusted tuition centre.
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/courses" className="btn btn-primary">
-              Explore Courses <ArrowRight className="w-4 h-4" />
-            </Link>
-            <a href="https://wa.me/919747110790" target="_blank" rel="noopener noreferrer" className="btn btn-secondary">
-              WhatsApp Us
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* Stats */}
-      <section className="section-spacing">
-        <div className="container">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            {[
-              { value: '12+', label: 'Years', icon: Award },
-              { value: '500+', label: 'Students', icon: Users },
-              { value: '3', label: 'Boards', icon: BookOpen },
-              { value: '10+', label: 'Teachers', icon: Award },
-            ].map(({ value, label, icon: Icon }) => (
-              <div key={label}>
-                <Icon className="w-8 h-8 mx-auto mb-4 text-[#D4AF37]" />
-                <div className="serif text-4xl md:text-5xl font-semibold mb-2">{value}</div>
-                <div className="text-sm text-gray-600 uppercase tracking-wider">{label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Why Choose Us */}
-      <section className="section-spacing bg-gray-50">
-        <div className="container-narrow">
-          <div className="text-center mb-16">
-            <p className="text-sm uppercase tracking-widest text-gray-600 mb-4">Why Parents Trust Us</p>
-            <h2 className="text-h2">Built for Results</h2>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                icon: BookOpen,
-                title: 'All Major Boards',
-                desc: 'CBSE, ICSE & SCERT curricula—Grades III to XII with expert subject teachers.',
-              },
-              {
-                icon: Users,
-                title: 'Personal Attention',
-                desc: 'Small batches ensure every student is seen, heard, and guided individually.',
-              },
-              {
-                icon: Award,
-                title: 'Proven Results',
-                desc: '12 years, hundreds of students excelling in board exams and beyond.',
-              },
-              {
-                icon: Clock,
-                title: 'Flexible Modes',
-                desc: 'Evening batches, one-on-one sessions, online & offline—your schedule, your way.',
-              },
-              {
-                icon: CheckCircle,
-                title: 'Exam-Focused',
-                desc: 'Mock tests, previous year papers, and systematic weekly revision.',
-              },
-              {
-                icon: BookOpen,
-                title: 'Vacation Batches',
-                desc: 'Intensive revision and advance-learning programmes during holidays.',
-              },
-            ].map(({ icon: Icon, title, desc }) => (
-              <div key={title} className="text-center">
-                <div className="w-16 h-16 mx-auto mb-6 flex items-center justify-center border border-gray-200">
-                  <Icon className="w-7 h-7 text-[#D4AF37]" />
-                </div>
-                <h3 className="serif text-xl font-semibold mb-3">{title}</h3>
-                <p className="text-sm text-gray-600 leading-relaxed">{desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Courses Preview */}
-      <section className="section-spacing">
-        <div className="container">
-          <div className="text-center mb-16">
-            <p className="text-sm uppercase tracking-widest text-gray-600 mb-4">What We Teach</p>
-            <h2 className="text-h2 mb-6">Courses & Programmes</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              Comprehensive coaching across all levels, subjects, and boards.
-            </p>
-          </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              {
-                grade: 'III–VII',
-                label: 'Primary',
-                subjects: ['Mathematics', 'Science', 'English', 'Malayalam'],
-                boards: ['CBSE', 'ICSE', 'SCERT'],
-              },
-              {
-                grade: 'VIII–X',
-                label: 'High School',
-                subjects: ['Mathematics', 'Physics', 'Chemistry', 'Biology'],
-                boards: ['CBSE', 'ICSE', 'SCERT'],
-              },
-              {
-                grade: 'XI',
-                label: 'Plus One',
-                subjects: ['Mathematics', 'Physics', 'Chemistry', 'Biology'],
-                boards: ['CBSE', 'SCERT'],
-              },
-              {
-                grade: 'XII',
-                label: 'Plus Two',
-                subjects: ['Mathematics', 'Physics', 'Chemistry', 'Biology'],
-                boards: ['CBSE', 'SCERT'],
-              },
-            ].map((course) => (
-              <div key={course.grade} className="card p-6">
-                <div className="text-sm font-semibold text-[#D4AF37] mb-1 uppercase tracking-wider">
-                  Grade {course.grade}
-                </div>
-                <h3 className="serif text-2xl font-semibold mb-4">{course.label}</h3>
-                
-                <div className="flex flex-wrap gap-1.5 mb-4">
-                  {course.boards.map((b) => (
-                    <span key={b} className="text-xs px-2 py-0.5 bg-gray-100 text-gray-700 font-medium">
-                      {b}
-                    </span>
-                  ))}
-                </div>
-
-                <ul className="space-y-2 text-sm text-gray-600">
-                  {course.subjects.map((s) => (
-                    <li key={s} className="flex items-center gap-2">
-                      <CheckCircle className="w-3.5 h-3.5 text-[#D4AF37] flex-shrink-0" />
-                      {s}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-
-          <div className="text-center mt-12">
-            <Link href="/courses" className="btn btn-primary">
-              View All Courses <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Key Features */}
-      <section className="section-spacing bg-gray-50">
-        <div className="container-narrow">
-          <div className="grid md:grid-cols-2 gap-16 items-center">
-            <div>
-              <p className="text-sm uppercase tracking-widest text-gray-600 mb-4">Methodology</p>
-              <h2 className="text-h3 mb-6">What Makes Us Different</h2>
-              <p className="text-gray-600">
-                Our teaching methodology is built around your child's success—from foundation to board exams.
-              </p>
-            </div>
+      {/* Hero with Crest */}
+      <section className="bg-forest text-bone relative overflow-hidden">
+        <div className="container section-spacing">
+          <div className="max-w-4xl mx-auto text-center">
+            {/* Crest */}
+            <Crest className="w-24 h-28 mx-auto mb-12 text-brass" />
             
-            <ul className="space-y-3">
+            <h1 className="display mb-8">
+              Where Students <span className="text-oxblood">Excel</span>
+            </h1>
+
+            <p className="eyebrow mb-6">Est. 2013 · Pala, Kerala</p>
+
+            <p className="text-lg text-bone/70 mb-12 max-w-2xl mx-auto leading-relaxed">
+              CBSE, ICSE & SCERT coaching for grades III–XII.<br />
+              Twelve years of academic rigour, proven results, and personal attention.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Link href="/courses" className="btn btn-primary">
+                Explore Courses <ArrowRight className="w-4 h-4" />
+              </Link>
+              <a href="https://wa.me/919747110790" target="_blank" rel="noopener noreferrer" className="btn btn-light">
+                Enquire Now
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* Gilt rule divider */}
+        <div className="absolute bottom-0 left-0 right-0">
+          <div className="gilt-rule"></div>
+        </div>
+      </section>
+
+      {/* Stats - Editorial Grid */}
+      <section className="section-spacing bg-parchment">
+        <div className="container">
+          <div className="editorial-grid relative">
+            <div className="margin-rule hidden lg:block"></div>
+            
+            <aside className="margin-label">
+              <span>Record</span>
+            </aside>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
               {[
-                'Focus on mastering concepts, not rote learning',
-                'Worksheets and assignment sheets every week',
-                'Mock tests with detailed analysis',
-                'Systematic weekly and monthly tests',
-                'Previous year question paper revision',
-                'One-on-one doubt clearing sessions',
-              ].map((item) => (
-                <li key={item} className="flex items-start gap-3 text-sm">
-                  <CheckCircle className="w-5 h-5 text-[#D4AF37] flex-shrink-0 mt-0.5" />
-                  {item}
-                </li>
+                { value: '12', label: 'Years', icon: Award },
+                { value: '500+', label: 'Students', icon: Users },
+                { value: '3', label: 'Boards', icon: BookOpen },
+                { value: '10+', label: 'Teachers', icon: Clock },
+              ].map(({ value, label, icon: Icon }) => (
+                <div key={label} className="text-center">
+                  <Icon className="w-6 h-6 mx-auto mb-4 text-brass" />
+                  <div className="h2 mb-2">{value}</div>
+                  <div className="eyebrow">{label}</div>
+                </div>
               ))}
-            </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Why Parents Trust Us */}
+      <section className="section-spacing bg-ivy text-bone">
+        <div className="container">
+          <div className="editorial-grid relative">
+            <div className="margin-rule hidden lg:block"></div>
+            
+            <aside className="margin-label">
+              <span>Trust</span>
+            </aside>
+
+            <div>
+              <div className="max-w-3xl mb-16">
+                <h2 className="h2 mb-6">Why Parents Trust Us</h2>
+                <div className="rule-oxblood mb-6"></div>
+                <p className="text-lg text-bone/70 leading-relaxed">
+                  Twelve years ago, we started with a single promise: every student deserves expert guidance, 
+                  systematic preparation, and a teacher who cares. That promise still guides everything we do.
+                </p>
+              </div>
+
+              <div className="grid md:grid-cols-3 gap-8">
+                {[
+                  {
+                    title: 'All Major Boards',
+                    desc: 'CBSE, ICSE & SCERT curricula. Grades III to XII. Expert subject teachers for every discipline.',
+                  },
+                  {
+                    title: 'Personal Attention',
+                    desc: 'Small batches. Individual progress tracking. Weekly feedback to parents.',
+                  },
+                  {
+                    title: 'Proven Results',
+                    desc: 'Hundreds of students excelling in board exams. Systematic preparation, not shortcuts.',
+                  },
+                  {
+                    title: 'Flexible Modes',
+                    desc: 'Evening batches for school-going students. One-on-one sessions. Online and offline.',
+                  },
+                  {
+                    title: 'Exam-Focused',
+                    desc: 'Mock tests, previous year papers, weekly assessments. We prepare students for success.',
+                  },
+                  {
+                    title: 'Vacation Batches',
+                    desc: 'Intensive revision programmes during school holidays. Advance learning opportunities.',
+                  },
+                ].map(({ title, desc }) => (
+                  <div key={title} className="card-dark p-6">
+                    <h3 className="h3 mb-3 text-lg">{title}</h3>
+                    <p className="text-sm text-bone/60 leading-relaxed">{desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Methodology */}
+      <section className="section-spacing bg-parchment">
+        <div className="container">
+          <div className="editorial-grid relative">
+            <div className="margin-rule hidden lg:block"></div>
+            
+            <aside className="margin-label">
+              <span>Method</span>
+            </aside>
+
+            <div className="grid md:grid-cols-2 gap-16 items-center max-w-5xl">
+              <div>
+                <h2 className="h2 mb-6">Our Methodology</h2>
+                <div className="rule-oxblood mb-6"></div>
+                <p className="text-forest/70 leading-relaxed mb-6">
+                  We don't believe in rote learning. Our approach focuses on deep conceptual understanding, 
+                  systematic practice, and continuous assessment.
+                </p>
+                <p className="text-forest/70 leading-relaxed">
+                  Every week: concept mastery, problem solving, mock tests, and personalized feedback. 
+                  Every month: comprehensive assessments and parent updates.
+                </p>
+              </div>
+
+              <ul className="space-y-3">
+                {[
+                  'Conceptual clarity over memorization',
+                  'Weekly worksheets and assignments',
+                  'Mock tests with detailed analysis',
+                  'Systematic monthly assessments',
+                  'Previous year paper practice',
+                  'One-on-one doubt clearing',
+                ].map((item) => (
+                  <li key={item} className="flex items-start gap-3 text-sm">
+                    <CheckCircle className="w-5 h-5 text-brass flex-shrink-0 mt-0.5" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
       </section>
 
       {/* CTA */}
-      <section className="section-spacing">
-        <div className="container-narrow text-center">
-          <p className="text-sm uppercase tracking-widest text-gray-600 mb-4">Limited Seats Available</p>
-          <h2 className="text-h2 mb-6">Ready to Begin?</h2>
-          <p className="text-gray-600 mb-10 max-w-xl mx-auto">
-            Visit us at 52A, RV Road, Njondimakkal, Pala or reach out—we'll find the right programme for your child.
-          </p>
+      <section className="section-spacing bg-forest text-bone">
+        <div className="container">
+          <div className="max-w-3xl mx-auto text-center">
+            <p className="eyebrow mb-6">Limited Seats Available</p>
+            <h2 className="h2 mb-8">Begin Your Journey</h2>
+            <p className="text-bone/70 mb-10 leading-relaxed">
+              Visit us at 52A, RV Road, Njondimakkal, Pala — or reach out for admissions and inquiries.
+            </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-            <Link href="/contact" className="btn btn-primary">
-              Contact Us <ArrowRight className="w-4 h-4" />
-            </Link>
-            <a href="https://wa.me/919747110790" target="_blank" rel="noopener noreferrer" className="btn btn-secondary">
-              WhatsApp
-            </a>
-          </div>
-
-          <div className="flex flex-wrap gap-3 justify-center text-sm text-gray-600">
-            {['+91 9747 110 790', '+91 9188 650 790', '+91 9847 877 507'].map((ph) => (
-              <a
-                key={ph}
-                href={`tel:${ph.replace(/\s/g, '')}`}
-                className="hover:text-[#0A1628] transition-colors"
-              >
-                {ph}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+              <Link href="/contact" className="btn btn-primary">
+                Contact Us <ArrowRight className="w-4 h-4" />
+              </Link>
+              <a href="https://wa.me/919747110790" target="_blank" rel="noopener noreferrer" className="btn btn-light">
+                WhatsApp
               </a>
-            ))}
+            </div>
+
+            <div className="flex flex-wrap gap-4 justify-center text-sm text-bone/50 font-mono">
+              {['+91 9747 110 790', '+91 9188 650 790', '+91 9847 877 507'].map((ph) => (
+                <a
+                  key={ph}
+                  href={`tel:${ph.replace(/\s/g, '')}`}
+                  className="hover:text-brass transition-colors"
+                >
+                  {ph}
+                </a>
+              ))}
+            </div>
           </div>
         </div>
       </section>

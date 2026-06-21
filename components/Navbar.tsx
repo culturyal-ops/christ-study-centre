@@ -17,12 +17,18 @@ export default function Navbar() {
   const [open, setOpen] = useState(false)
 
   return (
-    <header className="sticky top-0 z-50 bg-white border-b border-gray-200">
+    <header className="sticky top-0 z-50 bg-parchment border-b border-forest/10">
       <div className="container">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link href="/" className="serif text-2xl font-semibold tracking-tight text-[#0A1628]">
-            Christ Study Centre
+          <Link href="/" className="flex items-center gap-3">
+            <div className="w-8 h-10 border border-forest/20 flex items-center justify-center">
+              <span className="text-brass text-xs font-mono">CSC</span>
+            </div>
+            <div>
+              <div className="text-sm font-semibold tracking-tight">Christ Study Centre</div>
+              <div className="text-[10px] font-mono uppercase tracking-widest text-brass">Pala</div>
+            </div>
           </Link>
 
           {/* Desktop Nav */}
@@ -34,7 +40,7 @@ export default function Navbar() {
                   key={link.href}
                   href={link.href}
                   className={`nav-link text-sm font-medium ${
-                    active ? 'active text-[#0A1628]' : 'text-gray-600 hover:text-[#0A1628]'
+                    active ? 'active text-forest' : 'text-forest/60 hover:text-forest'
                   }`}
                 >
                   {link.label}
@@ -45,14 +51,14 @@ export default function Navbar() {
 
           {/* Desktop CTA */}
           <div className="hidden md:flex items-center gap-4">
-            <Link href="/login" className="text-sm font-medium text-gray-600 hover:text-[#0A1628]">
+            <Link href="/login" className="text-sm font-medium text-forest/60 hover:text-forest">
               Portal
             </Link>
             <a
               href="https://wa.me/919747110790"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn btn-primary"
+              className="btn btn-primary text-sm"
             >
               Enquire
             </a>
@@ -61,7 +67,8 @@ export default function Navbar() {
           {/* Mobile toggle */}
           <button
             onClick={() => setOpen(!open)}
-            className="md:hidden p-2 text-gray-600"
+            className="md:hidden p-2"
+            aria-label="Toggle menu"
           >
             {open ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
@@ -70,7 +77,7 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {open && (
-        <div className="md:hidden border-t border-gray-200 bg-white">
+        <div className="md:hidden border-t border-forest/10 bg-parchment">
           <div className="container py-4 space-y-3">
             {navLinks.map((link) => {
               const active = pathname === link.href
@@ -80,7 +87,7 @@ export default function Navbar() {
                   href={link.href}
                   onClick={() => setOpen(false)}
                   className={`block py-2 text-sm font-medium ${
-                    active ? 'text-[#0A1628]' : 'text-gray-600'
+                    active ? 'text-forest' : 'text-forest/60'
                   }`}
                 >
                   {link.label}
@@ -91,7 +98,7 @@ export default function Navbar() {
               <Link
                 href="/login"
                 onClick={() => setOpen(false)}
-                className="btn btn-secondary w-full justify-center"
+                className="btn btn-secondary w-full justify-center text-sm"
               >
                 Portal
               </Link>
@@ -99,7 +106,7 @@ export default function Navbar() {
                 href="https://wa.me/919747110790"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn btn-primary w-full justify-center"
+                className="btn btn-primary w-full justify-center text-sm"
               >
                 Enquire
               </a>
