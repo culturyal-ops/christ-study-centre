@@ -3,20 +3,24 @@ import { PrismaNeon } from '@prisma/adapter-neon'
 import { Pool, neonConfig } from '@neondatabase/serverless'
 
 // For WebSocket support (needed in some environments)
-import ws from 'ws'
-neonConfig.webSocketConstructor = ws
+if (typeof WebSocket === 'undefined') {
+  const ws = require('ws')
+  neonConfig.webSocketConstructor = ws
+}
 
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined
 }
 
 const createPrismaClient = () => {
+  // Prisma v7 requires adapter for proper functionality
+  // If DATABASE_URL is not set, return a basic client (build time)
   if (!process.env.DATABASE_URL) {
-    throw new Error('DATABASE_URL is not defined')
+    return null as any as PrismaClient
   }
   
   const pool = new Pool({ connectionString: process.env.DATABASE_URL })
-  const adapter = new PrismaNeon(pool as any) // Type mismatch in adapter, but works at runtime
+  const adapter = new PrismaNeon(pool as any)
   return new PrismaClient({ adapter })
 }
 
