@@ -1,34 +1,21 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import Navbar from '@/components/Navbar'
-import PageHero from '@/components/PageHero'
+import HomeHero from '@/components/HomeHero'
 import Footer from '@/components/Footer'
 
-// Distinct hero per page — warm study session, evening light, natural depth
 const HERO_IMAGE = 'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?w=1800&q=85&auto=format&fit=crop'
 
 export default function HomePage() {
   return (
     <div className="shell">
-      <header style={{ position: 'relative' }}>
+      {/* Hero — full split layout, navbar sits inside */}
+      <div style={{ position: 'relative' }}>
         <Navbar />
-        <PageHero
-          size="full"
-          eyebrow="Grades III – XII · CBSE · ICSE · SCERT"
-          title={<>Where Pala's brightest <em>prepare</em> to lead.</>}
-          subtitle="Twelve years of disciplined, personal coaching. Built for parents who want more than tuition."
+        <HomeHero
           image={HERO_IMAGE}
           imageAlt="Students studying at Christ Study Centre"
-          cta={{ label: 'Enquire about admission →', href: '/contact' }}
-          secondaryCta={{ label: 'View course structure', href: '/courses' }}
         />
-      </header>
-
-      <div className="stat-strip">
-        <div className="stat"><div className="num">12+</div><div className="lbl">Years educating<br />Pala's students</div></div>
-        <div className="stat"><div className="num">500+</div><div className="lbl">Students guided<br />through board exams</div></div>
-        <div className="stat"><div className="num">3</div><div className="lbl">Boards taught —<br />CBSE, ICSE, SCERT</div></div>
-        <div className="stat"><div className="num">1:8</div><div className="lbl">Average teacher<br />to student ratio</div></div>
       </div>
 
       <section>
