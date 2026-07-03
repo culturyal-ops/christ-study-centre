@@ -3,19 +3,27 @@ import Link from 'next/link'
 export default function Footer() {
   return (
     <footer>
+      <div className="footer-masthead">
+        <h2>Christ Study Centre</h2>
+        <p className="masthead-sub">Structured tuition. Measurable progress. Since 2013.</p>
+      </div>
+
       <div className="footer-grid">
         <div className="footer-brand">
           <div className="brand-text">Christ Study Centre</div>
           <p>
-            Quality tuition for CBSE, ICSE & SCERT students. Grades III–XII. Twelve years of excellence in Pala.
+            CBSE, ICSE & SCERT coaching for grades III–XII.
+            Twelve years of disciplined, structured tuition in Pala.
           </p>
         </div>
 
         <div className="footer-col">
-          <h4>Quick links</h4>
-          <Link href="/">Home</Link>
-          <Link href="/about">About</Link>
+          <h4>Navigate</h4>
           <Link href="/courses">Courses</Link>
+          <Link href="/#results">Results</Link>
+          <Link href="/#faculty">Faculty</Link>
+          <Link href="/#batches">Batches</Link>
+          <Link href="/about">About</Link>
           <Link href="/contact">Contact</Link>
         </div>
 
