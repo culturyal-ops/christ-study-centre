@@ -22,7 +22,8 @@ export default function SectionSpread({
 }: SectionSpreadProps) {
   return (
     <header
-      className={`spread-header animate-fade-in ${dark ? 'spread-header-dark' : ''} ${className}`}
+      className={`spread-header ${dark ? 'spread-header-dark' : ''} ${className}`}
+      data-scroll-reveal
     >
       <div className="spread-rail">
         <span className="spread-index">{index}</span>

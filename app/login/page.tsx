@@ -4,6 +4,7 @@ import { Suspense, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { signIn } from 'next-auth/react'
+import { getSession } from 'next-auth/react'
 import { useRouter, useSearchParams } from 'next/navigation'
 
 function LoginForm() {
@@ -31,7 +32,19 @@ function LoginForm() {
         setIsLoading(false)
         return
       }
-      router.push(callbackUrl)
+
+      const session = await getSession()
+      const role = session?.user?.role
+
+      if (callbackUrl !== '/' && !callbackUrl.startsWith('/login')) {
+        router.push(callbackUrl)
+      } else if (role === 'ADMIN') {
+        router.push('/admin/dashboard')
+      } else if (role === 'STUDENT') {
+        router.push('/student/dashboard')
+      } else {
+        router.push('/')
+      }
       router.refresh()
     } catch {
       setError('An error occurred. Please try again.')

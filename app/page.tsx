@@ -187,14 +187,12 @@ const parentPoints = [
   'Honest batch-fit assessment during the counselling call',
 ]
 
-const delayClass = (i: number) =>
-  ['', 'animate-delay-1', 'animate-delay-2', 'animate-delay-3', 'animate-delay-4'][
-    Math.min(i + 1, 4)
-  ]
+const delayAttr = (i: number) =>
+  ({ 'data-delay': String(Math.min(i * 0.08, 0.32)) }) as const
 
 export default function HomePage() {
   return (
-    <div className="shell">
+    <div className="shell shell-grid">
       <div className="hero-wrap">
         <Navbar />
         <HomeHero
@@ -208,7 +206,9 @@ export default function HomePage() {
         {systemProof.map((item, i) => (
           <div
             key={item.num}
-            className={`institutional-item animate-fade-in ${delayClass(i)}`}
+            className="institutional-item fly-card"
+            data-scroll-reveal
+            {...delayAttr(i)}
           >
             <span className="institutional-num">{item.num}</span>
             <span className="institutional-label">{item.label}</span>
@@ -229,7 +229,9 @@ export default function HomePage() {
           {courses.map((course, i) => (
             <div
               key={course.num}
-              className={`course-index-row animate-fade-in ${delayClass(i)}`}
+              className="course-index-row fly-card"
+              data-scroll-reveal
+              {...delayAttr(i)}
             >
               <div className="course-index-num">{course.num}</div>
               <div>
@@ -254,7 +256,7 @@ export default function HomePage() {
         description="Every batch follows the same academic cycle. Not random tuition — a system parents can see working."
         dark
       >
-        <div className="progress-cycle animate-fade-in animate-delay-1">
+        <div className="progress-cycle fly-card" data-scroll-reveal data-delay="0.1">
           <div className="progress-cycle-header">
             <span className="progress-cycle-label">Student Progress Cycle</span>
           </div>
@@ -277,7 +279,9 @@ export default function HomePage() {
           {methodSteps.map((step, i) => (
             <div
               key={step.num}
-              className={`ledger-row animate-fade-in ${delayClass(i)}`}
+              className="ledger-row fly-card"
+              data-scroll-reveal
+              {...delayAttr(i)}
             >
               <div className="idx">{step.num}</div>
               <h3>{step.title}</h3>
@@ -297,14 +301,17 @@ export default function HomePage() {
         description="Students who follow the revision cycle improve with every test. Progress reports track the journey, not just the final mark."
         alt
       >
-        <p className="spread-disclaimer animate-fade-in animate-delay-1">
+        <p className="spread-disclaimer" data-scroll-reveal data-delay="0.05">
           Representative progress patterns · anonymised · Class X & XII batches
         </p>
         <div className="report-grid">
           {progressReports.map((report, i) => (
             <article
               key={`${report.ref}-${report.subject}`}
-              className={`report-card animate-fade-in ${delayClass(i)}`}
+              className="report-card fly-card"
+              data-scroll-reveal
+              data-tilt
+              {...delayAttr(i)}
             >
               <header className="report-header">
                 <span className="report-ref">{report.ref}</span>
@@ -329,7 +336,7 @@ export default function HomePage() {
             </article>
           ))}
         </div>
-        <blockquote className="report-quote animate-fade-in animate-delay-2">
+        <blockquote className="report-quote fly-card" data-scroll-reveal data-delay="0.2">
           &ldquo;They didn&apos;t just teach my daughter the syllabus. They taught
           her how to sit an exam without fear.&rdquo;
           <span>— Parent, Class X batch</span>
@@ -349,7 +356,10 @@ export default function HomePage() {
           {faculty.map((member, i) => (
             <article
               key={member.subject}
-              className={`faculty-type-card animate-fade-in ${delayClass(i)}`}
+              className="faculty-type-card fly-card"
+              data-scroll-reveal
+              data-tilt
+              {...delayAttr(i)}
             >
               <div className="faculty-type-label">Faculty / {member.subject}</div>
               <h3 className="faculty-type-name">{member.name}</h3>
@@ -370,7 +380,7 @@ export default function HomePage() {
         description="Mon – Sat, 4:00 PM – 8:00 PM. One hour per subject. Sunday closed. Begin with a counselling call to confirm batch fit."
         alt
       >
-        <div className="batch-table-wrap animate-fade-in animate-delay-1">
+        <div className="batch-table-wrap fly-card" data-scroll-reveal data-delay="0.1">
           <table className="batch-table batch-table-refined">
             <thead>
               <tr>
@@ -419,7 +429,7 @@ export default function HomePage() {
         description="Attendance, test performance, weak chapters, and revision progress are communicated clearly — every month."
       >
         <div className="parent-spread">
-          <div className="parent-emphasis animate-fade-in animate-delay-1">
+          <div className="parent-emphasis" data-scroll-reveal data-delay="0.1">
             <p>
               You shouldn&apos;t have to wonder where your child stands. Our job
               is to make progress visible — not promise miracles.
@@ -429,7 +439,9 @@ export default function HomePage() {
             {parentPoints.map((point, i) => (
               <div
                 key={point}
-                className={`parent-list-item animate-fade-in ${delayClass(i)}`}
+                className="parent-list-item fly-card"
+                data-scroll-reveal
+                {...delayAttr(i)}
               >
                 <div className="num">{String(i + 1).padStart(2, '0')}</div>
                 <p>{point}</p>
@@ -441,7 +453,7 @@ export default function HomePage() {
 
       {/* Admissions CTA */}
       <section className="cta">
-        <div className="cta-inner animate-fade-in">
+        <div className="cta-inner" data-scroll-reveal>
           <div className="spread-label cta-label">Admissions / 2026–27</div>
           <h2>
             Begin with a

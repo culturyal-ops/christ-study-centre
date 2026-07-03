@@ -25,6 +25,7 @@ export default function Footer() {
           <Link href="/#batches">Batches</Link>
           <Link href="/about">About</Link>
           <Link href="/contact">Contact</Link>
+          <Link href="/login">Portal</Link>
         </div>
 
         <div className="footer-col">

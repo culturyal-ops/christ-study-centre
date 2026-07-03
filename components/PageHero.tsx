@@ -7,16 +7,15 @@ interface PageHeroProps {
   subtitle?: string
   image: string
   imageAlt: string
-  /** 'full' = 92vh (homepage), 'mid' = 72vh (about/courses), 'short' = 62vh (contact) */
   size?: 'full' | 'mid' | 'short'
   cta?: { label: string; href: string }
   secondaryCta?: { label: string; href: string }
 }
 
 const sizeMap = {
-  full:  { height: '92vh', minHeight: '640px', maxHeight: '920px' },
-  mid:   { height: '72vh', minHeight: '520px', maxHeight: '720px' },
-  short: { height: '62vh', minHeight: '440px', maxHeight: '600px' },
+  full: { height: '88vh', minHeight: '560px', maxHeight: '860px' },
+  mid: { height: '68vh', minHeight: '480px', maxHeight: '680px' },
+  short: { height: '58vh', minHeight: '400px', maxHeight: '560px' },
 }
 
 export default function PageHero({
@@ -33,7 +32,7 @@ export default function PageHero({
 
   return (
     <section
-      className="hero"
+      className="hero hero-page"
       style={{ height: dim.height, minHeight: dim.minHeight, maxHeight: dim.maxHeight }}
     >
       <Image
@@ -42,21 +41,29 @@ export default function PageHero({
         fill
         priority
         className="hero-image"
-        style={{ objectFit: 'cover', objectPosition: 'center' }}
+        style={{ objectFit: 'cover', objectPosition: 'center 35%' }}
       />
       <div className="hero-inner">
-        <div className="hero-eyebrow">{eyebrow}</div>
-        <h1 className="hero-title">{title}</h1>
-        {subtitle && <p className="hero-sub">{subtitle}</p>}
+        <div className="hero-eyebrow" data-scroll-reveal>
+          {eyebrow}
+        </div>
+        <h1 className="hero-title" data-scroll-reveal data-delay="0.08">
+          {title}
+        </h1>
+        {subtitle && (
+          <p className="hero-sub" data-scroll-reveal data-delay="0.16">
+            {subtitle}
+          </p>
+        )}
         {(cta || secondaryCta) && (
-          <div className="hero-actions">
+          <div className="hero-actions" data-scroll-reveal data-delay="0.24">
             {cta && (
-              <Link href={cta.href} className="btn btn-solid">
+              <Link href={cta.href} className="btn btn-solid btn-motion">
                 {cta.label}
               </Link>
             )}
             {secondaryCta && (
-              <Link href={secondaryCta.href} className="hero-link">
+              <Link href={secondaryCta.href} className="btn btn-secondary btn-motion">
                 {secondaryCta.label}
               </Link>
             )}
@@ -70,7 +77,7 @@ export default function PageHero({
         xmlns="http://www.w3.org/2000/svg"
         aria-hidden="true"
       >
-        <path d="M0,90 L0,40 Q720,-30 1440,40 L1440,90 Z" fill="#0A1628" />
+        <path d="M0,90 L0,40 Q720,-30 1440,40 L1440,90 Z" fill="var(--paper)" />
       </svg>
     </section>
   )

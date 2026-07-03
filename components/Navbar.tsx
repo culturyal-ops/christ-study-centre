@@ -11,7 +11,10 @@ const navLinks = [
   { href: '/#batches', label: 'Batches' },
   { href: '/about', label: 'About' },
   { href: '/contact', label: 'Contact' },
+  { href: '/login', label: 'Portal' },
 ]
+
+const mobilePrimary = navLinks.filter((l) => l.href !== '/login')
 
 export default function Navbar() {
   const pathname = usePathname()
@@ -19,11 +22,10 @@ export default function Navbar() {
 
   return (
     <>
-      <nav>
+      <nav id="siteNav">
         <div className="brand">
-          <svg className="crest" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="1" y="1" width="46" height="46" stroke="rgba(17,17,17,0.2)" strokeWidth="1" />
-            <path d="M24 12L28 20H36L30 26L32 35L24 30L16 35L18 26L12 20H20L24 12Z" stroke="#681B22" strokeWidth="1" fill="none" />
+          <svg className="crest" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M16 4L19.2 11.6H27.2L21 16.4L23.2 24.8L16 20L8.8 24.8L11 16.4L4.8 11.6H12.8L16 4Z" stroke="#681B22" strokeWidth="0.85" fill="none" />
           </svg>
           <Link href="/" className="brand-text">
             Christ Study Centre
@@ -41,7 +43,7 @@ export default function Navbar() {
                 href={link.href}
                 className={active ? 'active' : ''}
               >
-                {link.label}
+                <span className="nav-link-text">{link.label}</span>
               </Link>
             )
           })}
@@ -59,46 +61,54 @@ export default function Navbar() {
         </div>
 
         <button
-          className="hamburger"
+          className={`hamburger ${isMenuOpen ? 'open' : ''}`}
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           aria-label="Toggle menu"
           aria-expanded={isMenuOpen}
         >
-          <span className={`hamburger-line ${isMenuOpen ? 'open' : ''}`}></span>
-          <span className={`hamburger-line ${isMenuOpen ? 'open' : ''}`}></span>
-          <span className={`hamburger-line ${isMenuOpen ? 'open' : ''}`}></span>
+          <span className="hamburger-line"></span>
+          <span className="hamburger-line"></span>
+          <span className="hamburger-line"></span>
         </button>
       </nav>
 
-      {isMenuOpen && (
-        <>
-          <div className="mobile-menu-overlay" onClick={() => setIsMenuOpen(false)} />
-          <div className="mobile-menu">
-            <div className="mobile-menu-content">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="mobile-menu-item"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {link.label}
-                </Link>
-              ))}
-              <div className="mobile-menu-divider" />
-              <a
-                href="https://wa.me/919747110790"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mobile-menu-cta"
+      <div className={`mobile-menu ${isMenuOpen ? 'active' : ''}`}>
+        <div className="mobile-menu-overlay" onClick={() => setIsMenuOpen(false)} aria-hidden="true" />
+        <div className="mobile-menu-panel">
+          <div className="mobile-menu-content">
+            {mobilePrimary.map((link, i) => (
+              <Link
+                key={link.href}
+                href={link.href}
+                className="mobile-menu-item"
                 onClick={() => setIsMenuOpen(false)}
+                style={{ animationDelay: `${0.08 + i * 0.06}s` }}
               >
-                Enquire for Admission
-              </a>
-            </div>
+                <span className="mobile-menu-num">{String(i + 1).padStart(2, '0')}</span>
+                <span className="mobile-menu-label">{link.label}</span>
+              </Link>
+            ))}
+            <Link
+              href="/login"
+              className="mobile-menu-item mobile-menu-portal"
+              onClick={() => setIsMenuOpen(false)}
+              style={{ animationDelay: '0.44s' }}
+            >
+              <span className="mobile-menu-num">—</span>
+              <span className="mobile-menu-label">Portal</span>
+            </Link>
+            <a
+              href="https://wa.me/919747110790"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mobile-menu-cta"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Enquire for admission →
+            </a>
           </div>
-        </>
-      )}
+        </div>
+      </div>
     </>
   )
 }
