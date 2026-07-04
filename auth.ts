@@ -22,6 +22,8 @@ declare module 'next-auth' {
 }
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
+  trustHost: true,
+  secret: process.env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET,
   providers: [
     Credentials({
       credentials: {
@@ -33,29 +35,34 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           return null
         }
 
-        const user = await prisma.user.findUnique({
-          where: { username: credentials.username as string },
-          include: { student: true },
-        })
+        try {
+          const user = await prisma.user.findUnique({
+            where: { username: credentials.username as string },
+            include: { student: true },
+          })
 
-        if (!user) {
+          if (!user) {
+            return null
+          }
+
+          const isValidPassword = await bcryptjs.compare(
+            credentials.password as string,
+            user.passwordHash
+          )
+
+          if (!isValidPassword) {
+            return null
+          }
+
+          return {
+            id: user.id,
+            username: user.username,
+            role: user.role,
+            studentId: user.student?.id,
+          }
+        } catch (error) {
+          console.error('Login authorize failed:', error)
           return null
-        }
-
-        const isValidPassword = await bcryptjs.compare(
-          credentials.password as string,
-          user.passwordHash
-        )
-
-        if (!isValidPassword) {
-          return null
-        }
-
-        return {
-          id: user.id,
-          username: user.username,
-          role: user.role,
-          studentId: user.student?.id,
         }
       },
     }),

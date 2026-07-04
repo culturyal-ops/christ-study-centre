@@ -2,24 +2,20 @@ import { PrismaClient } from '@prisma/client'
 import { PrismaNeon } from '@prisma/adapter-neon'
 import { neonConfig } from '@neondatabase/serverless'
 
-// For WebSocket support (needed in some environments)
-if (typeof WebSocket === 'undefined') {
-  const ws = require('ws')
-  neonConfig.webSocketConstructor = ws
-}
+// Fetch mode works on Vercel serverless (WebSocket pool can hang)
+neonConfig.poolQueryViaFetch = true
 
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined
 }
 
 const createPrismaClient = () => {
-  // Prisma v7 requires adapter for proper functionality
-  // If DATABASE_URL is not set, return a basic client (build time)
-  if (!process.env.DATABASE_URL) {
-    return null as any as PrismaClient
+  const url = process.env.DATABASE_URL
+  if (!url) {
+    return null as unknown as PrismaClient
   }
-  
-  const adapter = new PrismaNeon({ connectionString: process.env.DATABASE_URL })
+
+  const adapter = new PrismaNeon({ connectionString: url })
   return new PrismaClient({ adapter })
 }
 

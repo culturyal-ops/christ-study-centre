@@ -51,7 +51,7 @@ function LoginForm() {
 
     try {
 
-      const result = await signIn('credentials', {
+      const signInPromise = signIn('credentials', {
 
         username,
 
@@ -61,23 +61,25 @@ function LoginForm() {
 
       })
 
-      if (result?.error) {
+      const timeoutPromise = new Promise<never>((_, reject) =>
+
+        setTimeout(() => reject(new Error('timeout')), 20000)
+
+      )
+
+      const result = await Promise.race([signInPromise, timeoutPromise])
+
+      if (result?.error || !result?.ok) {
 
         setError('Invalid username or password')
-
-        setIsLoading(false)
 
         return
 
       }
 
-
-
       const session = await getSession()
 
       const role = session?.user?.role
-
-
 
       if (callbackUrl !== '/' && !callbackUrl.startsWith('/login')) {
 
@@ -99,9 +101,19 @@ function LoginForm() {
 
       router.refresh()
 
-    } catch {
+    } catch (err) {
 
-      setError('An error occurred. Please try again.')
+      setError(
+
+        err instanceof Error && err.message === 'timeout'
+
+          ? 'Login timed out — check server database connection.'
+
+          : 'An error occurred. Please try again.'
+
+      )
+
+    } finally {
 
       setIsLoading(false)
 

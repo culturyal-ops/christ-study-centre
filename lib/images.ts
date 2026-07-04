@@ -5,8 +5,6 @@ function unsplash(id: string, width = 1200) {
 }
 
 export const images = {
-  /** Brand mark — graduation cap logo */
-  brandLogo: '/images/brand-logo.png',
   /** Students in a classroom */
   heroClassroom: unsplash('photo-1524178232363-1fb2b075b655'),
   /** Full-bleed hero background — campus / school mood */

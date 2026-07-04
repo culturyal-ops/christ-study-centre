@@ -1,6 +1,5 @@
 import { PrismaClient, Board, AttendanceStatus, PaymentStatus } from '@prisma/client'
 import bcryptjs from 'bcryptjs'
-import ws from 'ws'
 import { BATCH_GROUPS } from '../lib/register/constants'
 
 let prisma: PrismaClient
@@ -12,7 +11,7 @@ function initPrisma() {
   require('dotenv').config({ path: envPath, override: true })
   const { PrismaNeon } = require('@prisma/adapter-neon')
   const { neonConfig } = require('@neondatabase/serverless')
-  neonConfig.webSocketConstructor = ws
+  neonConfig.poolQueryViaFetch = true
   const url = process.env.DATABASE_URL
   if (!url) throw new Error(`DATABASE_URL missing — env file: ${envPath}`)
   prisma = new PrismaClient({ adapter: new PrismaNeon({ connectionString: url }) })
