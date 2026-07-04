@@ -8,6 +8,7 @@ export function middleware(request: NextRequest) {
   const publicRoutes = ['/', '/about', '/courses', '/contact', '/login', '/admission']
   const isPublicRoute = publicRoutes.some(route => pathname === route) || 
                        pathname.startsWith('/api/auth') ||
+                       pathname === '/api/health' ||
                        pathname.startsWith('/_next') ||
                        pathname.startsWith('/favicon') ||
                        pathname.startsWith('/videos/') ||

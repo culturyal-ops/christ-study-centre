@@ -39,11 +39,11 @@ export default function AdmissionForm() {
   }
 
   return (
-    <div className="csc-landing csc-site">
+    <div className="csc-landing csc-site csc-site--admission">
       <LandingNav />
       <div className="admission-page">
         <div className="admission-card">
-          <div className="spread-label" style={{ marginBottom: 12 }}>
+          <div className="admission-card__brand">
             <BrandName variant="compact" />
           </div>
           {done ? (
@@ -121,7 +121,7 @@ export default function AdmissionForm() {
                   {busy ? 'Submitting…' : 'Submit application'}
                 </button>
               </form>
-              <p style={{ marginTop: 20, opacity: 0.55, fontSize: '0.88rem' }}>
+              <p className="admission-card__foot">
                 Already enrolled? <Link href="/login">Sign in to the portal</Link>
               </p>
             </>

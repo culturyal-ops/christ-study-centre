@@ -1,24 +1,22 @@
 import { PrismaClient } from '@prisma/client'
-import { PrismaNeon } from '@prisma/adapter-neon'
-import { neonConfig } from '@neondatabase/serverless'
-
-// Fetch mode works on Vercel serverless (WebSocket pool can hang)
-neonConfig.poolQueryViaFetch = true
+import { PrismaNeonHttp } from '@prisma/adapter-neon'
+import { getDatabaseUrl } from '@/lib/env'
 
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined
 }
 
 const createPrismaClient = () => {
-  const url = process.env.DATABASE_URL
-  if (!url) {
-    return null as unknown as PrismaClient
-  }
-
-  const adapter = new PrismaNeon({ connectionString: url })
+  const url = getDatabaseUrl()
+  // HTTP driver — reliable on Vercel serverless (no WebSocket hangs)
+  const adapter = new PrismaNeonHttp(url, {
+    arrayMode: false,
+    fullResults: true,
+  })
   return new PrismaClient({ adapter })
 }
 
 export const prisma = globalForPrisma.prisma ?? createPrismaClient()
 
-if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
+// Reuse client across hot reloads and warm serverless invocations
+globalForPrisma.prisma = prisma

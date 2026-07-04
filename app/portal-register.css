@@ -311,29 +311,122 @@
 }
 
 .admission-page {
+  min-height: calc(100vh - var(--csc-nav-h, 56px));
+  padding: calc(var(--csc-nav-h, 56px) + 32px) 24px 80px;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(61, 125, 255, 0.12), transparent 55%),
+    linear-gradient(180deg, #eef2fa 0%, #f8fafc 48%, #f1f5f9 100%);
+}
+
+.csc-site--admission {
   min-height: 100vh;
-  padding: 120px 24px 80px;
-  background: var(--paper);
+  color: #0f172a;
+  background: #eef2fa;
 }
 
 .admission-card {
-  max-width: 560px;
+  max-width: 520px;
   margin: 0 auto;
-  padding: 32px;
+  padding: 36px 32px 32px;
   border-radius: 24px;
-  background: rgba(255, 255, 255, 0.85);
-  border: 1px solid rgba(17, 17, 17, 0.08);
-  box-shadow: 0 20px 60px rgba(17, 17, 17, 0.06);
+  background: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  box-shadow:
+    0 24px 64px rgba(15, 23, 42, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  color: #0f172a;
+}
+
+.admission-card__brand {
+  margin-bottom: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #2563eb;
+}
+
+.admission-card__brand .csc-brand-name {
+  color: #0f172a;
 }
 
 .admission-card h1 {
-  margin: 0 0 8px;
-  font-size: 1.75rem;
+  margin: 0 0 10px;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(1.75rem, 4vw, 2.125rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: #0f172a;
 }
 
 .admission-card p {
-  margin: 0 0 24px;
-  opacity: 0.65;
+  margin: 0 0 28px;
+  font-size: 15px;
+  line-height: 1.65;
+  color: #64748b;
+}
+
+.admission-card .register-form-grid label {
+  color: #475569;
+  opacity: 1;
+  font-weight: 600;
+}
+
+.admission-card .register-form-grid input,
+.admission-card .register-form-grid select {
+  padding: 14px 16px;
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  background: #f8fafc;
+  color: #0f172a;
+  font-size: 15px;
+  border-radius: 12px;
+  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+}
+
+.admission-card .register-form-grid input::placeholder {
+  color: #94a3b8;
+}
+
+.admission-card .register-form-grid input:focus,
+.admission-card .register-form-grid select:focus {
+  outline: none;
+  border-color: rgba(37, 99, 235, 0.45);
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.admission-card .register-btn--primary {
+  margin-top: 4px;
+  padding: 14px 24px;
+  background: #2563eb;
+  border-color: #2563eb;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.admission-card .register-btn--primary:hover:not(:disabled) {
+  background: #1d4ed8;
+  border-color: #1d4ed8;
+}
+
+.admission-card__foot {
+  margin: 24px 0 0;
+  font-size: 14px;
+  color: #64748b;
+}
+
+.admission-card__foot a {
+  color: #2563eb;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.admission-card .register-error {
+  color: #b91c1c;
+  background: rgba(254, 226, 226, 0.8);
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 14px;
 }
 
 .admission-success {
@@ -344,4 +437,51 @@
 .admission-success h2 {
   color: var(--deep-burgundy);
   margin-bottom: 8px;
+}
+
+.admission-success p {
+  color: #64748b;
+}
+
+html[data-theme='dark'] .csc-site--admission .admission-page {
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(61, 125, 255, 0.18), transparent 55%),
+    linear-gradient(180deg, #0c1224 0%, #070b16 100%);
+}
+
+html[data-theme='dark'] .csc-site--admission {
+  background: #070b16;
+  color: #f8fafc;
+}
+
+html[data-theme='dark'] .admission-card {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.12);
+  color: #f8fafc;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.35);
+}
+
+html[data-theme='dark'] .admission-card h1,
+html[data-theme='dark'] .admission-card__brand .csc-brand-name {
+  color: #f8fafc;
+}
+
+html[data-theme='dark'] .admission-card p,
+html[data-theme='dark'] .admission-card__foot {
+  color: rgba(248, 250, 252, 0.72);
+}
+
+html[data-theme='dark'] .admission-card .register-form-grid label {
+  color: rgba(248, 250, 252, 0.65);
+}
+
+html[data-theme='dark'] .admission-card .register-form-grid input,
+html[data-theme='dark'] .admission-card .register-form-grid select {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: #f8fafc;
+}
+
+html[data-theme='dark'] .admission-card .register-form-grid input::placeholder {
+  color: rgba(248, 250, 252, 0.4);
 }

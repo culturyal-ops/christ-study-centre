@@ -1,6 +1,7 @@
 import NextAuth, { DefaultSession } from 'next-auth'
 import Credentials from 'next-auth/providers/credentials'
 import { prisma } from '@/lib/prisma'
+import { getAuthSecret } from '@/lib/env'
 import bcryptjs from 'bcryptjs'
 import { Role } from '@prisma/client'
 
@@ -23,7 +24,7 @@ declare module 'next-auth' {
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   trustHost: true,
-  secret: process.env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET,
+  secret: getAuthSecret(),
   providers: [
     Credentials({
       credentials: {

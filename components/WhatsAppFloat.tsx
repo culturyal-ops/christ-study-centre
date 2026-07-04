@@ -7,7 +7,7 @@ import BrandName from '@/components/BrandName'
 const WHATSAPP_URL =
   'https://wa.me/919747110790?text=Hi%20Christ%20Study%20Centre%20%E2%80%94%20I%20would%20like%20to%20enquire%20about%20admissions.'
 
-const HIDDEN_PREFIXES = ['/admin', '/student', '/login']
+const HIDDEN_PREFIXES = ['/admin', '/student', '/login', '/admission']
 const SHOW_DELAY_MS = 800
 const AUTO_HIDE_MS = 2200
 
