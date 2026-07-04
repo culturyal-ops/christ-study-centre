@@ -310,6 +310,140 @@
   opacity: 0.5;
 }
 
+.register-search {
+  width: 100%;
+  margin-bottom: 16px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.08);
+  color: inherit;
+  font: inherit;
+}
+
+.register-search::placeholder {
+  color: rgba(248, 250, 252, 0.45);
+}
+
+.register-group-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 4px;
+  border: none;
+  background: rgba(255, 255, 255, 0.06);
+  color: inherit;
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.register-nav-btn--batch {
+  padding-left: 20px;
+}
+
+.register-toolbar-sub {
+  margin: 4px 0 0;
+  opacity: 0.6;
+  font-size: 0.9rem;
+}
+
+.register-hero-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.register-hero-stats--fees {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.register-hero-stat {
+  padding: 22px 20px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 55%, #a855f7 100%);
+  color: #fff;
+  box-shadow: 0 16px 40px rgba(99, 102, 241, 0.25);
+}
+
+.register-hero-stat strong {
+  display: block;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  line-height: 1.1;
+  font-weight: 700;
+}
+
+.register-hero-stat span {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.register-hero-stat--paid strong {
+  color: #bbf7d0;
+}
+
+.register-hero-stat--pending strong {
+  color: #fecaca;
+}
+
+.register-chart {
+  margin-bottom: 24px;
+  padding: 16px 12px 8px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.register-chart--empty {
+  padding: 48px 24px;
+  text-align: center;
+  opacity: 0.55;
+}
+
+.register-link-btn {
+  padding: 0;
+  border: none;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+
+@media print {
+  .portal-header,
+  .register-sidebar,
+  .register-actions,
+  .register-btn {
+    display: none !important;
+  }
+
+  .register-layout {
+    display: block;
+    margin: 0 !important;
+  }
+
+  .register-main {
+    padding: 0 !important;
+  }
+
+  .register-hero-stat,
+  .register-table-wrap {
+    break-inside: avoid;
+  }
+}
+
 .admission-page {
   min-height: calc(100vh - var(--csc-nav-h, 56px));
   padding: calc(var(--csc-nav-h, 56px) + 32px) 24px 80px;

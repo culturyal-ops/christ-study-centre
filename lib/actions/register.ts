@@ -4,7 +4,7 @@ import { revalidatePath } from 'next/cache'
 import { auth } from '@/auth'
 import { prisma } from '@/lib/prisma'
 import { BATCH_GROUPS, ALL_BATCH_NAMES, DEFAULT_SUBJECTS } from '@/lib/register/constants'
-import { MAX_DOCUMENT_BYTES, parseBatchName } from '@/lib/register/utils'
+import { MAX_DOCUMENT_BYTES, parseBatchName, countStudentSubjects } from '@/lib/register/utils'
 import { PaymentStatus, Prisma } from '@prisma/client'
 
 const ADMIN_PATHS = ['/admin/register', '/admin/dashboard']
@@ -125,7 +125,7 @@ export async function getRegisterBootstrap() {
     },
   })
 
-  const [totalStudents, pendingCount, recycleCount, feesAgg, subjects] =
+  const [totalStudents, pendingCount, recycleCount, feesAgg, subjects, subjectRows] =
     await Promise.all([
       prisma.student.count({ where: { deletedAt: null } }),
       prisma.pendingAdmission.count(),
@@ -135,7 +135,20 @@ export async function getRegisterBootstrap() {
         _sum: { feesAmountPaid: true, feesRemaining: true },
       }),
       prisma.subject.findMany({ orderBy: { name: 'asc' } }),
+      prisma.student.findMany({
+        where: { deletedAt: null },
+        select: { subjectCount: true, subjectsText: true },
+      }),
     ])
+
+  const totalSubjects = subjectRows.reduce(
+    (sum, row) => sum + countStudentSubjects(row),
+    0
+  )
+
+  const chartData = batches
+    .filter((b) => b._count.students > 0)
+    .map((b) => ({ name: b.name, count: b._count.students }))
 
   return {
     batches: batches.map((b) => ({
@@ -150,9 +163,24 @@ export async function getRegisterBootstrap() {
       recycleCount,
       feesReceived: feesAgg._sum.feesAmountPaid ?? 0,
       feesPending: feesAgg._sum.feesRemaining ?? 0,
+      totalSubjects,
     },
+    chartData,
     subjects: subjects.map((s) => s.name),
   }
+}
+
+export async function getAllRegisterStudents() {
+  await requireAdmin()
+  return prisma.student.findMany({
+    where: { deletedAt: null },
+    include: {
+      batch: { select: { name: true } },
+      registerMarks: { orderBy: { date: 'desc' } },
+      registerDocuments: { orderBy: { uploadedAt: 'desc' } },
+    },
+    orderBy: [{ rollNo: 'asc' }],
+  })
 }
 
 export async function getBatchStudents(batchName: string) {
@@ -448,6 +476,39 @@ export async function rejectPendingAdmission(id: string) {
   await requireAdmin()
   await prisma.pendingAdmission.delete({ where: { id } })
   revalidateRegister()
+}
+
+export async function exportAllStudentsCsv() {
+  await requireAdmin()
+  const students = await getAllRegisterStudents()
+  const header = [
+    'Class',
+    'No',
+    'Name',
+    'School',
+    'Subjects',
+    'Total Subj',
+    'Contact',
+    'Fees',
+    'Paid',
+    'Remaining',
+  ]
+  const rows = students.map((s) => [
+    s.batch?.name ?? '',
+    s.rollNo,
+    s.fullName,
+    s.schoolName ?? '',
+    s.subjectsText ?? '',
+    countStudentSubjects(s),
+    s.contact ?? '',
+    s.feesStatus,
+    s.feesAmountPaid ?? '',
+    s.feesRemaining ?? '',
+  ])
+
+  return [header, ...rows]
+    .map((row) => row.map((cell) => `"${String(cell).replace(/"/g, '""')}"`).join(','))
+    .join('\n')
 }
 
 export async function exportBatchCsv(batchName: string) {

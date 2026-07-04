@@ -14,5 +14,5 @@ export default async function StudentRegisterPage() {
     )
   }
 
-  return <RegisterApp bootstrap={{ batches: [], stats: { totalStudents: 0, pendingCount: 0, recycleCount: 0, feesReceived: 0, feesPending: 0 }, subjects: [] }} mode="student" student={student} />
+  return <RegisterApp bootstrap={{ batches: [], stats: { totalStudents: 0, pendingCount: 0, recycleCount: 0, feesReceived: 0, feesPending: 0, totalSubjects: 0 }, chartData: [], subjects: [] }} mode="student" student={student} />
 }

@@ -40,6 +40,11 @@ export type BatchInfo = {
   studentCount: number
 }
 
+export type ChartBatch = {
+  name: string
+  count: number
+}
+
 export type Bootstrap = {
   batches: BatchInfo[]
   stats: {
@@ -48,7 +53,9 @@ export type Bootstrap = {
     recycleCount: number
     feesReceived: number
     feesPending: number
+    totalSubjects: number
   }
+  chartData: ChartBatch[]
   subjects: string[]
 }
 
