@@ -1,417 +1,324 @@
-.register-layout {
+/* Register app — scoped liquid glass (must stay under .csc-portal) */
+
+.csc-portal .register-layout {
   display: grid;
-  grid-template-columns: 260px minmax(0, 1fr);
-  gap: 0;
-  min-height: calc(100vh - 72px);
-  margin: -48px -40px -80px;
+  grid-template-columns: minmax(240px, 280px) minmax(0, 1fr);
+  gap: 18px;
+  min-height: calc(100vh - 120px);
+  margin: 0;
 }
 
 @media (max-width: 960px) {
-  .register-layout {
+  .csc-portal .register-layout {
     grid-template-columns: 1fr;
-    margin: -32px -20px -64px;
   }
 }
 
-.register-sidebar {
-  background: rgba(255, 255, 255, 0.72);
-  border-right: 1px solid rgba(17, 17, 17, 0.08);
-  backdrop-filter: blur(12px);
-  padding: 24px 16px 32px;
-  overflow-y: auto;
-  max-height: calc(100vh - 72px);
+.csc-portal .register-sidebar {
   position: sticky;
-  top: 72px;
+  top: 88px;
+  align-self: start;
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
+  padding: 18px 14px 24px;
+  border-radius: 22px;
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.12) 0%,
+    rgba(255, 255, 255, 0.04) 45%,
+    rgba(255, 255, 255, 0.08) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+  box-shadow:
+    0 12px 40px rgba(61, 125, 255, 0.12),
+    0 8px 28px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
 }
 
-@media (max-width: 960px) {
-  .register-sidebar {
-    position: static;
-    max-height: none;
-    border-right: none;
-    border-bottom: 1px solid rgba(17, 17, 17, 0.08);
-  }
+.csc-portal .register-main {
+  padding: 26px 26px 40px;
+  border-radius: 22px;
+  overflow-x: auto;
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.03) 42%,
+    rgba(255, 255, 255, 0.07) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+  box-shadow:
+    0 12px 40px rgba(61, 125, 255, 0.1),
+    0 8px 28px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
 }
 
-.register-sidebar h2 {
-  font-size: 0.72rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: rgba(17, 17, 17, 0.45);
-  margin: 0 0 12px 8px;
+.csc-portal .register-search {
+  width: 100%;
+  margin-bottom: 14px;
+  padding: 11px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: rgba(7, 11, 22, 0.35);
+  backdrop-filter: blur(12px);
+  color: #f8fafc;
+  font: inherit;
+  font-size: 14px;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
-.register-nav-btn {
+.csc-portal .register-search::placeholder {
+  color: rgba(248, 250, 252, 0.42);
+}
+
+.csc-portal .register-search:focus {
+  outline: none;
+  border-color: rgba(61, 125, 255, 0.5);
+  box-shadow: 0 0 0 3px rgba(61, 125, 255, 0.15);
+}
+
+.csc-portal .register-nav-btn,
+.csc-portal .register-group-toggle {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
   padding: 10px 12px;
-  border: none;
+  border: 1px solid transparent;
   background: transparent;
   text-align: left;
   font: inherit;
-  color: var(--ink);
-  border-radius: 10px;
+  color: rgba(248, 250, 252, 0.88);
+  border-radius: 12px;
   cursor: pointer;
-  transition: background 0.2s ease;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
 }
 
-.register-nav-btn:hover,
-.register-nav-btn.is-active {
-  background: rgba(107, 22, 40, 0.08);
-  color: var(--deep-burgundy);
+.csc-portal .register-group-toggle {
+  margin-bottom: 6px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(148, 163, 184, 0.95);
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.08);
 }
 
-.register-nav-btn span:last-child {
+.csc-portal .register-nav-btn:hover,
+.csc-portal .register-nav-btn.is-active {
+  background: rgba(61, 125, 255, 0.16);
+  border-color: rgba(61, 125, 255, 0.28);
+  color: #ffffff;
+}
+
+.csc-portal .register-nav-btn span:last-child {
   font-size: 0.75rem;
-  opacity: 0.55;
+  opacity: 0.65;
 }
 
-.register-group {
-  margin-bottom: 20px;
+.csc-portal .register-nav-btn--batch {
+  padding-left: 18px;
+  font-size: 0.92rem;
 }
 
-.register-main {
-  padding: 28px 32px 64px;
-  overflow-x: auto;
+.csc-portal .register-group {
+  margin-bottom: 14px;
 }
 
-@media (max-width: 640px) {
-  .register-main { padding: 20px 16px 48px; }
-}
-
-.register-toolbar {
+.csc-portal .register-toolbar {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 12px;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 20px;
+  margin-bottom: 22px;
 }
 
-.register-toolbar h1 {
-  font-size: clamp(1.4rem, 2vw, 1.85rem);
+.csc-portal .register-toolbar h1 {
   margin: 0;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 600;
   letter-spacing: -0.02em;
+  color: #ffffff;
 }
 
-.register-actions {
+.csc-portal .register-toolbar-sub {
+  margin: 4px 0 0;
+  color: rgba(148, 163, 184, 0.95);
+  font-size: 0.9rem;
+}
+
+.csc-portal .register-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
 }
 
-.register-btn {
+.csc-portal .register-btn {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 9px 14px;
+  padding: 9px 16px;
   border-radius: 999px;
-  border: 1px solid rgba(17, 17, 17, 0.12);
-  background: rgba(255, 255, 255, 0.8);
-  color: var(--ink);
-  font-size: 0.82rem;
-  cursor: pointer;
-  transition: border-color 0.2s, background 0.2s;
-}
-
-.register-btn:hover {
-  border-color: var(--deep-burgundy);
-}
-
-.register-btn--primary {
-  background: var(--deep-burgundy);
-  border-color: var(--deep-burgundy);
-  color: #fff;
-}
-
-.register-btn--danger {
-  border-color: rgba(107, 22, 40, 0.35);
-  color: var(--deep-burgundy);
-}
-
-.register-stats {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 12px;
-  margin-bottom: 24px;
-}
-
-.register-stat {
-  padding: 16px 18px;
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.75);
-  border: 1px solid rgba(17, 17, 17, 0.08);
-}
-
-.register-stat strong {
-  display: block;
-  font-size: 1.5rem;
-  line-height: 1.1;
-  color: var(--deep-burgundy);
-}
-
-.register-stat span {
-  font-size: 0.78rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  opacity: 0.55;
-}
-
-.register-table-wrap {
-  border: 1px solid rgba(17, 17, 17, 0.08);
-  border-radius: 18px;
-  overflow: hidden;
-  background: rgba(255, 255, 255, 0.82);
-}
-
-.register-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.88rem;
-}
-
-.register-table th,
-.register-table td {
-  padding: 12px 14px;
-  text-align: left;
-  border-bottom: 1px solid rgba(17, 17, 17, 0.06);
-  vertical-align: top;
-}
-
-.register-table th {
-  font-size: 0.72rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  opacity: 0.55;
-  background: rgba(250, 249, 247, 0.9);
-}
-
-.register-table tr:last-child td { border-bottom: none; }
-
-.register-table tr:hover td {
-  background: rgba(107, 22, 40, 0.03);
-}
-
-.reg-fees--paid { color: #1a7f4b; }
-.reg-fees--partial { color: #b8860b; }
-.reg-fees--pending { color: #666; }
-.reg-fees--overdue { color: var(--deep-burgundy); }
-
-.register-empty {
-  padding: 48px 24px;
-  text-align: center;
-  opacity: 0.55;
-}
-
-.register-modal-backdrop {
-  position: fixed;
-  inset: 0;
-  background: rgba(17, 17, 17, 0.45);
-  backdrop-filter: blur(4px);
-  z-index: 100;
-  display: grid;
-  place-items: center;
-  padding: 20px;
-}
-
-.register-modal {
-  width: min(560px, 100%);
-  max-height: 90vh;
-  overflow-y: auto;
-  background: var(--paper);
-  border-radius: 20px;
-  padding: 24px;
-  box-shadow: 0 24px 80px rgba(17, 17, 17, 0.18);
-}
-
-.register-modal h2 {
-  margin: 0 0 16px;
-  font-size: 1.25rem;
-}
-
-.register-form-grid {
-  display: grid;
-  gap: 14px;
-}
-
-.register-form-grid label {
-  display: grid;
-  gap: 6px;
-  font-size: 0.78rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  opacity: 0.65;
-}
-
-.register-form-grid input,
-.register-form-grid select,
-.register-form-grid textarea {
-  padding: 10px 12px;
-  border-radius: 10px;
-  border: 1px solid rgba(17, 17, 17, 0.12);
-  background: #fff;
-  font: inherit;
-  color: var(--ink);
-}
-
-.register-form-grid textarea {
-  min-height: 72px;
-  resize: vertical;
-}
-
-.register-modal-actions {
-  display: flex;
-  gap: 10px;
-  justify-content: flex-end;
-  margin-top: 20px;
-}
-
-.register-expand {
-  margin-top: 8px;
-  padding: 12px;
-  border-radius: 12px;
-  background: rgba(250, 249, 247, 0.95);
-  border: 1px solid rgba(17, 17, 17, 0.06);
-}
-
-.register-expand h4 {
-  margin: 0 0 8px;
-  font-size: 0.82rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  opacity: 0.55;
-}
-
-.register-chip-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: 10px;
-}
-
-.register-chip {
-  padding: 4px 10px;
-  border-radius: 999px;
-  background: rgba(107, 22, 40, 0.08);
-  font-size: 0.78rem;
-}
-
-.register-error {
-  color: var(--deep-burgundy);
-  font-size: 0.85rem;
-  margin-top: 8px;
-}
-
-.register-loading {
-  padding: 40px;
-  text-align: center;
-  opacity: 0.5;
-}
-
-.register-search {
-  width: 100%;
-  margin-bottom: 16px;
-  padding: 10px 12px;
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   background: rgba(255, 255, 255, 0.08);
-  color: inherit;
-  font: inherit;
-}
-
-.register-search::placeholder {
-  color: rgba(248, 250, 252, 0.45);
-}
-
-.register-group-toggle {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  padding: 10px 12px;
-  margin-bottom: 4px;
-  border: none;
-  background: rgba(255, 255, 255, 0.06);
-  color: inherit;
-  font: inherit;
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  border-radius: 10px;
+  backdrop-filter: blur(12px);
+  color: #f8fafc;
+  font-size: 0.82rem;
+  font-weight: 500;
   cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, transform 0.2s;
 }
 
-.register-nav-btn--batch {
-  padding-left: 20px;
+.csc-portal .register-btn:hover {
+  border-color: rgba(61, 125, 255, 0.45);
+  background: rgba(61, 125, 255, 0.12);
 }
 
-.register-toolbar-sub {
-  margin: 4px 0 0;
-  opacity: 0.6;
-  font-size: 0.9rem;
+.csc-portal .register-btn--primary {
+  background: linear-gradient(135deg, #3d7dff 0%, #2563eb 100%);
+  border-color: rgba(255, 255, 255, 0.25);
+  color: #fff;
+  box-shadow: 0 8px 24px rgba(61, 125, 255, 0.35);
 }
 
-.register-hero-stats {
+.csc-portal .register-btn--danger {
+  border-color: rgba(248, 113, 113, 0.4);
+  color: #fecaca;
+}
+
+.csc-portal .register-hero-stats {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 14px;
   margin-bottom: 20px;
 }
 
-.register-hero-stats--fees {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.register-hero-stat {
+.csc-portal .register-hero-stat {
+  position: relative;
+  overflow: hidden;
   padding: 22px 20px;
   border-radius: 18px;
-  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 55%, #a855f7 100%);
+  background: linear-gradient(
+    135deg,
+    rgba(61, 125, 255, 0.32) 0%,
+    rgba(99, 102, 241, 0.22) 50%,
+    rgba(139, 92, 246, 0.18) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  box-shadow:
+    0 16px 48px rgba(61, 125, 255, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
   color: #fff;
-  box-shadow: 0 16px 40px rgba(99, 102, 241, 0.25);
 }
 
-.register-hero-stat strong {
+.csc-portal .register-hero-stat::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.25) 0%,
+    transparent 45%
+  );
+  pointer-events: none;
+}
+
+.csc-portal .register-hero-stat strong {
+  position: relative;
+  z-index: 1;
   display: block;
   font-size: clamp(1.6rem, 3vw, 2.2rem);
   line-height: 1.1;
   font-weight: 700;
 }
 
-.register-hero-stat span {
+.csc-portal .register-hero-stat span {
+  position: relative;
+  z-index: 1;
   display: block;
   margin-top: 6px;
-  font-size: 0.78rem;
-  letter-spacing: 0.08em;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  opacity: 0.85;
+  opacity: 0.88;
 }
 
-.register-hero-stat--paid strong {
+.csc-portal .register-hero-stat--paid strong {
   color: #bbf7d0;
 }
 
-.register-hero-stat--pending strong {
+.csc-portal .register-hero-stat--pending strong {
   color: #fecaca;
 }
 
-.register-chart {
-  margin-bottom: 24px;
+.csc-portal .register-chart {
+  margin-bottom: 22px;
   padding: 16px 12px 8px;
   border-radius: 18px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(16px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
-.register-chart--empty {
+.csc-portal .register-chart--empty {
   padding: 48px 24px;
   text-align: center;
-  opacity: 0.55;
+  color: rgba(148, 163, 184, 0.9);
 }
 
-.register-link-btn {
+.csc-portal .register-table-wrap {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
+  overflow: hidden;
+  background: rgba(7, 11, 22, 0.28);
+  backdrop-filter: blur(16px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.csc-portal .register-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.csc-portal .register-table th,
+.csc-portal .register-table td {
+  padding: 12px 14px;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  vertical-align: top;
+}
+
+.csc-portal .register-table th {
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(148, 163, 184, 0.95);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.csc-portal .register-table td {
+  color: rgba(226, 232, 240, 0.95);
+}
+
+.csc-portal .register-table tr:last-child td {
+  border-bottom: none;
+}
+
+.csc-portal .register-table tr:hover td {
+  background: rgba(61, 125, 255, 0.08);
+}
+
+.csc-portal .register-link-btn {
   padding: 0;
   border: none;
   background: none;
@@ -421,28 +328,108 @@
   text-align: left;
 }
 
+.csc-portal .register-empty,
+.csc-portal .register-loading {
+  padding: 48px 24px;
+  text-align: center;
+  color: rgba(148, 163, 184, 0.9);
+}
+
+.csc-portal .register-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(7, 11, 22, 0.72);
+  backdrop-filter: blur(8px);
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+}
+
+.csc-portal .register-modal {
+  width: min(560px, 100%);
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 24px;
+  border-radius: 22px;
+  background: linear-gradient(
+    145deg,
+    rgba(30, 41, 59, 0.95) 0%,
+    rgba(15, 23, 42, 0.98) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(24px);
+  color: #f8fafc;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+}
+
+.csc-portal .register-form-grid input,
+.csc-portal .register-form-grid select,
+.csc-portal .register-form-grid textarea {
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.06);
+  color: #f8fafc;
+  font: inherit;
+}
+
+.csc-portal .register-expand {
+  margin-top: 8px;
+  padding: 12px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.csc-portal .register-chip {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(61, 125, 255, 0.18);
+  font-size: 0.78rem;
+}
+
+.csc-portal .reg-fees--paid {
+  color: #86efac;
+}
+
+.csc-portal .reg-fees--partial {
+  color: #fcd34d;
+}
+
+.csc-portal .reg-fees--pending {
+  color: #94a3b8;
+}
+
+.csc-portal .reg-fees--overdue {
+  color: #fca5a5;
+}
+
+.csc-portal .register-error {
+  color: #fca5a5;
+}
+
 @media print {
-  .portal-header,
-  .register-sidebar,
-  .register-actions,
-  .register-btn {
+  .csc-portal .portal-nav-shell,
+  .csc-portal .register-sidebar,
+  .csc-portal .register-actions,
+  .csc-portal .register-btn {
     display: none !important;
   }
 
-  .register-layout {
+  .csc-portal .register-layout {
     display: block;
-    margin: 0 !important;
   }
 
-  .register-main {
-    padding: 0 !important;
-  }
-
-  .register-hero-stat,
-  .register-table-wrap {
-    break-inside: avoid;
+  .csc-portal .register-main {
+    box-shadow: none;
+    border: none;
+    background: #fff;
+    color: #000;
   }
 }
+
+/* ── Public admission form (unchanged light/dark theme blocks) ── */
 
 .admission-page {
   min-height: calc(100vh - var(--csc-nav-h, 56px));
@@ -512,19 +499,6 @@
   color: #0f172a;
   font-size: 15px;
   border-radius: 12px;
-  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
-}
-
-.admission-card .register-form-grid input::placeholder {
-  color: #94a3b8;
-}
-
-.admission-card .register-form-grid input:focus,
-.admission-card .register-form-grid select:focus {
-  outline: none;
-  border-color: rgba(37, 99, 235, 0.45);
-  background: #fff;
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
 }
 
 .admission-card .register-btn--primary {
@@ -537,11 +511,6 @@
   font-weight: 600;
 }
 
-.admission-card .register-btn--primary:hover:not(:disabled) {
-  background: #1d4ed8;
-  border-color: #1d4ed8;
-}
-
 .admission-card__foot {
   margin: 24px 0 0;
   font-size: 14px;
@@ -551,30 +520,6 @@
 .admission-card__foot a {
   color: #2563eb;
   font-weight: 600;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-.admission-card .register-error {
-  color: #b91c1c;
-  background: rgba(254, 226, 226, 0.8);
-  padding: 10px 12px;
-  border-radius: 10px;
-  font-size: 14px;
-}
-
-.admission-success {
-  text-align: center;
-  padding: 24px 0;
-}
-
-.admission-success h2 {
-  color: var(--deep-burgundy);
-  margin-bottom: 8px;
-}
-
-.admission-success p {
-  color: #64748b;
 }
 
 html[data-theme='dark'] .csc-site--admission .admission-page {
@@ -600,22 +545,9 @@ html[data-theme='dark'] .admission-card__brand .csc-brand-name {
   color: #f8fafc;
 }
 
-html[data-theme='dark'] .admission-card p,
-html[data-theme='dark'] .admission-card__foot {
-  color: rgba(248, 250, 252, 0.72);
-}
-
-html[data-theme='dark'] .admission-card .register-form-grid label {
-  color: rgba(248, 250, 252, 0.65);
-}
-
 html[data-theme='dark'] .admission-card .register-form-grid input,
 html[data-theme='dark'] .admission-card .register-form-grid select {
   background: rgba(255, 255, 255, 0.08);
   border-color: rgba(255, 255, 255, 0.15);
   color: #f8fafc;
-}
-
-html[data-theme='dark'] .admission-card .register-form-grid input::placeholder {
-  color: rgba(248, 250, 252, 0.4);
 }

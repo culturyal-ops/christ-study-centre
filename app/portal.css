@@ -1,32 +1,67 @@
-/* Admin / student portal — matches dark landing site */
+/* Admin / student portal — liquid glass (matches landing site) */
 
 .csc-portal.portal-shell {
+  --portal-glass: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.14) 0%,
+    rgba(255, 255, 255, 0.04) 42%,
+    rgba(255, 255, 255, 0.09) 100%
+  );
+  --portal-border: rgba(255, 255, 255, 0.2);
+  --portal-rim: inset 0 1px 0 rgba(255, 255, 255, 0.42);
+  --portal-shadow: 0 12px 40px rgba(61, 125, 255, 0.16), 0 8px 32px rgba(0, 0, 0, 0.28);
+
   min-height: 100vh;
   background:
-    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(61, 125, 255, 0.14), transparent 55%),
+    radial-gradient(ellipse 70% 55% at 15% -10%, rgba(61, 125, 255, 0.22), transparent 55%),
+    radial-gradient(ellipse 50% 40% at 90% 5%, rgba(139, 92, 246, 0.14), transparent 50%),
+    radial-gradient(ellipse 60% 45% at 50% 100%, rgba(37, 99, 235, 0.1), transparent 55%),
     var(--theme-page-bg, #070b16);
   color: var(--theme-text, #f8fafc);
   font-family: var(--font-inter), system-ui, sans-serif;
 }
 
+.csc-portal .portal-nav-shell {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: 12px 20px 0;
+}
+
 .csc-portal .portal-header {
-  border-bottom: 1px solid var(--theme-nav-border, rgba(255, 255, 255, 0.18));
-  background: var(
-    --theme-nav-glass,
-    linear-gradient(
-      145deg,
-      rgba(255, 255, 255, 0.14) 0%,
-      rgba(255, 255, 255, 0.04) 45%,
-      rgba(255, 255, 255, 0.08) 100%
-    )
-  );
+  position: relative;
+  max-width: 1240px;
+  margin: 0 auto;
+  border: 1px solid var(--portal-border);
+  border-radius: var(--lg-radius-pill, 999px);
+  background: var(--portal-glass);
   backdrop-filter: var(--lg-blur-nav, blur(40px) saturate(180%));
   -webkit-backdrop-filter: var(--lg-blur-nav, blur(40px) saturate(180%));
+  box-shadow: var(--portal-shadow), var(--portal-rim);
+  overflow: hidden;
+}
+
+.csc-portal .portal-header::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.38) 0%,
+    rgba(255, 255, 255, 0.06) 38%,
+    transparent 55%,
+    rgba(255, 255, 255, 0.1) 100%
+  );
+  pointer-events: none;
 }
 
 .csc-portal .portal-header-inner {
-  max-width: 1240px;
-  gap: 20px;
+  position: relative;
+  z-index: 1;
+  max-width: none;
+  padding: 12px 22px;
+  gap: 18px;
 }
 
 .csc-portal .portal-brand {
@@ -49,21 +84,27 @@
 }
 
 .csc-portal .portal-nav {
-  gap: 20px;
+  display: flex;
+  gap: 8px;
+  padding: 4px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .csc-portal .portal-nav a {
+  padding: 8px 14px;
+  border-radius: 999px;
   color: var(--theme-text-muted, #94a3b8);
   font-family: var(--font-inter), system-ui, sans-serif;
   font-size: 13px;
   font-weight: 500;
-  letter-spacing: 0;
-  text-transform: none;
-  transition: color 0.2s;
+  transition: background 0.2s, color 0.2s;
 }
 
 .csc-portal .portal-nav a:hover {
   color: var(--theme-text, #f8fafc);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .csc-portal .portal-header-actions {
@@ -88,6 +129,9 @@
   font-weight: 600;
   letter-spacing: 0.06em;
   color: var(--theme-accent, #3d7dff);
+  background: none;
+  border: none;
+  cursor: pointer;
 }
 
 .csc-portal .portal-signout:hover {
@@ -96,13 +140,15 @@
 
 .csc-portal .portal-main {
   max-width: 1240px;
-  padding: 40px 24px 80px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 24px 20px 80px;
 }
 
 .csc-portal .portal-page-head {
-  margin-bottom: 32px;
-  padding-bottom: 28px;
-  border-bottom: 1px solid var(--theme-border, rgba(255, 255, 255, 0.12));
+  margin-bottom: 28px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .csc-portal .portal-page-head .spread-label {
@@ -117,7 +163,6 @@
   font-family: var(--font-display), Georgia, serif;
   font-size: clamp(1.75rem, 4vw, 2.35rem);
   font-weight: 600;
-  text-transform: none;
   letter-spacing: -0.02em;
   color: var(--theme-heading, #ffffff);
 }
@@ -128,19 +173,20 @@
 }
 
 .csc-portal .portal-stats {
-  gap: 12px;
-  background: transparent;
-  border: none;
-  margin-bottom: 32px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 14px;
+  margin-bottom: 28px;
 }
 
 .csc-portal .portal-stat {
-  background: var(--theme-surface-card, rgba(255, 255, 255, 0.08));
-  border: 1px solid var(--theme-border, rgba(255, 255, 255, 0.12));
-  border-radius: 16px;
-  padding: 24px 20px;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  padding: 22px 20px;
+  border-radius: 18px;
+  background: var(--portal-glass);
+  border: 1px solid var(--portal-border);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  box-shadow: var(--portal-shadow), var(--portal-rim);
 }
 
 .csc-portal .portal-stat-num {
@@ -154,44 +200,46 @@
   font-family: var(--font-inter), system-ui, sans-serif;
   font-size: 11px;
   letter-spacing: 0.08em;
+  text-transform: uppercase;
   color: var(--theme-text-muted, #94a3b8);
 }
 
 .csc-portal .portal-modules {
-  gap: 12px;
-  background: transparent;
-  border: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
 }
 
 .csc-portal .portal-module {
-  background: var(--theme-surface-card, rgba(255, 255, 255, 0.08));
-  border: 1px solid var(--theme-border, rgba(255, 255, 255, 0.12));
-  border-radius: 16px;
-  padding: 24px 22px;
-  transition: border-color 0.2s, background 0.2s, transform 0.2s;
+  padding: 22px 20px;
+  border-radius: 18px;
+  background: var(--portal-glass);
+  border: 1px solid var(--portal-border);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  box-shadow: var(--portal-shadow), var(--portal-rim);
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
 }
 
 .csc-portal a.portal-module:hover {
-  border-color: rgba(61, 125, 255, 0.35);
-  background: rgba(61, 125, 255, 0.1);
-  transform: translateY(-1px);
+  border-color: rgba(61, 125, 255, 0.45);
+  transform: translateY(-2px);
+  box-shadow: 0 16px 48px rgba(61, 125, 255, 0.22), var(--portal-rim);
 }
 
 .csc-portal .portal-module-head h2 {
   font-family: var(--font-inter), system-ui, sans-serif;
   font-size: 15px;
   font-weight: 600;
-  letter-spacing: 0;
-  text-transform: none;
   color: var(--theme-heading, #ffffff);
 }
 
 .csc-portal .portal-module-status {
   color: var(--theme-accent, #3d7dff);
-  font-family: var(--font-inter), system-ui, sans-serif;
   font-size: 10px;
   font-weight: 600;
   letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .csc-portal .portal-module p {
@@ -208,157 +256,35 @@
   font-weight: 600;
 }
 
-.csc-portal .portal-note a:hover {
-  border-bottom-color: var(--theme-accent, #3d7dff);
+.csc-portal .csc-theme-toggle {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.22);
+  color: #f8fafc;
 }
 
-/* Register app — dark portal theme */
-.csc-portal .register-layout {
-  margin: -40px -24px -80px;
-}
-
-.csc-portal .register-sidebar {
-  background: rgba(255, 255, 255, 0.05);
-  border-right: 1px solid var(--theme-border, rgba(255, 255, 255, 0.12));
-}
-
-.csc-portal .register-sidebar h2 {
-  color: var(--theme-text-muted, #94a3b8);
-}
-
-.csc-portal .register-nav-btn {
-  color: var(--theme-text, #f8fafc);
-}
-
-.csc-portal .register-nav-btn:hover,
-.csc-portal .register-nav-btn.is-active {
-  background: rgba(61, 125, 255, 0.12);
-  color: var(--theme-accent, #3d7dff);
-}
-
-.csc-portal .register-toolbar h1 {
-  font-family: var(--font-display), Georgia, serif;
-  font-weight: 600;
-  color: var(--theme-heading, #ffffff);
-}
-
-.csc-portal .register-btn {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: var(--theme-border, rgba(255, 255, 255, 0.15));
-  color: var(--theme-text, #f8fafc);
-}
-
-.csc-portal .register-btn:hover {
-  border-color: rgba(61, 125, 255, 0.45);
-}
-
-.csc-portal .register-btn--primary {
-  background: var(--theme-accent, #3d7dff);
-  border-color: var(--theme-accent, #3d7dff);
-  color: #fff;
-}
-
-.csc-portal .register-btn--danger {
-  border-color: rgba(248, 113, 113, 0.45);
-  color: #fca5a5;
-}
-
-.csc-portal .register-stat {
-  background: rgba(255, 255, 255, 0.06);
-  border-color: var(--theme-border, rgba(255, 255, 255, 0.12));
-}
-
-.csc-portal .register-stat strong {
-  color: var(--theme-heading, #ffffff);
-}
-
-.csc-portal .register-stat span {
-  color: var(--theme-text-muted, #94a3b8);
-  opacity: 1;
-}
-
-.csc-portal .register-table-wrap {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: var(--theme-border, rgba(255, 255, 255, 0.12));
-}
-
-.csc-portal .register-table th {
-  background: rgba(255, 255, 255, 0.04);
-  color: var(--theme-text-muted, #94a3b8);
-  opacity: 1;
-}
-
-.csc-portal .register-table td {
-  color: var(--theme-text-body, #cbd5e1);
-  border-bottom-color: var(--theme-border, rgba(255, 255, 255, 0.08));
-}
-
-.csc-portal .register-table tr:hover td {
-  background: rgba(61, 125, 255, 0.06);
-}
-
-.csc-portal .register-empty,
-.csc-portal .register-loading {
-  color: var(--theme-text-muted, #94a3b8);
-  opacity: 1;
-}
-
-.csc-portal .register-modal {
-  background: #111827;
-  border: 1px solid var(--theme-border, rgba(255, 255, 255, 0.12));
-  color: var(--theme-text, #f8fafc);
-}
-
-.csc-portal .register-form-grid input,
-.csc-portal .register-form-grid select,
-.csc-portal .register-form-grid textarea {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: var(--theme-border, rgba(255, 255, 255, 0.15));
-  color: var(--theme-text, #f8fafc);
-}
-
-.csc-portal .register-expand {
-  background: rgba(255, 255, 255, 0.04);
-  border-color: var(--theme-border, rgba(255, 255, 255, 0.1));
-}
-
-.csc-portal .register-chip {
-  background: rgba(61, 125, 255, 0.15);
-  color: var(--theme-text, #f8fafc);
-}
-
-.csc-portal .register-error {
-  color: #fca5a5;
-}
-
-.csc-portal .register-search {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: var(--theme-border, rgba(255, 255, 255, 0.15));
-  color: var(--theme-text, #f8fafc);
-}
-
-.csc-portal .register-group-toggle {
-  background: rgba(255, 255, 255, 0.06);
-  color: var(--theme-text-muted, #94a3b8);
-}
-
-.csc-portal .register-chart {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: var(--theme-border, rgba(255, 255, 255, 0.12));
+.csc-portal .csc-theme-toggle:hover {
+  background: rgba(61, 125, 255, 0.18);
+  border-color: rgba(61, 125, 255, 0.35);
 }
 
 @media (max-width: 640px) {
+  .csc-portal .portal-nav-shell {
+    padding: 8px 12px 0;
+  }
+
+  .csc-portal .portal-header {
+    border-radius: 20px;
+  }
+
   .csc-portal .portal-header-inner {
-    padding: 12px 16px;
+    padding: 12px 14px;
   }
 
   .csc-portal .portal-nav {
-    display: flex;
     order: 3;
     width: 100%;
-    gap: 16px;
-    padding-top: 10px;
-    border-top: 1px solid var(--theme-border, rgba(255, 255, 255, 0.12));
+    flex-wrap: wrap;
+    border-radius: 14px;
   }
 
   .csc-portal .portal-header-actions {
@@ -366,10 +292,6 @@
   }
 
   .csc-portal .portal-main {
-    padding: 28px 16px 64px;
-  }
-
-  .csc-portal .register-layout {
-    margin: -28px -16px -64px;
+    padding: 16px 12px 64px;
   }
 }
