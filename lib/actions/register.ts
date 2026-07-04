@@ -111,6 +111,50 @@ export async function getAdminDashboardStats() {
   }
 }
 
+export async function getAdminDashboardData() {
+  await requireAdmin()
+
+  const bootstrap = await getRegisterBootstrap()
+
+  const [pendingPreview, students, feesOverdueCount] = await Promise.all([
+    prisma.pendingAdmission.findMany({
+      take: 5,
+      orderBy: { submittedAt: 'desc' },
+    }),
+    prisma.student.findMany({
+      where: { deletedAt: null },
+      include: { batch: { select: { name: true } } },
+      orderBy: [{ batch: { name: 'asc' } }, { rollNo: 'asc' }],
+    }),
+    prisma.student.count({
+      where: { deletedAt: null, feesRemaining: { gt: 0 } },
+    }),
+  ])
+
+  const batchByGroup = BATCH_GROUPS.map((group) => {
+    const batches = group.batches
+      .map((name) => {
+        const info = bootstrap.batches.find((b) => b.name === name)
+        return { name, count: info?.studentCount ?? 0 }
+      })
+      .filter((b) => b.count > 0)
+
+    return {
+      title: group.title,
+      total: batches.reduce((sum, b) => sum + b.count, 0),
+      batches,
+    }
+  }).filter((g) => g.total > 0)
+
+  return {
+    ...bootstrap,
+    batchByGroup,
+    pendingPreview,
+    students,
+    feesOverdueCount,
+  }
+}
+
 export async function getRegisterBootstrap() {
   await requireAdmin()
 

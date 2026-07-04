@@ -1,15 +1,59 @@
 /* Admin / student portal — liquid glass (matches landing site) */
 
 .csc-portal.portal-shell {
-  --portal-glass: linear-gradient(
-    145deg,
-    rgba(255, 255, 255, 0.14) 0%,
-    rgba(255, 255, 255, 0.04) 42%,
-    rgba(255, 255, 255, 0.09) 100%
-  );
-  --portal-border: rgba(255, 255, 255, 0.2);
+  --portal-glass: var(--theme-nav-glass);
+  --portal-border: var(--theme-nav-border);
   --portal-rim: inset 0 1px 0 rgba(255, 255, 255, 0.42);
   --portal-shadow: 0 12px 40px rgba(61, 125, 255, 0.16), 0 8px 32px rgba(0, 0, 0, 0.28);
+  --portal-panel: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.12) 0%,
+    rgba(255, 255, 255, 0.04) 45%,
+    rgba(255, 255, 255, 0.08) 100%
+  );
+  --portal-panel-border: rgba(255, 255, 255, 0.16);
+  --portal-fg: var(--theme-text);
+  --portal-fg-muted: var(--theme-text-muted);
+  --portal-fg-heading: var(--theme-heading);
+  --portal-input-bg: rgba(7, 11, 22, 0.35);
+  --portal-input-border: var(--theme-border);
+  --portal-input-placeholder: rgba(248, 250, 252, 0.42);
+  --portal-nav-pill-bg: rgba(255, 255, 255, 0.06);
+  --portal-nav-pill-border: rgba(255, 255, 255, 0.1);
+  --portal-nav-hover-bg: rgba(255, 255, 255, 0.08);
+  --portal-nav-btn-fg: rgba(248, 250, 252, 0.88);
+  --portal-nav-btn-muted: rgba(148, 163, 184, 0.95);
+  --portal-nav-active-bg: rgba(61, 125, 255, 0.16);
+  --portal-nav-active-border: rgba(61, 125, 255, 0.28);
+  --portal-nav-active-fg: #ffffff;
+  --portal-table-wrap-bg: rgba(7, 11, 22, 0.28);
+  --portal-table-row-border: rgba(255, 255, 255, 0.07);
+  --portal-table-th-bg: rgba(255, 255, 255, 0.05);
+  --portal-table-td-fg: rgba(226, 232, 240, 0.95);
+  --portal-table-th-fg: rgba(148, 163, 184, 0.95);
+  --portal-table-hover-bg: rgba(61, 125, 255, 0.08);
+  --portal-btn-bg: rgba(255, 255, 255, 0.08);
+  --portal-btn-border: rgba(255, 255, 255, 0.2);
+  --portal-btn-fg: #f8fafc;
+  --portal-row-btn-bg: rgba(255, 255, 255, 0.06);
+  --portal-row-btn-border: rgba(255, 255, 255, 0.14);
+  --portal-row-btn-fg: rgba(226, 232, 240, 0.92);
+  --portal-row-btn-danger-fg: rgba(254, 202, 202, 0.95);
+  --portal-row-btn-danger-bg: rgba(248, 113, 113, 0.08);
+  --portal-row-btn-danger-border: rgba(248, 113, 113, 0.28);
+  --portal-chart-bg: rgba(255, 255, 255, 0.06);
+  --portal-chart-border: rgba(255, 255, 255, 0.12);
+  --portal-modal-bg: linear-gradient(
+    145deg,
+    rgba(30, 41, 59, 0.95) 0%,
+    rgba(15, 23, 42, 0.98) 100%
+  );
+  --portal-modal-backdrop: rgba(7, 11, 22, 0.72);
+  --portal-divider: rgba(255, 255, 255, 0.1);
+  --portal-form-bg: rgba(255, 255, 255, 0.06);
+  --portal-form-border: rgba(255, 255, 255, 0.14);
+  --portal-expand-bg: rgba(255, 255, 255, 0.05);
+  --portal-expand-border: rgba(255, 255, 255, 0.1);
 
   min-height: 100vh;
   background:
@@ -17,8 +61,56 @@
     radial-gradient(ellipse 50% 40% at 90% 5%, rgba(139, 92, 246, 0.14), transparent 50%),
     radial-gradient(ellipse 60% 45% at 50% 100%, rgba(37, 99, 235, 0.1), transparent 55%),
     var(--theme-page-bg, #070b16);
-  color: var(--theme-text, #f8fafc);
+  color: var(--portal-fg);
   font-family: var(--font-inter), system-ui, sans-serif;
+}
+
+html[data-theme='light'] .csc-portal.portal-shell {
+  --portal-rim: inset 0 1px 0 rgba(255, 255, 255, 0.95);
+  --portal-shadow: 0 12px 40px rgba(61, 125, 255, 0.08), 0 4px 20px rgba(15, 23, 42, 0.06);
+  --portal-panel: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.94) 0%,
+    rgba(255, 255, 255, 0.82) 100%
+  );
+  --portal-panel-border: rgba(15, 23, 42, 0.1);
+  --portal-input-bg: #ffffff;
+  --portal-input-border: rgba(15, 23, 42, 0.12);
+  --portal-input-placeholder: #94a3b8;
+  --portal-nav-pill-bg: rgba(15, 23, 42, 0.04);
+  --portal-nav-pill-border: rgba(15, 23, 42, 0.08);
+  --portal-nav-hover-bg: rgba(15, 23, 42, 0.06);
+  --portal-nav-btn-fg: #334155;
+  --portal-nav-btn-muted: #64748b;
+  --portal-nav-active-bg: rgba(61, 125, 255, 0.12);
+  --portal-nav-active-border: rgba(61, 125, 255, 0.25);
+  --portal-nav-active-fg: #1d4ed8;
+  --portal-table-wrap-bg: rgba(255, 255, 255, 0.82);
+  --portal-table-row-border: rgba(15, 23, 42, 0.08);
+  --portal-table-th-bg: rgba(15, 23, 42, 0.04);
+  --portal-table-td-fg: #334155;
+  --portal-table-th-fg: #64748b;
+  --portal-table-hover-bg: rgba(61, 125, 255, 0.06);
+  --portal-btn-bg: rgba(15, 23, 42, 0.04);
+  --portal-btn-border: rgba(15, 23, 42, 0.12);
+  --portal-btn-fg: #0f172a;
+  --portal-row-btn-bg: rgba(15, 23, 42, 0.04);
+  --portal-row-btn-border: rgba(15, 23, 42, 0.12);
+  --portal-row-btn-fg: #334155;
+  --portal-row-btn-danger-fg: #b91c1c;
+  --portal-row-btn-danger-bg: rgba(254, 226, 226, 0.65);
+  --portal-row-btn-danger-border: rgba(220, 38, 38, 0.28);
+  --portal-chart-bg: rgba(255, 255, 255, 0.88);
+  --portal-chart-border: rgba(15, 23, 42, 0.1);
+  --portal-modal-bg: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+  --portal-modal-backdrop: rgba(15, 23, 42, 0.35);
+  --portal-divider: rgba(15, 23, 42, 0.1);
+  --portal-form-bg: #ffffff;
+  --portal-form-border: rgba(15, 23, 42, 0.12);
+  --portal-expand-bg: rgba(15, 23, 42, 0.03);
+  --portal-expand-border: rgba(15, 23, 42, 0.08);
+
+  background: var(--theme-section-mesh);
 }
 
 .csc-portal .portal-nav-shell {
@@ -65,22 +157,12 @@
 }
 
 .csc-portal .portal-brand {
-  color: var(--theme-text, #f8fafc);
-}
-
-.csc-portal .portal-brand .csc-brand-name {
-  font-family: var(--font-inter), system-ui, sans-serif;
-  font-weight: 700;
-  font-size: 0.95rem;
-  letter-spacing: -0.01em;
-}
-
-.csc-portal .portal-brand span {
-  font-family: var(--font-inter), system-ui, sans-serif;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  color: var(--theme-accent, #3d7dff);
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  color: var(--theme-nav-fg, var(--theme-text, #f8fafc));
+  text-decoration: none;
+  flex-shrink: 0;
 }
 
 .csc-portal .portal-nav {
@@ -88,14 +170,14 @@
   gap: 8px;
   padding: 4px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--portal-nav-pill-bg);
+  border: 1px solid var(--portal-nav-pill-border);
 }
 
 .csc-portal .portal-nav a {
   padding: 8px 14px;
   border-radius: 999px;
-  color: var(--theme-text-muted, #94a3b8);
+  color: var(--portal-fg-muted);
   font-family: var(--font-inter), system-ui, sans-serif;
   font-size: 13px;
   font-weight: 500;
@@ -103,8 +185,8 @@
 }
 
 .csc-portal .portal-nav a:hover {
-  color: var(--theme-text, #f8fafc);
-  background: rgba(255, 255, 255, 0.08);
+  color: var(--portal-fg);
+  background: var(--portal-nav-hover-bg);
 }
 
 .csc-portal .portal-header-actions {
@@ -120,7 +202,7 @@
   font-weight: 500;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: var(--theme-text-muted, #94a3b8);
+  color: var(--portal-fg-muted);
 }
 
 .csc-portal .portal-signout {
@@ -148,7 +230,7 @@
 .csc-portal .portal-page-head {
   margin-bottom: 28px;
   padding-bottom: 24px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid var(--portal-divider);
 }
 
 .csc-portal .portal-page-head .spread-label {
@@ -164,11 +246,12 @@
   font-size: clamp(1.75rem, 4vw, 2.35rem);
   font-weight: 600;
   letter-spacing: -0.02em;
-  color: var(--theme-heading, #ffffff);
+  text-transform: none;
+  color: var(--portal-fg-heading);
 }
 
 .csc-portal .portal-page-head p {
-  color: var(--theme-text-muted, #94a3b8);
+  color: var(--portal-fg-muted);
   max-width: 52ch;
 }
 
@@ -193,7 +276,7 @@
   font-family: var(--font-display), Georgia, serif;
   font-size: clamp(1.75rem, 4vw, 2rem);
   font-weight: 600;
-  color: var(--theme-heading, #ffffff);
+  color: var(--portal-fg-heading);
 }
 
 .csc-portal .portal-stat-lbl {
@@ -201,7 +284,7 @@
   font-size: 11px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--theme-text-muted, #94a3b8);
+  color: var(--portal-fg-muted);
 }
 
 .csc-portal .portal-modules {
@@ -231,7 +314,7 @@
   font-family: var(--font-inter), system-ui, sans-serif;
   font-size: 15px;
   font-weight: 600;
-  color: var(--theme-heading, #ffffff);
+  color: var(--portal-fg-heading);
 }
 
 .csc-portal .portal-module-status {
@@ -243,12 +326,12 @@
 }
 
 .csc-portal .portal-module p {
-  color: var(--theme-text-muted, #94a3b8);
+  color: var(--portal-fg-muted);
   font-size: 14px;
 }
 
 .csc-portal .portal-note {
-  color: var(--theme-text-muted, #94a3b8);
+  color: var(--portal-fg-muted);
 }
 
 .csc-portal .portal-note a {
@@ -257,14 +340,19 @@
 }
 
 .csc-portal .csc-theme-toggle {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.22);
-  color: #f8fafc;
+  background: var(--theme-toggle-bg);
+  border-color: var(--theme-toggle-border);
+  color: var(--theme-toggle-fg);
 }
 
 .csc-portal .csc-theme-toggle:hover {
   background: rgba(61, 125, 255, 0.18);
   border-color: rgba(61, 125, 255, 0.35);
+}
+
+html[data-theme='light'] .csc-portal .csc-theme-toggle:hover {
+  background: rgba(61, 125, 255, 0.1);
+  border-color: rgba(61, 125, 255, 0.25);
 }
 
 @media (max-width: 640px) {

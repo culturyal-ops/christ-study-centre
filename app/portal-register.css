@@ -22,38 +22,22 @@
   overflow-y: auto;
   padding: 18px 14px 24px;
   border-radius: 22px;
-  background: linear-gradient(
-    145deg,
-    rgba(255, 255, 255, 0.12) 0%,
-    rgba(255, 255, 255, 0.04) 45%,
-    rgba(255, 255, 255, 0.08) 100%
-  );
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: var(--portal-panel);
+  border: 1px solid var(--portal-panel-border);
   backdrop-filter: blur(40px) saturate(180%);
   -webkit-backdrop-filter: blur(40px) saturate(180%);
-  box-shadow:
-    0 12px 40px rgba(61, 125, 255, 0.12),
-    0 8px 28px rgba(0, 0, 0, 0.25),
-    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  box-shadow: var(--portal-shadow), var(--portal-rim);
 }
 
 .csc-portal .register-main {
   padding: 26px 26px 40px;
   border-radius: 22px;
   overflow-x: auto;
-  background: linear-gradient(
-    145deg,
-    rgba(255, 255, 255, 0.1) 0%,
-    rgba(255, 255, 255, 0.03) 42%,
-    rgba(255, 255, 255, 0.07) 100%
-  );
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: var(--portal-panel);
+  border: 1px solid var(--portal-panel-border);
   backdrop-filter: blur(40px) saturate(180%);
   -webkit-backdrop-filter: blur(40px) saturate(180%);
-  box-shadow:
-    0 12px 40px rgba(61, 125, 255, 0.1),
-    0 8px 28px rgba(0, 0, 0, 0.22),
-    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  box-shadow: var(--portal-shadow), var(--portal-rim);
 }
 
 .csc-portal .register-search {
@@ -61,17 +45,17 @@
   margin-bottom: 14px;
   padding: 11px 14px;
   border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  background: rgba(7, 11, 22, 0.35);
+  border: 1px solid var(--portal-input-border);
+  background: var(--portal-input-bg);
   backdrop-filter: blur(12px);
-  color: #f8fafc;
+  color: var(--portal-fg);
   font: inherit;
   font-size: 14px;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 .csc-portal .register-search::placeholder {
-  color: rgba(248, 250, 252, 0.42);
+  color: var(--portal-input-placeholder);
 }
 
 .csc-portal .register-search:focus {
@@ -91,7 +75,7 @@
   background: transparent;
   text-align: left;
   font: inherit;
-  color: rgba(248, 250, 252, 0.88);
+  color: var(--portal-nav-btn-fg);
   border-radius: 12px;
   cursor: pointer;
   transition: background 0.2s, border-color 0.2s, color 0.2s;
@@ -103,16 +87,16 @@
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(148, 163, 184, 0.95);
-  background: rgba(255, 255, 255, 0.04);
-  border-color: rgba(255, 255, 255, 0.08);
+  color: var(--portal-nav-btn-muted);
+  background: var(--portal-nav-pill-bg);
+  border-color: var(--portal-nav-pill-border);
 }
 
 .csc-portal .register-nav-btn:hover,
 .csc-portal .register-nav-btn.is-active {
-  background: rgba(61, 125, 255, 0.16);
-  border-color: rgba(61, 125, 255, 0.28);
-  color: #ffffff;
+  background: var(--portal-nav-active-bg);
+  border-color: var(--portal-nav-active-border);
+  color: var(--portal-nav-active-fg);
 }
 
 .csc-portal .register-nav-btn span:last-child {
@@ -144,12 +128,12 @@
   font-size: clamp(1.5rem, 3vw, 2rem);
   font-weight: 600;
   letter-spacing: -0.02em;
-  color: #ffffff;
+  color: var(--portal-fg-heading);
 }
 
 .csc-portal .register-toolbar-sub {
   margin: 4px 0 0;
-  color: rgba(148, 163, 184, 0.95);
+  color: var(--portal-fg-muted);
   font-size: 0.9rem;
 }
 
@@ -165,10 +149,10 @@
   gap: 6px;
   padding: 9px 16px;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--portal-btn-border);
+  background: var(--portal-btn-bg);
   backdrop-filter: blur(12px);
-  color: #f8fafc;
+  color: var(--portal-btn-fg);
   font-size: 0.82rem;
   font-weight: 500;
   cursor: pointer;
@@ -188,8 +172,84 @@
 }
 
 .csc-portal .register-btn--danger {
-  border-color: rgba(248, 113, 113, 0.4);
-  color: #fecaca;
+  border-color: var(--portal-row-btn-danger-border);
+  color: var(--portal-row-btn-danger-fg);
+  background: var(--portal-row-btn-danger-bg);
+}
+
+.csc-portal .register-row-actions {
+  display: inline-flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.csc-portal .register-row-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 10px;
+  border-radius: 8px;
+  border: 1px solid var(--portal-row-btn-border);
+  background: var(--portal-row-btn-bg);
+  color: var(--portal-row-btn-fg);
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, color 0.2s;
+}
+
+.csc-portal .register-row-btn:hover {
+  border-color: rgba(61, 125, 255, 0.4);
+  background: rgba(61, 125, 255, 0.12);
+  color: var(--portal-nav-active-fg);
+}
+
+.csc-portal .register-row-btn--danger {
+  border-color: var(--portal-row-btn-danger-border);
+  background: var(--portal-row-btn-danger-bg);
+  color: var(--portal-row-btn-danger-fg);
+}
+
+.csc-portal .register-row-btn--danger:hover {
+  border-color: rgba(248, 113, 113, 0.5);
+  background: rgba(248, 113, 113, 0.16);
+  color: var(--portal-row-btn-danger-fg);
+}
+
+.csc-portal .register-row-btn--primary {
+  border-color: rgba(61, 125, 255, 0.35);
+  background: rgba(61, 125, 255, 0.18);
+  color: #dbeafe;
+}
+
+.csc-portal .register-row-btn--primary:hover {
+  border-color: rgba(61, 125, 255, 0.55);
+  background: rgba(61, 125, 255, 0.28);
+  color: #fff;
+}
+
+html[data-theme='light'] .csc-portal .register-row-btn--primary {
+  color: #1d4ed8;
+  background: rgba(61, 125, 255, 0.12);
+}
+
+html[data-theme='light'] .csc-portal .register-row-btn--primary:hover {
+  color: #1e40af;
+  background: rgba(61, 125, 255, 0.2);
+}
+
+html[data-theme='light'] .csc-portal .register-row-btn:hover {
+  color: #1d4ed8;
+}
+
+.csc-portal .register-table td:last-child {
+  width: 1%;
+  white-space: nowrap;
 }
 
 .csc-portal .register-hero-stats {
@@ -197,6 +257,327 @@
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 14px;
   margin-bottom: 20px;
+}
+
+.csc-portal .dashboard-hero-stats {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+@media (max-width: 960px) {
+  .csc-portal .dashboard-hero-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 520px) {
+  .csc-portal .dashboard-hero-stats {
+    grid-template-columns: 1fr;
+  }
+}
+
+.csc-portal .dashboard-toolbar .spread-label {
+  margin-bottom: 6px;
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--theme-label, #93c5fd);
+}
+
+.csc-portal .dashboard-toolbar h1 {
+  margin: 0;
+}
+
+.csc-portal .dashboard-quick-nav {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+  .csc-portal .dashboard-quick-nav {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.csc-portal .dashboard-quick-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid var(--portal-panel-border);
+  background: var(--portal-panel);
+  backdrop-filter: blur(20px);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+
+.csc-portal .dashboard-quick-card:hover {
+  border-color: rgba(61, 125, 255, 0.35);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(61, 125, 255, 0.12);
+}
+
+.csc-portal .dashboard-quick-card strong {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--portal-fg-heading);
+}
+
+.csc-portal .dashboard-quick-card span {
+  font-size: 0.78rem;
+  color: var(--portal-fg-muted);
+}
+
+.csc-portal .dashboard-quick-card--alert {
+  border-color: rgba(251, 191, 36, 0.35);
+  background: linear-gradient(
+    145deg,
+    rgba(251, 191, 36, 0.12) 0%,
+    var(--portal-panel) 100%
+  );
+}
+
+.csc-portal .dashboard-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(260px, 0.8fr);
+  gap: 18px;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 960px) {
+  .csc-portal .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.csc-portal .dashboard-panel {
+  padding: 18px;
+  border-radius: 18px;
+  border: 1px solid var(--portal-panel-border);
+  background: var(--portal-panel);
+  backdrop-filter: blur(24px);
+  box-shadow: var(--portal-shadow), var(--portal-rim);
+}
+
+.csc-portal .dashboard-panel--table {
+  margin-bottom: 20px;
+}
+
+.csc-portal .dashboard-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.csc-portal .dashboard-panel-head--sub {
+  margin-top: 18px;
+  margin-bottom: 10px;
+}
+
+.csc-portal .dashboard-panel-head h2,
+.csc-portal .dashboard-panel-head h3 {
+  margin: 0;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--portal-fg-heading);
+}
+
+.csc-portal .dashboard-panel-head h3 {
+  font-size: 0.95rem;
+}
+
+.csc-portal .dashboard-panel-head a {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--theme-accent, #3d7dff);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.csc-portal .dashboard-panel-head a:hover {
+  text-decoration: underline;
+}
+
+.csc-portal .dashboard-panel .register-chart {
+  margin-bottom: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+}
+
+.csc-portal .dashboard-board-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.csc-portal .dashboard-board-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--portal-fg-muted);
+}
+
+.csc-portal .dashboard-board-head strong {
+  font-size: 1rem;
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--portal-fg-heading);
+}
+
+.csc-portal .dashboard-board-group ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.csc-portal .dashboard-board-group li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--portal-table-row-border);
+  font-size: 0.86rem;
+}
+
+.csc-portal .dashboard-board-group li:last-child {
+  border-bottom: none;
+}
+
+.csc-portal .dashboard-board-group a {
+  color: var(--portal-fg);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.csc-portal .dashboard-board-group a:hover {
+  color: var(--theme-accent, #3d7dff);
+}
+
+.csc-portal .dashboard-board-group li span {
+  font-size: 0.78rem;
+  color: var(--portal-fg-muted);
+}
+
+.csc-portal .dashboard-alert {
+  margin-top: 16px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: var(--portal-fg-body, var(--portal-fg));
+}
+
+.csc-portal .dashboard-alert strong {
+  display: block;
+  margin-bottom: 2px;
+  color: var(--portal-fg-heading);
+}
+
+.csc-portal .dashboard-alert a {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--theme-accent, #3d7dff);
+  text-decoration: none;
+}
+
+.csc-portal .dashboard-alert--fees {
+  background: rgba(248, 113, 113, 0.1);
+  border: 1px solid rgba(248, 113, 113, 0.22);
+}
+
+.csc-portal .dashboard-alert--pending {
+  background: rgba(251, 191, 36, 0.1);
+  border: 1px solid rgba(251, 191, 36, 0.25);
+}
+
+.csc-portal .dashboard-pending-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.csc-portal .dashboard-pending-list li {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--portal-table-row-border);
+}
+
+.csc-portal .dashboard-pending-list li:last-child {
+  border-bottom: none;
+}
+
+.csc-portal .dashboard-pending-list strong {
+  display: block;
+  font-size: 0.88rem;
+  color: var(--portal-fg-heading);
+}
+
+.csc-portal .dashboard-pending-list span {
+  font-size: 0.78rem;
+  color: var(--portal-fg-muted);
+}
+
+.csc-portal .dashboard-student-link {
+  color: inherit;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.csc-portal .dashboard-student-link:hover {
+  color: var(--theme-accent, #3d7dff);
+  text-decoration: underline;
+}
+
+.csc-portal .dashboard-batch-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.csc-portal .dashboard-batch-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--portal-btn-border);
+  background: var(--portal-btn-bg);
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--portal-btn-fg);
+  text-decoration: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.csc-portal .dashboard-batch-pill:hover {
+  border-color: rgba(61, 125, 255, 0.4);
+  background: rgba(61, 125, 255, 0.1);
+}
+
+.csc-portal .dashboard-batch-pill span {
+  font-size: 0.72rem;
+  opacity: 0.7;
+}
+
+.csc-portal a.register-btn {
+  text-decoration: none;
 }
 
 .csc-portal .register-hero-stat {
@@ -263,8 +644,8 @@
   margin-bottom: 22px;
   padding: 16px 12px 8px;
   border-radius: 18px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: var(--portal-chart-bg);
+  border: 1px solid var(--portal-chart-border);
   backdrop-filter: blur(16px);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
@@ -272,14 +653,14 @@
 .csc-portal .register-chart--empty {
   padding: 48px 24px;
   text-align: center;
-  color: rgba(148, 163, 184, 0.9);
+  color: var(--portal-fg-muted);
 }
 
 .csc-portal .register-table-wrap {
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid var(--portal-chart-border);
   border-radius: 18px;
   overflow: hidden;
-  background: rgba(7, 11, 22, 0.28);
+  background: var(--portal-table-wrap-bg);
   backdrop-filter: blur(16px);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
@@ -294,7 +675,7 @@
 .csc-portal .register-table td {
   padding: 12px 14px;
   text-align: left;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  border-bottom: 1px solid var(--portal-table-row-border);
   vertical-align: top;
 }
 
@@ -302,12 +683,12 @@
   font-size: 0.72rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: rgba(148, 163, 184, 0.95);
-  background: rgba(255, 255, 255, 0.05);
+  color: var(--portal-table-th-fg);
+  background: var(--portal-table-th-bg);
 }
 
 .csc-portal .register-table td {
-  color: rgba(226, 232, 240, 0.95);
+  color: var(--portal-table-td-fg);
 }
 
 .csc-portal .register-table tr:last-child td {
@@ -315,7 +696,7 @@
 }
 
 .csc-portal .register-table tr:hover td {
-  background: rgba(61, 125, 255, 0.08);
+  background: var(--portal-table-hover-bg);
 }
 
 .csc-portal .register-link-btn {
@@ -332,13 +713,13 @@
 .csc-portal .register-loading {
   padding: 48px 24px;
   text-align: center;
-  color: rgba(148, 163, 184, 0.9);
+  color: var(--portal-fg-muted);
 }
 
 .csc-portal .register-modal-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(7, 11, 22, 0.72);
+  background: var(--portal-modal-backdrop);
   backdrop-filter: blur(8px);
   z-index: 100;
   display: grid;
@@ -352,15 +733,11 @@
   overflow-y: auto;
   padding: 24px;
   border-radius: 22px;
-  background: linear-gradient(
-    145deg,
-    rgba(30, 41, 59, 0.95) 0%,
-    rgba(15, 23, 42, 0.98) 100%
-  );
-  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: var(--portal-modal-bg);
+  border: 1px solid var(--portal-panel-border);
   backdrop-filter: blur(24px);
-  color: #f8fafc;
-  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+  color: var(--portal-fg);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.25);
 }
 
 .csc-portal .register-form-grid input,
@@ -368,9 +745,9 @@
 .csc-portal .register-form-grid textarea {
   padding: 10px 12px;
   border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  background: rgba(255, 255, 255, 0.06);
-  color: #f8fafc;
+  border: 1px solid var(--portal-form-border);
+  background: var(--portal-form-bg);
+  color: var(--portal-fg);
   font: inherit;
 }
 
@@ -378,8 +755,8 @@
   margin-top: 8px;
   padding: 12px;
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--portal-expand-bg);
+  border: 1px solid var(--portal-expand-border);
 }
 
 .csc-portal .register-chip {
@@ -387,6 +764,26 @@
   border-radius: 999px;
   background: rgba(61, 125, 255, 0.18);
   font-size: 0.78rem;
+}
+
+html[data-theme='light'] .csc-portal .reg-fees--paid {
+  color: #15803d;
+}
+
+html[data-theme='light'] .csc-portal .reg-fees--partial {
+  color: #a16207;
+}
+
+html[data-theme='light'] .csc-portal .reg-fees--pending {
+  color: #64748b;
+}
+
+html[data-theme='light'] .csc-portal .reg-fees--overdue {
+  color: #b91c1c;
+}
+
+html[data-theme='light'] .csc-portal .register-error {
+  color: #b91c1c;
 }
 
 .csc-portal .reg-fees--paid {
@@ -413,7 +810,9 @@
   .csc-portal .portal-nav-shell,
   .csc-portal .register-sidebar,
   .csc-portal .register-actions,
-  .csc-portal .register-btn {
+  .csc-portal .register-btn,
+  .csc-portal .register-row-actions,
+  .csc-portal .register-row-btn {
     display: none !important;
   }
 

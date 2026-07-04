@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { signOut } from '@/auth'
 import { requireAuth } from '@/lib/auth-utils'
 import BrandName from '@/components/BrandName'
+import BrandIcon from '@/components/BrandIcon'
 import ThemeToggle from '@/components/ThemeToggle'
 import '@/app/portal.css'
 import '@/app/portal-register.css'
@@ -18,9 +19,9 @@ export default async function AdminLayout({
       <div className="portal-nav-shell">
         <header className="portal-header">
           <div className="portal-header-inner">
-            <Link href="/admin/dashboard" className="portal-brand">
-              <BrandName variant="compact" />
-              <span>Admin</span>
+            <Link href="/admin/dashboard" className="csc-landing__brand portal-brand">
+              <BrandIcon className="csc-landing__brand-mark" />
+              <BrandName variant="nav" />
             </Link>
             <nav className="portal-nav">
               <Link href="/admin/dashboard">Dashboard</Link>

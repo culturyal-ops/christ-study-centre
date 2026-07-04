@@ -1,4 +1,6 @@
 import { Board } from '@prisma/client'
+import { ALL_BATCH_NAMES } from '@/lib/register/constants'
+import type { RegisterView } from '@/lib/register/constants'
 
 export function parseBatchName(batchName: string): { grade: string; board: Board } {
   const parts = batchName.trim().split(/\s+/)
@@ -52,4 +54,22 @@ export function countStudentSubjects(input: {
   if (!text) return 1
   const parts = text.split(',').map((s) => s.trim()).filter(Boolean)
   return parts.length || 1
+}
+
+export function resolveRegisterView(
+  view?: string,
+  batch?: string
+): RegisterView | undefined {
+  if (batch && ALL_BATCH_NAMES.includes(batch as (typeof ALL_BATCH_NAMES)[number])) {
+    return `batch:${batch}`
+  }
+  if (!view) return undefined
+  if (view === 'home' || view === 'fees' || view === 'pending' || view === 'recycle') {
+    return view
+  }
+  if (view.startsWith('batch:')) return view as RegisterView
+  if (ALL_BATCH_NAMES.includes(view as (typeof ALL_BATCH_NAMES)[number])) {
+    return `batch:${view}`
+  }
+  return undefined
 }

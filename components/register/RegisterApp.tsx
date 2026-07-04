@@ -49,10 +49,11 @@ type Props = {
   bootstrap: Bootstrap
   mode: 'admin' | 'student'
   student?: RegisterStudent | null
+  initialView?: RegisterView
 }
 
-export default function RegisterApp({ bootstrap, mode, student: studentProp }: Props) {
-  const [view, setView] = useState<RegisterView>('home')
+export default function RegisterApp({ bootstrap, mode, student: studentProp, initialView }: Props) {
+  const [view, setView] = useState<RegisterView>(initialView ?? 'home')
   const [students, setStudents] = useState<RegisterStudent[]>([])
   const [pendingAdmissions, setPendingAdmissions] = useState<PendingAdmissionRow[]>([])
   const [recycle, setRecycle] = useState<RegisterStudent[]>([])
@@ -124,9 +125,9 @@ export default function RegisterApp({ bootstrap, mode, student: studentProp }: P
 
   useEffect(() => {
     if (mode === 'admin') {
-      void loadView('home')
+      void loadView(initialView ?? 'home')
     }
-  }, [loadView, mode])
+  }, [loadView, mode, initialView])
 
   const openCreate = () => {
     setEditing(null)
@@ -481,32 +482,34 @@ export default function RegisterApp({ bootstrap, mode, student: studentProp }: P
                         <td>{p.schoolName}</td>
                         <td>{p.contact}</td>
                         <td>
-                          <button
-                            type="button"
-                            className="register-btn register-btn--primary"
-                            onClick={() => {
-                              const roll = prompt('Roll number for this student:', '1')
-                              if (!roll) return
-                              startSaving(async () => {
-                                await admitPendingAdmission(p.id, Number(roll))
-                                await loadView('pending')
-                              })
-                            }}
-                          >
-                            Admit
-                          </button>{' '}
-                          <button
-                            type="button"
-                            className="register-btn register-btn--danger"
-                            onClick={() =>
-                              startSaving(async () => {
-                                await rejectPendingAdmission(p.id)
-                                await loadView('pending')
-                              })
-                            }
-                          >
-                            Reject
-                          </button>
+                          <div className="register-row-actions">
+                            <button
+                              type="button"
+                              className="register-row-btn register-row-btn--primary"
+                              onClick={() => {
+                                const roll = prompt('Roll number for this student:', '1')
+                                if (!roll) return
+                                startSaving(async () => {
+                                  await admitPendingAdmission(p.id, Number(roll))
+                                  await loadView('pending')
+                                })
+                              }}
+                            >
+                              Admit
+                            </button>
+                            <button
+                              type="button"
+                              className="register-row-btn register-row-btn--danger"
+                              onClick={() =>
+                                startSaving(async () => {
+                                  await rejectPendingAdmission(p.id)
+                                  await loadView('pending')
+                                })
+                              }
+                            >
+                              Reject
+                            </button>
+                          </div>
                         </td>
                       </tr>
                     ))}
@@ -540,36 +543,38 @@ export default function RegisterApp({ bootstrap, mode, student: studentProp }: P
                         <td>{s.fullName}</td>
                         <td>{s.deletedFromBatch ?? '—'}</td>
                         <td>
-                          <button
-                            type="button"
-                            className="register-btn"
-                            onClick={() => {
-                              const batch = prompt(
-                                'Restore to batch:',
-                                s.deletedFromBatch ?? '12 CBSE'
-                              )
-                              if (!batch) return
-                              startSaving(async () => {
-                                await restoreStudent(s.id, batch)
-                                await loadView('recycle')
-                              })
-                            }}
-                          >
-                            Restore
-                          </button>{' '}
-                          <button
-                            type="button"
-                            className="register-btn register-btn--danger"
-                            onClick={() => {
-                              if (!confirm('Permanently delete this student?')) return
-                              startSaving(async () => {
-                                await permanentlyDeleteStudent(s.id)
-                                await loadView('recycle')
-                              })
-                            }}
-                          >
-                            Delete forever
-                          </button>
+                          <div className="register-row-actions">
+                            <button
+                              type="button"
+                              className="register-row-btn"
+                              onClick={() => {
+                                const batch = prompt(
+                                  'Restore to batch:',
+                                  s.deletedFromBatch ?? '12 CBSE'
+                                )
+                                if (!batch) return
+                                startSaving(async () => {
+                                  await restoreStudent(s.id, batch)
+                                  await loadView('recycle')
+                                })
+                              }}
+                            >
+                              Restore
+                            </button>
+                            <button
+                              type="button"
+                              className="register-row-btn register-row-btn--danger"
+                              onClick={() => {
+                                if (!confirm('Permanently delete this student?')) return
+                                startSaving(async () => {
+                                  await permanentlyDeleteStudent(s.id)
+                                  await loadView('recycle')
+                                })
+                              }}
+                            >
+                              Delete forever
+                            </button>
+                          </div>
                         </td>
                       </tr>
                     ))}
@@ -720,6 +725,29 @@ export default function RegisterApp({ bootstrap, mode, student: studentProp }: P
   )
 }
 
+function RegisterTableActions({
+  onEdit,
+  onDelete,
+}: {
+  onEdit: () => void
+  onDelete: () => void
+}) {
+  return (
+    <div className="register-row-actions">
+      <button type="button" className="register-row-btn" onClick={onEdit}>
+        Edit
+      </button>
+      <button
+        type="button"
+        className="register-row-btn register-row-btn--danger"
+        onClick={onDelete}
+      >
+        Delete
+      </button>
+    </div>
+  )
+}
+
 function HomeStudentTable({
   students,
   selected,
@@ -785,16 +813,10 @@ function HomeStudentTable({
               <td>{s.subjectsText ?? '—'}</td>
               <td>{countStudentSubjects(s)}</td>
               <td>
-                <button type="button" className="register-btn" onClick={() => onEdit(s)}>
-                  Edit
-                </button>{' '}
-                <button
-                  type="button"
-                  className="register-btn register-btn--danger"
-                  onClick={() => onDelete(s.id)}
-                >
-                  Delete
-                </button>
+                <RegisterTableActions
+                  onEdit={() => onEdit(s)}
+                  onDelete={() => onDelete(s.id)}
+                />
               </td>
             </tr>
           ))}
@@ -843,7 +865,7 @@ function FeesTable({
                   : '—'}
               </td>
               <td>
-                <button type="button" className="register-btn" onClick={() => onEdit(s)}>
+                <button type="button" className="register-row-btn" onClick={() => onEdit(s)}>
                   Edit
                 </button>
               </td>
@@ -935,16 +957,10 @@ function StudentTable({
                 )}
               </td>
               <td>
-                <button type="button" className="register-btn" onClick={() => onEdit(s)}>
-                  Edit
-                </button>{' '}
-                <button
-                  type="button"
-                  className="register-btn register-btn--danger"
-                  onClick={() => onDelete(s.id)}
-                >
-                  Delete
-                </button>
+                <RegisterTableActions
+                  onEdit={() => onEdit(s)}
+                  onDelete={() => onDelete(s.id)}
+                />
               </td>
             </tr>
           ))}
