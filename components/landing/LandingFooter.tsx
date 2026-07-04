@@ -1,46 +1,86 @@
 import Link from 'next/link'
 import BrandName from '@/components/BrandName'
 
+const programmes = [
+  'CBSE & ICSE coaching',
+  'Weekly board-pattern tests',
+  'Chapter-wise tracking',
+  'Monthly parent reports',
+  'Grades 3 to Plus Two',
+  'Small evening batches',
+]
+
 export default function LandingFooter() {
   return (
     <footer className="csc-landing__footer">
+      <div className="csc-landing__footer-watermark" aria-hidden="true">
+        Christ Study Centre
+      </div>
+
       <div className="csc-landing__wrap csc-landing__footer-grid">
-        <div data-reveal>
+        <div className="csc-landing__footer-col csc-landing__footer-col--brand" data-reveal>
           <p className="csc-landing__footer-brand">
             <BrandName variant="footer" />
           </p>
-          <p className="csc-landing__footer-text">
-            52A, RV Road, Njondimakkal, Pala 686575
-            <br />
-            Mon to Sat, 4pm to 8pm
+          <p className="csc-landing__footer-tagline">
+            Structured coaching with progress families can see every week.
+          </p>
+          <p className="csc-landing__footer-meta">
+            Pala, Kerala · Mon to Sat, 4pm to 8pm
           </p>
         </div>
-        <div className="csc-landing__footer-links" data-reveal>
-          <Link href="/courses">Courses</Link>
-          <Link href="/about">About</Link>
-          <Link href="/contact">Contact</Link>
-          <Link href="/login">Portal</Link>
+
+        <div className="csc-landing__footer-col" data-reveal>
+          <p className="csc-landing__footer-col-title">Navigate</p>
+          <nav className="csc-landing__footer-links" aria-label="Footer">
+            <Link href="/courses">Courses</Link>
+            <Link href="/about">About</Link>
+            <Link href="/contact">Contact</Link>
+            <Link href="/login">Portal</Link>
+          </nav>
         </div>
-        <div className="csc-landing__footer-links" data-reveal>
-          <a href="tel:+919747110790">+91 9747 110 790</a>
-          <a href="mailto:christstudycentrepala@gmail.com">Email us</a>
-          <a href="https://wa.me/919747110790" target="_blank" rel="noopener noreferrer">
-            WhatsApp
-          </a>
+
+        <div className="csc-landing__footer-col" data-reveal>
+          <p className="csc-landing__footer-col-title">Programmes</p>
+          <ul className="csc-landing__footer-list">
+            {programmes.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="csc-landing__footer-col" data-reveal>
+          <p className="csc-landing__footer-col-title">Contact</p>
+          <div className="csc-landing__footer-links">
+            <a href="tel:+919747110790">+91 9747 110 790</a>
+            <a href="mailto:christstudycentrepala@gmail.com">christstudycentrepala@gmail.com</a>
+            <span className="csc-landing__footer-address">
+              52A, RV Road, Njondimakkal
+              <br />
+              Pala 686575
+            </span>
+            <a
+              href="https://wa.me/919747110790"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="csc-landing__footer-wa"
+            >
+              WhatsApp us →
+            </a>
+          </div>
         </div>
       </div>
-      <div className="csc-landing__wrap csc-landing__footer-copy" data-reveal>
-        <span>© {new Date().getFullYear()} Christ Study Centre, Pala</span>
-        <span className="csc-landing__footer-credit">
-          Made by{' '}
-          <a
-            href="https://revol-q.vercel.app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            revolq
-          </a>
-        </span>
+
+      <div className="csc-landing__footer-bottom">
+        <div className="csc-landing__wrap csc-landing__footer-bottom-inner" data-reveal>
+          <span>© {new Date().getFullYear()} Christ Study Centre. All rights reserved.</span>
+          <span className="csc-landing__footer-credit">
+            Made by{' '}
+            <a href="https://revol-q.vercel.app" target="_blank" rel="noopener noreferrer">
+              revolq
+            </a>
+          </span>
+        </div>
       </div>
     </footer>
   )

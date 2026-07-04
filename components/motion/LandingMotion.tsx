@@ -203,7 +203,7 @@ export default function LandingMotion() {
               delay: 0.08,
             })
             gsap.from('.csc-landing__feature-row', {
-              x: -24,
+              x: window.matchMedia('(max-width: 767px)').matches ? 0 : -24,
               opacity: 0,
               stagger: 0.05,
               duration: 0.75,
@@ -218,7 +218,7 @@ export default function LandingMotion() {
           start: 'top 92%',
           once: true,
           onEnter: () => {
-            gsap.from('.csc-landing__footer-grid > *, .csc-landing__footer-copy', {
+            gsap.from('.csc-landing__footer-grid > *, .csc-landing__footer-bottom-inner', {
               y: 28,
               opacity: 0,
               stagger: 0.08,

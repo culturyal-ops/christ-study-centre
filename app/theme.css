@@ -622,8 +622,8 @@ html[data-theme='light'] .csc-site.csc-site--login .login-glass-form .form-label
 
 /* Prevent legacy globals footer styles from bleeding in */
 footer.csc-landing__footer {
-  background: var(--theme-footer-bg);
-  color: var(--theme-footer-fg);
+  background: #050608;
+  color: #f8fafc;
 }
 
 html[data-theme='light'] .csc-site.csc-site--login {
