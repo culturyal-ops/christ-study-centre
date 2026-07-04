@@ -41,27 +41,30 @@ export default function LandingHeroCopy() {
         students in Pala. Grades 3 to 12.
       </p>
 
-      <Link href="/contact" className="csc-landing__hero-cta" data-hero-fade>
-        Book a counselling call
-        <span className="csc-landing__hero-cta-icon" aria-hidden="true">
-          ↗
-        </span>
-      </Link>
-
-      <Link href="/login" className="csc-landing__hero-portal" data-hero-fade>
-        <span className="csc-landing__hero-portal-icon" aria-hidden="true">
-          ◉
-        </span>
-        <span className="csc-landing__hero-portal-body">
-          <span className="csc-landing__hero-portal-label">Student portal</span>
-          <span className="csc-landing__hero-portal-meta">
-            Marks, attendance &amp; fee status
+      <div className="csc-landing__hero-actions" data-hero-fade>
+        <Link href="/contact" className="csc-landing__hero-cta">
+          Book a counselling call
+          <span className="csc-landing__hero-cta-icon" aria-hidden="true">
+            ↗
           </span>
-        </span>
-        <span className="csc-landing__hero-portal-arrow" aria-hidden="true">
-          →
-        </span>
-      </Link>
+        </Link>
+
+        <Link href="/login" className="csc-landing__hero-portal csc-landing__hero-portal--highlight">
+          <span className="csc-landing__hero-portal-badge">Already enrolled?</span>
+          <span className="csc-landing__hero-portal-icon" aria-hidden="true">
+            ◉
+          </span>
+          <span className="csc-landing__hero-portal-body">
+            <span className="csc-landing__hero-portal-label">Student portal</span>
+            <span className="csc-landing__hero-portal-meta">
+              Marks, attendance &amp; fee status
+            </span>
+          </span>
+          <span className="csc-landing__hero-portal-arrow" aria-hidden="true">
+            →
+          </span>
+        </Link>
+      </div>
     </div>
   )
 }

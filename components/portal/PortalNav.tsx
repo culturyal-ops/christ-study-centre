@@ -2,11 +2,12 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
 import ThemeToggle from '@/components/ThemeToggle'
 import BrandName from '@/components/BrandName'
 import BrandIcon from '@/components/BrandIcon'
+import { useNavScrollSolid } from '@/lib/hooks/useNavScrollSolid'
 
 type NavLink = { href: string; label: string }
 
@@ -21,6 +22,9 @@ export default function PortalNav({ brandHref, links, username, signOutSlot }: P
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
   const [mounted, setMounted] = useState(false)
+  const shellRef = useRef<HTMLDivElement>(null)
+
+  useNavScrollSolid(shellRef)
 
   useEffect(() => {
     setMounted(true)
@@ -55,7 +59,10 @@ export default function PortalNav({ brandHref, links, username, signOutSlot }: P
 
   return (
     <>
-      <div className={`csc-landing__nav-shell portal-nav-shell ${open ? 'is-menu-open' : ''}`}>
+      <div
+        ref={shellRef}
+        className={`csc-landing__nav-shell portal-nav-shell ${open ? 'is-menu-open' : ''}`}
+      >
         <header className={`csc-landing__header portal-header ${open ? 'is-menu-open' : ''}`}>
           <div className="csc-landing__wrap csc-landing__header-row portal-header-inner">
             <Link href={brandHref} className="csc-landing__brand portal-brand" onClick={() => setOpen(false)}>

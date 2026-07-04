@@ -2,11 +2,12 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { createPortal } from 'react-dom'
 import ThemeToggle from '@/components/ThemeToggle'
 import BrandName from '@/components/BrandName'
 import BrandIcon from '@/components/BrandIcon'
+import { useNavScrollSolid } from '@/lib/hooks/useNavScrollSolid'
 
 const links = [
   { href: '/', label: 'Home' },
@@ -20,6 +21,9 @@ export default function LandingNav() {
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
   const [mounted, setMounted] = useState(false)
+  const shellRef = useRef<HTMLDivElement>(null)
+
+  useNavScrollSolid(shellRef)
 
   useEffect(() => {
     setMounted(true)
@@ -64,7 +68,10 @@ export default function LandingNav() {
 
   return (
     <>
-      <div className={`csc-landing__nav-shell ${open ? 'is-menu-open' : ''}`}>
+      <div
+        ref={shellRef}
+        className={`csc-landing__nav-shell ${open ? 'is-menu-open' : ''}`}
+      >
         <header className={`csc-landing__header ${open ? 'is-menu-open' : ''}`}>
           <div className="csc-landing__wrap csc-landing__header-row">
             <Link href="/" className="csc-landing__brand" onClick={() => setOpen(false)}>

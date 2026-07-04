@@ -31,13 +31,39 @@ function animateCount(el: Element, delay = 0) {
   })
 }
 
-function heroShotRotations(landing: ParentNode) {
-  const map: Record<string, number> = { back: -7, main: 2, front: 5 }
-  landing.querySelectorAll<HTMLElement>('.csc-landing__hero-shot-inner').forEach((el) => {
-    const shot = el.getAttribute('data-shot')
-    if (shot && map[shot] !== undefined) {
-      gsap.set(el, { rotation: map[shot], transformOrigin: '50% 50%' })
-    }
+const HERO_SHOT_TILT = {
+  back: -10,
+  main: 4,
+  front: 9,
+} as const
+
+function animateHeroShots(tl: gsap.core.Timeline, landing: ParentNode, at = 0.18) {
+  ;(
+    [
+      ['.csc-landing__hero-shot--back', HERO_SHOT_TILT.back],
+      ['.csc-landing__hero-shot--main', HERO_SHOT_TILT.main],
+      ['.csc-landing__hero-shot--front', HERO_SHOT_TILT.front],
+    ] as const
+  ).forEach(([selector, rotation], index) => {
+    tl.fromTo(
+      landing.querySelector(selector),
+      {
+        y: 52,
+        opacity: 0,
+        rotation: rotation * 0.35,
+        scale: 0.9,
+      },
+      {
+        rotation,
+        y: 0,
+        opacity: 1,
+        scale: 1,
+        duration: 1.05,
+        ease: 'power3.out',
+        transformOrigin: '50% 50%',
+      },
+      at + index * 0.11
+    )
   })
 }
 
@@ -54,7 +80,6 @@ export default function LandingMotion() {
 
     if (!prefersReducedMotion()) {
       registerGsap()
-      heroShotRotations(landing)
 
       const ctx = gsap.context(() => {
         const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
@@ -80,32 +105,12 @@ export default function LandingMotion() {
         )
 
         tl.from(
-          '.csc-landing__hero-portal',
-          { y: 20, opacity: 0, scale: 0.96, duration: 0.85, ease: 'back.out(1.4)' },
-          0.42
+          '.csc-landing__hero-portal--highlight',
+          { y: 18, opacity: 0, scale: 0.94, duration: 0.9, ease: 'back.out(1.35)' },
+          0.34
         )
 
-        const isDesktop = window.matchMedia('(min-width: 768px)').matches
-
-        if (isDesktop) {
-          tl.from(
-            '.csc-landing__hero-shot-inner',
-            {
-              clipPath: 'inset(100% 0% 0% 0%)',
-              scale: 1.06,
-              stagger: 0.12,
-              duration: 1.15,
-              ease: 'power4.inOut',
-            },
-            0.2
-          )
-        } else {
-          tl.from(
-            '.csc-landing__hero-shot',
-            { y: 36, opacity: 0, scale: 0.94, stagger: 0.1, duration: 0.85 },
-            0.28
-          )
-        }
+        animateHeroShots(tl, landing, 0.2)
 
         tl.from(
           '.csc-landing__deck .csc-landing__ui',
@@ -263,17 +268,14 @@ export default function LandingMotion() {
       const safety = window.setTimeout(() => {
         landing
           .querySelectorAll(
-            '[data-hero-fade], .csc-split-line, .csc-landing__hero-portal, .csc-landing__deck .csc-landing__ui, .csc-landing__hero-shot, .csc-landing__video-copy, .csc-landing__video-frame, .csc-landing__feature-row'
+            '[data-hero-fade], .csc-split-line, .csc-landing__hero-portal--highlight, .csc-landing__deck .csc-landing__ui, .csc-landing__hero-shot, .csc-landing__video-copy, .csc-landing__video-frame, .csc-landing__feature-row'
           )
           .forEach((el) => {
             gsap.set(el, { clearProps: 'opacity,transform,clipPath,scale' })
           })
-        if (window.matchMedia('(min-width: 768px)').matches) {
-          landing.querySelectorAll('.csc-landing__hero-shot-inner').forEach((el) => {
-            gsap.set(el, { clearProps: 'clipPath,scale' })
-          })
-        }
-        heroShotRotations(landing)
+        landing.querySelectorAll('.csc-landing__hero-shot-inner').forEach((el) => {
+          gsap.set(el, { clearProps: 'clipPath,scale,transform' })
+        })
       }, 2800)
       cleanups.push(() => window.clearTimeout(safety))
     } else {
