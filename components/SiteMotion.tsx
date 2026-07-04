@@ -8,8 +8,12 @@ export default function SiteMotion() {
   const pathname = usePathname()
 
   useEffect(() => {
-    // Login page: skip Lenis/reveal — can interfere with form clicks
-    if (pathname.startsWith('/login')) {
+    // Login / portal: skip Lenis/reveal — can interfere with forms and admin UI
+    if (
+      pathname.startsWith('/login') ||
+      pathname.startsWith('/admin') ||
+      pathname.startsWith('/student')
+    ) {
       return
     }
 
@@ -43,7 +47,7 @@ export default function SiteMotion() {
     }
   }, [pathname])
 
-  if (pathname.startsWith('/login')) {
+  if (pathname.startsWith('/login') || pathname.startsWith('/admin') || pathname.startsWith('/student')) {
     return null
   }
 

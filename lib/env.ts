@@ -28,10 +28,15 @@ export function getDatabaseUrl(): string {
 }
 
 export function getAuthSecret(): string {
-  return required(
-    'AUTH_SECRET or NEXTAUTH_SECRET',
-    process.env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET
-  )
+  const secret = (process.env.AUTH_SECRET ?? process.env.NEXTAUTH_SECRET)?.trim()
+  if (secret) return secret
+
+  // Allow local builds when only .env is present
+  if (process.env.NODE_ENV !== 'production') {
+    return 'dev-auth-secret-change-me'
+  }
+
+  throw new Error('Missing required environment variable: AUTH_SECRET or NEXTAUTH_SECRET')
 }
 
 export function getAuthUrl(): string | undefined {

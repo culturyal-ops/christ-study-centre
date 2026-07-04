@@ -93,7 +93,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
       // Public routes
       const publicRoutes = ['/', '/about', '/courses', '/contact', '/login', '/admission']
-      const isPublicRoute = publicRoutes.some((route) => pathname === route)
+      const isPublicRoute =
+        publicRoutes.some((route) => pathname === route) ||
+        pathname.startsWith('/api/auth') ||
+        pathname.startsWith('/api/contact') ||
+        pathname === '/api/health'
 
       if (isPublicRoute) {
         return true
