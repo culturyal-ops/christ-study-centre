@@ -162,72 +162,6 @@ export default function LandingMotion() {
           })
         })
 
-        ScrollTrigger.create({
-          trigger: '.csc-landing__video-section',
-          start: 'top 88%',
-          once: true,
-          onEnter: () => {
-            gsap.from('.csc-landing__video-copy', {
-              y: 40,
-              opacity: 0,
-              duration: 0.9,
-              ease: 'power3.out',
-            })
-            gsap.from('.csc-landing__video-frame', {
-              y: 48,
-              opacity: 0,
-              scale: 0.96,
-              duration: 1.05,
-              ease: 'power3.out',
-              delay: 0.12,
-            })
-          },
-        })
-
-        ScrollTrigger.create({
-          trigger: '.csc-landing__features',
-          start: 'top 85%',
-          once: true,
-          onEnter: () => {
-            gsap.from('.csc-landing__features .csc-landing__eyebrow', {
-              y: 24,
-              opacity: 0,
-              duration: 0.7,
-            })
-            gsap.from('.csc-landing__features-title .csc-feature-line', {
-              yPercent: 110,
-              opacity: 0,
-              stagger: 0.08,
-              duration: 0.85,
-              ease: 'power4.out',
-              delay: 0.08,
-            })
-            gsap.from('.csc-landing__feature-row', {
-              x: window.matchMedia('(max-width: 767px)').matches ? 0 : -24,
-              opacity: 0,
-              stagger: 0.05,
-              duration: 0.75,
-              ease: 'power3.out',
-              delay: 0.2,
-            })
-          },
-        })
-
-        ScrollTrigger.create({
-          trigger: '.csc-landing__footer',
-          start: 'top 92%',
-          once: true,
-          onEnter: () => {
-            gsap.from('.csc-landing__footer-grid > *, .csc-landing__footer-bottom-inner', {
-              y: 28,
-              opacity: 0,
-              stagger: 0.08,
-              duration: 0.8,
-              ease: 'power3.out',
-            })
-          },
-        })
-
         const floaters = [...landing.querySelectorAll<HTMLElement>('.csc-cursor-float')]
         if (floaters.length && window.matchMedia('(min-width: 769px)').matches) {
           const state = floaters.map((el, i) => ({
@@ -268,7 +202,7 @@ export default function LandingMotion() {
       const safety = window.setTimeout(() => {
         landing
           .querySelectorAll(
-            '[data-hero-fade], .csc-split-line, .csc-landing__hero-portal--highlight, .csc-landing__deck .csc-landing__ui, .csc-landing__hero-shot, .csc-landing__video-copy, .csc-landing__video-frame, .csc-landing__feature-row'
+            '[data-hero-fade], .csc-split-line, .csc-landing__hero-portal--highlight, .csc-landing__deck .csc-landing__ui, .csc-landing__hero-shot'
           )
           .forEach((el) => {
             gsap.set(el, { clearProps: 'opacity,transform,clipPath,scale' })

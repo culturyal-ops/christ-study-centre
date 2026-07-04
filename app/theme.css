@@ -385,25 +385,30 @@ html[data-theme='light'] .csc-landing__feature-row:hover .csc-landing__feature-a
 }
 
 html[data-theme='light'] .csc-landing__footer-links a:hover {
-  color: var(--theme-accent-dark);
+  color: #f1f5f9;
 }
 
 html[data-theme='dark'] .csc-landing__footer-links a:hover {
-  color: #ffffff;
+  color: #f1f5f9;
 }
 
 .csc-landing__mobile {
-  background: var(--theme-mobile-overlay);
+  background: rgba(6, 10, 20, 0.94);
+  color: #f8fafc;
 }
 
-html[data-theme='light'] .csc-landing__mobile-panel a {
-  color: var(--theme-heading);
-  background: #ffffff;
-  border-color: var(--theme-border);
-}
-
+html[data-theme='light'] .csc-landing__mobile-panel a,
 html[data-theme='dark'] .csc-landing__mobile-panel a {
-  color: var(--theme-hero-fg);
+  color: #f8fafc;
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+html[data-theme='light'] .csc-landing__mobile-panel a:hover,
+html[data-theme='dark'] .csc-landing__mobile-panel a:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.22);
 }
 
 .csc-landing__header.is-menu-open {
@@ -622,8 +627,53 @@ html[data-theme='light'] .csc-site.csc-site--login .login-glass-form .form-label
 
 /* Prevent legacy globals footer styles from bleeding in */
 footer.csc-landing__footer {
-  background: #050608;
-  color: #f8fafc;
+  background: #070b12;
+  color: #ffffff;
+}
+
+html[data-theme='light'] footer.csc-landing__footer,
+html[data-theme='dark'] footer.csc-landing__footer {
+  background: #070b12;
+  color: #ffffff;
+}
+
+html[data-theme='light'] footer.csc-landing__footer .csc-landing__footer-brand,
+html[data-theme='light'] footer.csc-landing__footer .csc-landing__footer-brand .csc-brand-name {
+  color: #ffffff;
+}
+
+html[data-theme='light'] footer.csc-landing__footer .csc-landing__footer-col-title {
+  color: #93c5fd;
+}
+
+html[data-theme='light'] footer.csc-landing__footer .csc-landing__footer-tagline,
+html[data-theme='light'] footer.csc-landing__footer .csc-landing__footer-meta,
+html[data-theme='light'] footer.csc-landing__footer .csc-landing__footer-list li,
+html[data-theme='light'] footer.csc-landing__footer .csc-landing__footer-address,
+html[data-theme='light'] footer.csc-landing__footer .csc-landing__footer-links a,
+html[data-theme='light'] footer.csc-landing__footer .csc-landing__footer-bottom-inner,
+html[data-theme='light'] footer.csc-landing__footer .csc-landing__footer-credit {
+  color: #e2e8f0;
+}
+
+html[data-theme='light'] footer.csc-landing__footer .csc-landing__footer-wa,
+html[data-theme='light'] footer.csc-landing__footer .csc-landing__footer-credit a {
+  color: #93c5fd;
+}
+
+html[data-theme='light'] .csc-section-divider {
+  background: rgba(148, 163, 184, 0.4);
+}
+
+html[data-theme='light'] .csc-section-divider__shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(61, 125, 255, 0.2) 25%,
+    rgba(37, 99, 235, 0.65) 50%,
+    rgba(180, 140, 60, 0.28) 75%,
+    transparent 100%
+  );
 }
 
 html[data-theme='light'] .csc-site.csc-site--login {

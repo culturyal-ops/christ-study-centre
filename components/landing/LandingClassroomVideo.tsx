@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
+import SectionReveal from '@/components/motion/SectionReveal'
 
 const CLASSROOM_VIDEO = '/videos/classroom-hero.mp4'
 
@@ -67,7 +68,11 @@ export default function LandingClassroomVideo() {
   }, [])
 
   return (
-    <section ref={sectionRef} className="csc-landing__video-section" aria-labelledby="classroom-video-title">
+    <SectionReveal
+      ref={sectionRef}
+      className="csc-landing__video-section"
+      aria-labelledby="classroom-video-title"
+    >
       <div className="csc-landing__wrap">
         <div className="csc-landing__video-copy">
           <h2 id="classroom-video-title" className="csc-landing__video-title">
@@ -94,6 +99,6 @@ export default function LandingClassroomVideo() {
           <div className="csc-landing__video-shade" aria-hidden="true" />
         </div>
       </div>
-    </section>
+    </SectionReveal>
   )
 }

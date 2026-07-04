@@ -39,3 +39,16 @@ html.motion-on [data-reveal].revealed {
     transition: none !important;
   }
 }
+
+/* Footer + mobile menu must stay fully opaque and readable */
+footer.csc-landing__footer,
+footer.csc-landing__footer p,
+footer.csc-landing__footer li,
+footer.csc-landing__footer span,
+footer.csc-landing__footer a {
+  opacity: 1;
+}
+
+.csc-landing__mobile.is-open .csc-landing__mobile-panel a {
+  opacity: 1;
+}

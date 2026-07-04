@@ -4,6 +4,7 @@ import LandingClassroomVideo from '@/components/landing/LandingClassroomVideo'
 import LandingFeatures from '@/components/landing/LandingFeatures'
 import LandingFooter from '@/components/landing/LandingFooter'
 import LandingMotion from '@/components/motion/LandingMotion'
+import SectionDivider from '@/components/motion/SectionDivider'
 
 export default function HomePage() {
   return (
@@ -11,8 +12,11 @@ export default function HomePage() {
       <LandingMotion />
       <LandingNav />
       <LandingHero />
+      <SectionDivider />
       <LandingClassroomVideo />
+      <SectionDivider />
       <LandingFeatures />
+      <SectionDivider />
       <LandingFooter />
     </div>
   )

@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import BrandName from '@/components/BrandName'
+import SectionReveal from '@/components/motion/SectionReveal'
 
 const programmes = [
   'CBSE & ICSE coaching',
@@ -12,35 +13,33 @@ const programmes = [
 
 export default function LandingFooter() {
   return (
-    <footer className="csc-landing__footer">
+    <SectionReveal as="footer" className="csc-landing__footer" disabled glow={false}>
       <div className="csc-landing__footer-watermark" aria-hidden="true">
-        Christ Study Centre
+        CSC
       </div>
 
       <div className="csc-landing__wrap csc-landing__footer-grid">
-        <div className="csc-landing__footer-col csc-landing__footer-col--brand" data-reveal>
+        <div className="csc-landing__footer-col csc-landing__footer-col--brand">
           <p className="csc-landing__footer-brand">
             <BrandName variant="footer" />
           </p>
           <p className="csc-landing__footer-tagline">
             Structured coaching with progress families can see every week.
           </p>
-          <p className="csc-landing__footer-meta">
-            Pala, Kerala · Mon to Sat, 4pm to 8pm
-          </p>
+          <p className="csc-landing__footer-meta">Pala, Kerala · Mon to Sat, 4pm to 8pm</p>
         </div>
 
-        <div className="csc-landing__footer-col" data-reveal>
+        <div className="csc-landing__footer-col">
           <p className="csc-landing__footer-col-title">Navigate</p>
-          <nav className="csc-landing__footer-links" aria-label="Footer">
+          <div className="csc-landing__footer-links" role="navigation" aria-label="Footer">
             <Link href="/courses">Courses</Link>
             <Link href="/about">About</Link>
             <Link href="/contact">Contact</Link>
             <Link href="/login">Portal</Link>
-          </nav>
+          </div>
         </div>
 
-        <div className="csc-landing__footer-col" data-reveal>
+        <div className="csc-landing__footer-col">
           <p className="csc-landing__footer-col-title">Programmes</p>
           <ul className="csc-landing__footer-list">
             {programmes.map((item) => (
@@ -49,16 +48,16 @@ export default function LandingFooter() {
           </ul>
         </div>
 
-        <div className="csc-landing__footer-col" data-reveal>
+        <div className="csc-landing__footer-col">
           <p className="csc-landing__footer-col-title">Contact</p>
           <div className="csc-landing__footer-links">
             <a href="tel:+919747110790">+91 9747 110 790</a>
             <a href="mailto:christstudycentrepala@gmail.com">christstudycentrepala@gmail.com</a>
-            <span className="csc-landing__footer-address">
+            <p className="csc-landing__footer-address">
               52A, RV Road, Njondimakkal
               <br />
               Pala 686575
-            </span>
+            </p>
             <a
               href="https://wa.me/919747110790"
               target="_blank"
@@ -72,7 +71,7 @@ export default function LandingFooter() {
       </div>
 
       <div className="csc-landing__footer-bottom">
-        <div className="csc-landing__wrap csc-landing__footer-bottom-inner" data-reveal>
+        <div className="csc-landing__wrap csc-landing__footer-bottom-inner">
           <span>© {new Date().getFullYear()} Christ Study Centre. All rights reserved.</span>
           <span className="csc-landing__footer-credit">
             Made by{' '}
@@ -82,6 +81,6 @@ export default function LandingFooter() {
           </span>
         </div>
       </div>
-    </footer>
+    </SectionReveal>
   )
 }

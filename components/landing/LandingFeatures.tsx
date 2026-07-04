@@ -1,5 +1,8 @@
+'use client'
+
 import Link from 'next/link'
 import LandingFeaturesTitle from '@/components/landing/LandingFeaturesTitle'
+import SectionReveal from '@/components/motion/SectionReveal'
 
 const items = [
   {
@@ -46,7 +49,7 @@ const items = [
 
 export default function LandingFeatures() {
   return (
-    <section className="csc-landing__features" id="features">
+    <SectionReveal className="csc-landing__features" id="features">
       <div className="csc-landing__wrap">
         <p className="csc-landing__eyebrow">Why families choose us</p>
         <LandingFeaturesTitle />
@@ -66,6 +69,6 @@ export default function LandingFeatures() {
           ))}
         </div>
       </div>
-    </section>
+    </SectionReveal>
   )
 }
