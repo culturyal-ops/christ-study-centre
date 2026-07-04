@@ -2,16 +2,14 @@
 
 import { Suspense, useActionState } from 'react'
 import Link from 'next/link'
-import Image from 'next/image'
 import { useSearchParams } from 'next/navigation'
 import LandingNav from '@/components/landing/LandingNav'
 import BrandName from '@/components/BrandName'
-import { images } from '@/lib/images'
 import { loginAction, type LoginState } from '@/lib/actions/auth'
 
 function LoginForm() {
   const searchParams = useSearchParams()
-  const callbackUrl = searchParams.get('callbackUrl') || '/'
+  const callbackUrl = searchParams.get('callbackUrl') ?? ''
   const [state, formAction, pending] = useActionState<LoginState, FormData>(
     loginAction,
     {}
@@ -108,9 +106,6 @@ export default function LoginPage() {
       <div className="csc-landing csc-site csc-site--login">
         <LandingNav />
         <div className="csc-site__login-wrap">
-          <div className="login-glass-scene" aria-hidden="true">
-            <Image src={images.login} alt="" fill priority sizes="100vw" />
-          </div>
           <LoginForm />
         </div>
       </div>

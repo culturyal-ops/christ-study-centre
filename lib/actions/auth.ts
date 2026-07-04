@@ -21,14 +21,22 @@ export async function loginAction(
     return { error: 'Please enter username and password' }
   }
 
-  let redirectTo = '/'
-  if (callbackUrl && callbackUrl.startsWith('/') && !callbackUrl.startsWith('/login')) {
+  const publicPostLoginPaths = ['/', '/about', '/courses', '/contact', '/admission']
+  const hasProtectedCallback =
+    callbackUrl &&
+    callbackUrl.startsWith('/') &&
+    !callbackUrl.startsWith('/login') &&
+    !publicPostLoginPaths.includes(callbackUrl)
+
+  let redirectTo = '/student/dashboard'
+  if (hasProtectedCallback) {
     redirectTo = callbackUrl
   } else {
     try {
       const user = await prisma.user.findUnique({ where: { username } })
       if (user && (await bcryptjs.compare(password, user.passwordHash))) {
-        redirectTo = user.role === 'ADMIN' ? '/admin/register' : '/student/dashboard'
+        redirectTo =
+          user.role === 'ADMIN' ? '/admin/dashboard' : '/student/dashboard'
       }
     } catch (error) {
       console.error('Login redirect lookup failed:', error)

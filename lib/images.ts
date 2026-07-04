@@ -15,8 +15,6 @@ export const images = {
   heroVisualFront: '/images/hero-carousel-study-group.png',
   /** Small card / UI photo — live batch widget */
   heroCard: '/images/classroom-quadratic-lesson.png',
-  /** Campus / graduation mood for portal */
-  login: unsplash('photo-1523050854058-8df90110c9f1', 1400),
   /** About story — Christ Tuition Centre building, Pala */
   aboutStory: '/images/christ-tuition-centre-building.png',
   /** Courses — students studying together */

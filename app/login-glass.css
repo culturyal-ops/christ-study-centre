@@ -1,4 +1,4 @@
-/* Portal — liquid glass over full-bleed photo */
+/* Portal — liquid glass sign-in card */
 
 .csc-site.csc-site--login {
   min-height: 100vh;
@@ -21,30 +21,6 @@ html[data-theme='light'] .csc-site.csc-site--login {
   padding: calc(var(--csc-nav-h, 56px) + env(safe-area-inset-top, 0px) + 24px) 22px 48px;
   overflow: hidden;
   isolation: isolate;
-}
-
-.login-glass-scene {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-}
-
-.login-glass-scene img {
-  object-fit: cover;
-  pointer-events: none;
-}
-
-.login-glass-scene::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    180deg,
-    rgba(7, 11, 22, 0.35) 0%,
-    rgba(7, 11, 22, 0.5) 100%
-  );
-  pointer-events: none;
 }
 
 .login-glass-card {
