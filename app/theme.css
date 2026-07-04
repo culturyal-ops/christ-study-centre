@@ -187,6 +187,14 @@ html[data-theme='light'] {
   border-bottom-color: var(--theme-nav-border);
 }
 
+.csc-landing__nav-shell.is-scrolled .csc-landing__header {
+  background: rgba(10, 14, 24, calc(0.42 + var(--nav-scroll) * 0.56));
+}
+
+html[data-theme='light'] .csc-landing__nav-shell.is-scrolled .csc-landing__header {
+  background: rgba(255, 255, 255, calc(0.62 + var(--nav-scroll) * 0.36));
+}
+
 @media (min-width: 960px) {
   .csc-landing__header {
     border-color: var(--theme-nav-border);

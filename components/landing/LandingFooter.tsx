@@ -30,7 +30,17 @@ export default function LandingFooter() {
         </div>
       </div>
       <div className="csc-landing__wrap csc-landing__footer-copy" data-reveal>
-        © {new Date().getFullYear()} Christ Study Centre, Pala
+        <span>© {new Date().getFullYear()} Christ Study Centre, Pala</span>
+        <span className="csc-landing__footer-credit">
+          Made by{' '}
+          <a
+            href="https://revol-q.vercel.app"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            revolq
+          </a>
+        </span>
       </div>
     </footer>
   )

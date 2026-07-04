@@ -12,9 +12,10 @@ export function useNavScrollSolid(shellRef: RefObject<HTMLElement | null>) {
 
     const update = () => {
       const y = window.scrollY
-      const progress = Math.min(1, Math.max(0, (y - 16) / 120))
+      const linear = Math.min(1, Math.max(0, (y - 4) / 56))
+      const progress = 1 - (1 - linear) ** 2
       shell.style.setProperty('--nav-scroll', progress.toFixed(3))
-      shell.classList.toggle('is-scrolled', progress > 0.06)
+      shell.classList.toggle('is-scrolled', progress > 0.04)
     }
 
     const onScroll = () => {
