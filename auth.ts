@@ -84,7 +84,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       const { pathname } = nextUrl
 
       // Public routes
-      const publicRoutes = ['/', '/about', '/courses', '/contact', '/login']
+      const publicRoutes = ['/', '/about', '/courses', '/contact', '/login', '/admission']
       const isPublicRoute = publicRoutes.some((route) => pathname === route)
 
       if (isPublicRoute) {

@@ -85,7 +85,7 @@ function LoginForm() {
 
       } else if (role === 'ADMIN') {
 
-        router.push('/admin/dashboard')
+        router.push('/admin/register')
 
       } else if (role === 'STUDENT') {
 
@@ -233,7 +233,11 @@ function LoginForm() {
 
           <p className="login-glass-foot">
 
-            Not a student? <Link href="/">Return to home</Link>
+            New student? <Link href="/admission">Apply for admission</Link>
+
+            {' · '}
+
+            <Link href="/">Return to home</Link>
 
           </p>
 

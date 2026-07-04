@@ -1,16 +1,39 @@
 import { PrismaClient, Board, AttendanceStatus, PaymentStatus } from '@prisma/client'
-import { PrismaNeon } from '@prisma/adapter-neon'
-import { Pool, neonConfig } from '@neondatabase/serverless'
 import bcryptjs from 'bcryptjs'
 import ws from 'ws'
+import { BATCH_GROUPS } from '../lib/register/constants'
 
-neonConfig.webSocketConstructor = ws
+let prisma: PrismaClient
 
-const pool = new Pool({ connectionString: process.env.DATABASE_URL })
-const adapter = new PrismaNeon(pool as any)
-const prisma = new PrismaClient({ adapter })
+function initPrisma() {
+  const path = require('path') as typeof import('path')
+  const envPath = path.join(__dirname, '../.env')
+  // eslint-disable-next-line @typescript-eslint/no-require-imports
+  require('dotenv').config({ path: envPath, override: true })
+  const { PrismaNeon } = require('@prisma/adapter-neon')
+  const { neonConfig } = require('@neondatabase/serverless')
+  neonConfig.webSocketConstructor = ws
+  const url = process.env.DATABASE_URL
+  if (!url) throw new Error(`DATABASE_URL missing — env file: ${envPath}`)
+  prisma = new PrismaClient({ adapter: new PrismaNeon({ connectionString: url }) })
+}
+
+async function seedBatches() {
+  let order = 0
+  for (const group of BATCH_GROUPS) {
+    for (const name of group.batches) {
+      await prisma.batch.upsert({
+        where: { name },
+        update: { groupTitle: group.title, sortOrder: order },
+        create: { name, groupTitle: group.title, sortOrder: order },
+      })
+      order += 1
+    }
+  }
+}
 
 async function main() {
+  initPrisma()
   console.log('🌱 Starting seed...')
 
   // Create admin user
@@ -27,6 +50,18 @@ async function main() {
     },
   })
   console.log('✓ Admin user created')
+
+  const ownerPassword = await bcryptjs.hash('4511', 10)
+  await prisma.user.upsert({
+    where: { username: 'owner' },
+    update: {},
+    create: {
+      username: 'owner',
+      passwordHash: ownerPassword,
+      role: 'ADMIN',
+    },
+  })
+  console.log('✓ Owner user created (password: 4511)')
 
   // Create subjects
   const subjects = await Promise.all([
@@ -78,6 +113,16 @@ async function main() {
   ])
   console.log('✓ Subjects created')
 
+  await seedBatches()
+  console.log('✓ Batches created (36 CBSE / ICSE / State)')
+
+  const batch6Cbse = await prisma.batch.findUnique({ where: { name: '6 CBSE' } })
+  const batch9Cbse = await prisma.batch.findUnique({ where: { name: '9 CBSE' } })
+  const batch9Icse = await prisma.batch.findUnique({ where: { name: '9 ICSE' } })
+  const batch11State = await prisma.batch.findUnique({ where: { name: '11 State' } })
+  const batch12Cbse = await prisma.batch.findUnique({ where: { name: '12 CBSE' } })
+  const batch12State = await prisma.batch.findUnique({ where: { name: '12 State' } })
+
   // Create sample students
   const studentPassword = await bcryptjs.hash('student123', 10)
 
@@ -87,72 +132,110 @@ async function main() {
       fullName: 'Rahul Mathew',
       grade: '6',
       board: Board.CBSE,
+      batchId: batch6Cbse?.id,
+      rollNo: 1,
       guardianName: 'Mathew George',
       guardianPhone: '9876543210',
+      contact: '9876543210',
       subjects: ['Mathematics', 'English', 'Social Studies'],
+      subjectsText: 'Mathematics, English, Social Studies',
     },
     {
       username: 'CSC2024-002',
       fullName: 'Priya Thomas',
       grade: '6',
       board: Board.CBSE,
+      batchId: batch6Cbse?.id,
+      rollNo: 2,
       guardianName: 'Thomas Joseph',
       guardianPhone: '9876543211',
+      contact: '9876543211',
       subjects: ['Mathematics', 'English', 'Malayalam'],
+      subjectsText: 'Mathematics, English, Malayalam',
     },
     {
       username: 'CSC2024-003',
       fullName: 'Anu Varghese',
       grade: '9',
       board: Board.ICSE,
+      batchId: batch9Icse?.id,
+      rollNo: 1,
       guardianName: 'Varghese Philip',
       guardianPhone: '9876543212',
+      contact: '9876543212',
       subjects: ['Mathematics', 'Physics', 'Chemistry', 'English'],
+      subjectsText: 'Mathematics, Physics, Chemistry, English',
     },
     {
       username: 'CSC2024-004',
       fullName: 'Arjun Kumar',
       grade: '9',
       board: Board.CBSE,
+      batchId: batch9Cbse?.id,
+      rollNo: 1,
       guardianName: 'Kumar Nair',
       guardianPhone: '9876543213',
+      contact: '9876543213',
       subjects: ['Mathematics', 'Biology', 'Social Studies'],
+      subjectsText: 'Mathematics, Biology, Social Studies',
     },
     {
       username: 'CSC2024-005',
       fullName: 'Sneha Paul',
-      grade: 'Plus 1',
+      grade: '11',
       board: Board.SCERT,
+      batchId: batch11State?.id,
+      rollNo: 1,
       guardianName: 'Paul Samuel',
       guardianPhone: '9876543214',
+      contact: '9876543214',
       subjects: ['Mathematics', 'Physics', 'Chemistry', 'Computer Science'],
+      subjectsText: 'Mathematics, Physics, Chemistry, Computer Science',
     },
     {
       username: 'CSC2024-006',
       fullName: 'Kiran Menon',
-      grade: 'Plus 1',
+      grade: '11',
       board: Board.CBSE,
+      batchId: batch11State?.id,
+      rollNo: 2,
       guardianName: 'Menon Krishnan',
       guardianPhone: '9876543215',
+      contact: '9876543215',
       subjects: ['Mathematics', 'Physics', 'Chemistry', 'Biology'],
+      subjectsText: 'Mathematics, Physics, Chemistry, Biology',
     },
     {
       username: 'CSC2024-007',
       fullName: 'Meera John',
-      grade: 'Plus 2',
+      grade: '12',
       board: Board.CBSE,
+      batchId: batch12Cbse?.id,
+      rollNo: 1,
       guardianName: 'John Mathew',
       guardianPhone: '9876543216',
+      contact: '9876543216',
       subjects: ['Accountancy', 'English', 'Mathematics'],
+      subjectsText: 'Accountancy, English, Mathematics',
+      feesStatus: PaymentStatus.PAID,
+      feesAmountPaid: 12000,
+      feesRemaining: 0,
     },
     {
       username: 'CSC2024-008',
       fullName: 'Aditya Raj',
-      grade: 'Plus 2',
+      grade: '12',
       board: Board.SCERT,
+      batchId: batch12State?.id,
+      rollNo: 1,
       guardianName: 'Raj Kumar',
       guardianPhone: '9876543217',
+      contact: '9876543217',
       subjects: ['Physics', 'Chemistry', 'Mathematics', 'Computer Science'],
+      subjectsText: 'Physics, Chemistry, Mathematics, Computer Science',
+      feesStatus: PaymentStatus.PARTIAL,
+      feesAmountPaid: 6000,
+      feesRemaining: 6000,
     },
   ]
 
@@ -169,11 +252,19 @@ async function main() {
     const student = await prisma.student.create({
       data: {
         userId: user.id,
+        batchId: data.batchId,
+        rollNo: data.rollNo,
         fullName: data.fullName,
         grade: data.grade,
         board: data.board,
         guardianName: data.guardianName,
         guardianPhone: data.guardianPhone,
+        contact: data.contact,
+        subjectsText: data.subjectsText,
+        subjectCount: data.subjects.length,
+        feesStatus: data.feesStatus ?? PaymentStatus.PENDING,
+        feesAmountPaid: data.feesAmountPaid ?? null,
+        feesRemaining: data.feesRemaining ?? null,
         enrolledSubjects: {
           connect: subjects
             .filter((s) => data.subjects.includes(s.name))
@@ -199,7 +290,7 @@ async function main() {
     // Create 2-3 sessions per day for different grades
     const sessionsPerDay = [
       { subjectName: 'Mathematics', grade: '9' },
-      { subjectName: 'Physics', grade: 'Plus 1' },
+      { subjectName: 'Physics', grade: '11' },
       { subjectName: 'English', grade: '6' },
     ]
 
@@ -251,7 +342,7 @@ async function main() {
     data: {
       name: 'Unit Test 2',
       subjectId: subjects.find((s) => s.name === 'Physics')!.id,
-      grade: 'Plus 1',
+      grade: '11',
       date: new Date(2024, 5, 10),
       maxMarks: 50,
     },
@@ -270,7 +361,7 @@ async function main() {
     })
   }
 
-  for (const student of students.filter((s) => s.grade === 'Plus 1')) {
+  for (const student of students.filter((s) => s.grade === '11')) {
     await prisma.markEntry.create({
       data: {
         studentId: student.id,
@@ -347,7 +438,7 @@ async function main() {
     }
   }
 
-  // Create timetable for Plus 1
+  // Create timetable for Grade 11
   const plus1Timetable = [
     { day: 1, start: '16:00', end: '17:00', subject: 'Physics', teacher: 'Ms. Lakshmi' },
     { day: 1, start: '17:00', end: '18:00', subject: 'Chemistry', teacher: 'Mr. Thomas' },
@@ -365,7 +456,7 @@ async function main() {
     if (subject) {
       await prisma.timetableSlot.create({
         data: {
-          grade: 'Plus 1',
+          grade: '11',
           dayOfWeek: slot.day,
           startTime: slot.start,
           endTime: slot.end,
@@ -380,6 +471,7 @@ async function main() {
   console.log('✅ Seeding completed successfully!')
   console.log(`\n📝 Login credentials:`)
   console.log(`   Admin: username='admin', password='${adminPassword}'`)
+  console.log(`   Owner: username='owner', password='4511'`)
   console.log(`   Student: username='CSC2024-001' (or any student), password='student123'`)
 }
 

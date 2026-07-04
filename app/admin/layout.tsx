@@ -20,6 +20,7 @@ export default async function AdminLayout({
           </Link>
           <nav className="portal-nav">
             <Link href="/admin/dashboard">Dashboard</Link>
+            <Link href="/admin/register">Register</Link>
             <Link href="/">Public site</Link>
           </nav>
           <div className="portal-user">

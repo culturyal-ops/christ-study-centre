@@ -1,0 +1,65 @@
+{
+  "studentsData": {
+    "12 CBSE": [
+      {
+        "id": "id1",
+        "no": 1,
+        "name": "Alan Bygy",
+        "schoolName": "Example School",
+        "subjects": "Physics, Chemistry, Maths",
+        "subjectCount": 3,
+        "contact": "9876543210",
+        "fees": "Pending",
+        "feesAmountPaid": "",
+        "feesRemaining": "",
+        "feesDatePaid": "",
+        "marks": [
+          {
+            "id": "m1",
+            "exam": "Monthly Test",
+            "subject": "Physics",
+            "score": "42/50",
+            "date": "2025-03-15T10:00:00.000Z"
+          }
+        ],
+        "documents": [
+          {
+            "id": "d1",
+            "title": "ID Proof",
+            "url": "data:image/png;base64,iVBORw0KGgo=",
+            "uploadedAt": "2025-03-01T08:00:00.000Z"
+          }
+        ]
+      }
+    ],
+    "11 CBSE": [],
+    "10 CBSE": []
+  },
+  "recycleBin": [
+    {
+      "id": "id99",
+      "no": 5,
+      "name": "Removed Student",
+      "schoolName": "Old School",
+      "subjects": "Maths",
+      "contact": "",
+      "fees": "Paid",
+      "feesAmountPaid": "5000",
+      "deletedFrom": "10 CBSE",
+      "deletedAt": "2025-06-01T12:00:00.000Z"
+    }
+  ],
+  "pendingAdmissions": [
+    {
+      "id": "pending1",
+      "name": "New Applicant",
+      "schoolName": "St. Mary's",
+      "subjects": "PCM",
+      "subjectCount": 3,
+      "contact": "9999999999",
+      "batchName": "12 CBSE",
+      "submittedAt": "2025-07-01T09:00:00.000Z"
+    }
+  ],
+  "customSubjects": ["Physics", "Chemistry", "Maths", "Custom Subject"]
+}

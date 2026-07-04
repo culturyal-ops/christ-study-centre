@@ -43,20 +43,74 @@ model User {
 }
 
 model Student {
-  id               String             @id @default(cuid())
-  user             User               @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId           String             @unique
-  fullName         String
-  grade            String // e.g. "8", "Plus 1", "Plus 2"
-  board            Board
-  guardianName     String?
-  guardianPhone    String
-  enrolledSubjects Subject[]          @relation("StudentSubjects")
-  enrollmentDate   DateTime           @default(now())
-  attendance       AttendanceRecord[]
-  marks            MarkEntry[]
-  payments         Payment[]
-  feePlans         FeePlan[]
+  id                String              @id @default(cuid())
+  user              User?               @relation(fields: [userId], references: [id], onDelete: SetNull)
+  userId            String?             @unique
+  batch             Batch?              @relation(fields: [batchId], references: [id], onDelete: SetNull)
+  batchId           String?
+  rollNo            Int                 @default(0)
+  fullName          String
+  schoolName        String?
+  subjectsText      String?
+  subjectCount      Int?
+  grade             String
+  board             Board
+  guardianName      String?
+  guardianPhone     String              @default("")
+  contact           String?
+  feesStatus        PaymentStatus       @default(PENDING)
+  feesAmountPaid    Float?
+  feesRemaining     Float?
+  feesDatePaid      DateTime?
+  deletedAt         DateTime?
+  deletedFromBatch  String?
+  enrolledSubjects  Subject[]           @relation("StudentSubjects")
+  enrollmentDate    DateTime            @default(now())
+  attendance        AttendanceRecord[]
+  marks             MarkEntry[]
+  registerMarks     RegisterMark[]
+  registerDocuments RegisterDocument[]
+  payments          Payment[]
+  feePlans          FeePlan[]
+}
+
+model Batch {
+  id         String    @id @default(cuid())
+  name       String    @unique
+  groupTitle String
+  sortOrder  Int       @default(0)
+  students   Student[]
+  createdAt  DateTime  @default(now())
+}
+
+model RegisterMark {
+  id        String   @id @default(cuid())
+  student   Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  studentId String
+  exam      String
+  subject   String
+  score     String
+  date      DateTime @default(now())
+}
+
+model RegisterDocument {
+  id         String   @id @default(cuid())
+  student    Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  studentId  String
+  title      String
+  dataUrl    String   @db.Text
+  uploadedAt DateTime @default(now())
+}
+
+model PendingAdmission {
+  id           String   @id @default(cuid())
+  name         String
+  schoolName   String
+  subjects     String
+  subjectCount Int?
+  contact      String
+  batchName    String
+  submittedAt  DateTime @default(now())
 }
 
 model Subject {

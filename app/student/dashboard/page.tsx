@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { requireAuth } from '@/lib/auth-utils'
 import { prisma } from '@/lib/prisma'
+import { formatFeesStatus, feesStatusClass } from '@/lib/register/utils'
 
 export default async function StudentDashboardPage() {
   const session = await requireAuth(['STUDENT'])
@@ -9,8 +10,9 @@ export default async function StudentDashboardPage() {
     ? await prisma.student.findUnique({
         where: { id: session.user.studentId },
         include: {
+          batch: { select: { name: true } },
+          registerMarks: { take: 5, orderBy: { date: 'desc' } },
           attendance: { take: 10, orderBy: { markedAt: 'desc' } },
-          marks: { take: 5 },
           feePlans: { take: 3, orderBy: { dueDate: 'desc' } },
         },
       })
@@ -30,7 +32,7 @@ export default async function StudentDashboardPage() {
         <h1>{student?.fullName ?? session.user.username}</h1>
         <p>
           {student
-            ? `Grade ${student.grade} · ${student.board}`
+            ? `${student.batch?.name ?? `Grade ${student.grade}`} · ${student.board}`
             : 'Your academic portal'}
         </p>
       </div>
@@ -43,36 +45,34 @@ export default async function StudentDashboardPage() {
           <span className="portal-stat-lbl">Recent attendance</span>
         </div>
         <div className="portal-stat">
-          <span className="portal-stat-num">{student?.marks.length ?? 0}</span>
+          <span className="portal-stat-num">{student?.registerMarks.length ?? 0}</span>
           <span className="portal-stat-lbl">Recent marks</span>
         </div>
         <div className="portal-stat">
-          <span className="portal-stat-num">{student?.feePlans.length ?? 0}</span>
-          <span className="portal-stat-lbl">Fee records</span>
+          <span
+            className={`portal-stat-num ${student ? feesStatusClass(student.feesStatus) : ''}`}
+            style={{ fontSize: student ? '1.1rem' : undefined }}
+          >
+            {student ? formatFeesStatus(student.feesStatus) : '—'}
+          </span>
+          <span className="portal-stat-lbl">Fee status</span>
         </div>
       </div>
 
       <div className="portal-modules">
+        <Link href="/student/register" className="portal-module" style={{ display: 'block', textDecoration: 'none', color: 'inherit' }}>
+          <div className="portal-module-head">
+            <h2>My register profile</h2>
+            <span className="portal-module-status">Open</span>
+          </div>
+          <p>View your batch, subjects, marks, fees, and upload documents.</p>
+        </Link>
         <div className="portal-module">
           <div className="portal-module-head">
             <h2>Attendance</h2>
             <span className="portal-module-status">Coming soon</span>
           </div>
           <p>View session history and attendance percentage over time.</p>
-        </div>
-        <div className="portal-module">
-          <div className="portal-module-head">
-            <h2>Marks</h2>
-            <span className="portal-module-status">Coming soon</span>
-          </div>
-          <p>Track test scores, exam results, and subject-wise trends.</p>
-        </div>
-        <div className="portal-module">
-          <div className="portal-module-head">
-            <h2>Fees</h2>
-            <span className="portal-module-status">Coming soon</span>
-          </div>
-          <p>See payment status and fee plan details.</p>
         </div>
         <div className="portal-module">
           <div className="portal-module-head">

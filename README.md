@@ -41,7 +41,7 @@ A full-stack web application for Christ Study Centre, a tuition center in Pala, 
 
 ### Prerequisites
 - Node.js 18+ installed
-- PostgreSQL database (or use local Prisma Postgres)
+- **Neon** account (free cloud Postgres) — https://console.neon.tech
 
 ### Installation
 
@@ -51,46 +51,45 @@ cd christ-study-centre
 npm install
 ```
 
-2. **Set up environment variables:**
-Copy `.env.example` to `.env` and update values:
+2. **Create Neon database (cloud — no local Postgres):**
+   - Go to [console.neon.tech](https://console.neon.tech) → **New project**
+   - Name it `christ-study-centre`
+   - **Connection details** → copy the **Prisma** connection string
+
+3. **Set up `.env`:**
 ```bash
-DATABASE_URL="postgresql://user:password@localhost:5432/christstudycentre"
-NEXTAUTH_URL="http://localhost:3000"
-NEXTAUTH_SECRET="your-super-secret-key-change-this"
+DATABASE_URL="postgresql://...@ep-xxx.region.aws.neon.tech/neondb?sslmode=require"
+NEXTAUTH_URL="http://localhost:3005"
+NEXTAUTH_SECRET="your-long-random-secret"
 ADMIN_SEED_PASSWORD="admin123"
 ```
 
-3. **Start local database (if using Prisma Postgres):**
-```bash
-npx prisma dev
-```
-
-4. **Push schema to database:**
+4. **Push schema to Neon:**
 ```bash
 npx prisma db push
 ```
 
-5. **Seed the database:**
+5. **Seed batches, owner login, sample students:**
 ```bash
 npx prisma db seed
 ```
 
-6. **Generate Prisma Client:**
-```bash
-npx prisma generate
-```
-
-7. **Run the development server:**
+6. **Run the dev server:**
 ```bash
 npm run dev
 ```
 
-8. **Open your browser:**
-Visit [http://localhost:3000](http://localhost:3000)
+7. **Open:**
+   - Site: http://localhost:3005
+   - Owner register: http://localhost:3005/admin/register (login: `owner` / `4511` after seed)
 
 ## Login Credentials
 
 After seeding, use these credentials:
+
+**Owner (full register):**
+- Username: `owner`
+- Password: `4511`
 
 **Admin:**
 - Username: `admin`

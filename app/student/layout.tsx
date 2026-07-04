@@ -20,6 +20,7 @@ export default async function StudentLayout({
           </Link>
           <nav className="portal-nav">
             <Link href="/student/dashboard">Dashboard</Link>
+            <Link href="/student/register">My profile</Link>
             <Link href="/">Public site</Link>
           </nav>
           <div className="portal-user">

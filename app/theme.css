@@ -207,12 +207,8 @@ html[data-theme='light'] .csc-landing__header::before {
   color: var(--theme-nav-fg);
 }
 
-.csc-landing__brand-mark {
-  color: #3d7dff;
-}
-
 html[data-theme='light'] .csc-landing__brand-mark {
-  color: #2563eb;
+  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.08);
 }
 
 .csc-landing__nav a,
