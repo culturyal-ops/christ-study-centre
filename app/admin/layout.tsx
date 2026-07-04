@@ -1,11 +1,14 @@
-import Link from 'next/link'
 import { signOut } from '@/auth'
 import { requireAuth } from '@/lib/auth-utils'
-import BrandName from '@/components/BrandName'
-import BrandIcon from '@/components/BrandIcon'
-import ThemeToggle from '@/components/ThemeToggle'
+import PortalNav from '@/components/portal/PortalNav'
 import '@/app/portal.css'
 import '@/app/portal-register.css'
+
+const adminLinks = [
+  { href: '/admin/dashboard', label: 'Dashboard' },
+  { href: '/admin/register', label: 'Register' },
+  { href: '/', label: 'Public site' },
+]
 
 export default async function AdminLayout({
   children,
@@ -14,39 +17,27 @@ export default async function AdminLayout({
 }) {
   const session = await requireAuth(['ADMIN'])
 
+  const signOutSlot = (
+    <form
+      action={async () => {
+        'use server'
+        await signOut({ redirectTo: '/login' })
+      }}
+    >
+      <button type="submit" className="csc-landing__login portal-signout">
+        Sign out
+      </button>
+    </form>
+  )
+
   return (
     <div className="csc-portal portal-shell">
-      <div className="portal-nav-shell">
-        <header className="portal-header">
-          <div className="portal-header-inner">
-            <Link href="/admin/dashboard" className="csc-landing__brand portal-brand">
-              <BrandIcon className="csc-landing__brand-mark" />
-              <BrandName variant="nav" />
-            </Link>
-            <nav className="portal-nav">
-              <Link href="/admin/dashboard">Dashboard</Link>
-              <Link href="/admin/register">Register</Link>
-              <Link href="/">Public site</Link>
-            </nav>
-            <div className="portal-header-actions">
-              <ThemeToggle variant="nav" />
-              <div className="portal-user">
-                <span>{session.user.username}</span>
-                <form
-                  action={async () => {
-                    'use server'
-                    await signOut({ redirectTo: '/login' })
-                  }}
-                >
-                  <button type="submit" className="portal-signout">
-                    Sign out
-                  </button>
-                </form>
-              </div>
-            </div>
-          </div>
-        </header>
-      </div>
+      <PortalNav
+        brandHref="/admin/dashboard"
+        links={adminLinks}
+        username={session.user.username}
+        signOutSlot={signOutSlot}
+      />
       <main className="portal-main">{children}</main>
     </div>
   )
