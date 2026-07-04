@@ -1,10 +1,18 @@
 'use client'
 
 import { useEffect } from 'react'
+import { usePathname } from 'next/navigation'
 import { prefersReducedMotion, setupScrollReveal, setupSmoothScroll } from '@/lib/motion/reveal'
 
 export default function SiteMotion() {
+  const pathname = usePathname()
+
   useEffect(() => {
+    // Login page: skip Lenis/reveal — can interfere with form clicks
+    if (pathname.startsWith('/login')) {
+      return
+    }
+
     const root = document.documentElement
     const progress = document.getElementById('scrollProgress')
     let lenisCleanup = () => {}
@@ -33,7 +41,11 @@ export default function SiteMotion() {
       revealCleanup()
       lenisCleanup()
     }
-  }, [])
+  }, [pathname])
+
+  if (pathname.startsWith('/login')) {
+    return null
+  }
 
   return <div className="scroll-progress" id="scrollProgress" aria-hidden="true" />
 }

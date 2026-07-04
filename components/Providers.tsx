@@ -7,7 +7,7 @@ import WhatsAppFloat from '@/components/WhatsAppFloat'
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <SessionProvider>
+    <SessionProvider basePath="/api/auth">
       <SoftBackground />
       <SiteMotion />
       {children}
