@@ -1,101 +1,37 @@
 'use client'
 
 import { useEffect } from 'react'
-
-function throttle<T extends (...args: unknown[]) => void>(fn: T, limit: number) {
-  let locked = false
-  return (...args: Parameters<T>) => {
-    if (locked) return
-    locked = true
-    fn(...args)
-    setTimeout(() => {
-      locked = false
-    }, limit)
-  }
-}
+import { prefersReducedMotion, setupScrollReveal, setupSmoothScroll } from '@/lib/motion/reveal'
 
 export default function SiteMotion() {
   useEffect(() => {
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-
-    const revealAll = () => {
-      document.querySelectorAll('[data-scroll-reveal], .hero-word').forEach((el) => {
-        el.classList.add('revealed')
-      })
-    }
-
-    if (reduced) {
-      revealAll()
-      return
-    }
-
+    const root = document.documentElement
     const progress = document.getElementById('scrollProgress')
-    const onScroll = throttle(() => {
-      const height = document.documentElement.scrollHeight - window.innerHeight
-      const pct = height > 0 ? (window.scrollY / height) * 100 : 0
-      if (progress) progress.style.width = `${pct}%`
+    let lenisCleanup = () => {}
 
-      const nav = document.getElementById('siteNav')
-      nav?.classList.toggle('nav-scrolled', window.scrollY > 32)
-    }, 16)
+    const onScroll = () => {
+      const y = window.scrollY
+      const height = document.documentElement.scrollHeight - window.innerHeight
+      const pct = height > 0 ? (y / height) * 100 : 0
+      if (progress) progress.style.width = `${pct}%`
+      document.getElementById('siteNav')?.classList.toggle('nav-scrolled', y > 32)
+    }
 
     window.addEventListener('scroll', onScroll, { passive: true })
     onScroll()
 
-    document.querySelectorAll('.hero-word').forEach((word, i) => {
-      setTimeout(() => word.classList.add('revealed'), 80 + i * 140)
+    const revealCleanup = setupScrollReveal()
+    root.classList.add('motion-on')
+
+    setupSmoothScroll(onScroll).then((cleanup) => {
+      lenisCleanup = cleanup ?? (() => {})
     })
-
-    const revealObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return
-          const el = entry.target
-          const delay = parseFloat(el.getAttribute('data-delay') || '0')
-          setTimeout(() => {
-            el.classList.add('revealed')
-          }, delay * 1000)
-          revealObserver.unobserve(el)
-        })
-      },
-      { threshold: 0.12, rootMargin: '0px 0px -8% 0px' }
-    )
-
-    document.querySelectorAll('[data-scroll-reveal]').forEach((el) => {
-      revealObserver.observe(el)
-    })
-
-    const finePointer = window.matchMedia('(pointer: fine)').matches
-    const tiltCleanups: (() => void)[] = []
-
-    if (finePointer) {
-      document.querySelectorAll<HTMLElement>('[data-tilt]').forEach((el) => {
-        const onMove = (e: MouseEvent) => {
-          const rect = el.getBoundingClientRect()
-          const x = e.clientX - rect.left
-          const y = e.clientY - rect.top
-          const cx = rect.width / 2
-          const cy = rect.height / 2
-          const rotateX = ((y - cy) / cy) * -4
-          const rotateY = ((x - cx) / cx) * 4
-          el.style.transform = `perspective(900px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`
-        }
-        const onLeave = () => {
-          el.style.transform = ''
-        }
-        el.addEventListener('mousemove', onMove)
-        el.addEventListener('mouseleave', onLeave)
-        tiltCleanups.push(() => {
-          el.removeEventListener('mousemove', onMove)
-          el.removeEventListener('mouseleave', onLeave)
-        })
-      })
-    }
 
     return () => {
+      root.classList.remove('motion-on')
       window.removeEventListener('scroll', onScroll)
-      revealObserver.disconnect()
-      tiltCleanups.forEach((fn) => fn())
+      revealCleanup()
+      lenisCleanup()
     }
   }, [])
 

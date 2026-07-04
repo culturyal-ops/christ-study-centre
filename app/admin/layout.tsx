@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { signOut } from '@/auth'
 import { requireAuth } from '@/lib/auth-utils'
+import BrandName from '@/components/BrandName'
 
 export default async function AdminLayout({
   children,
@@ -14,7 +15,7 @@ export default async function AdminLayout({
       <header className="portal-header">
         <div className="portal-header-inner">
           <Link href="/admin/dashboard" className="portal-brand">
-            Christ Study Centre
+            <BrandName variant="compact" />
             <span>Admin</span>
           </Link>
           <nav className="portal-nav">

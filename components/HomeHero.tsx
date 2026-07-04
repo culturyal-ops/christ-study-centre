@@ -1,60 +1,45 @@
-import Link from 'next/link'
 import Image from 'next/image'
+import Link from 'next/link'
+import Navbar from '@/components/Navbar'
+import { images } from '@/lib/images'
 
-interface HomeHeroProps {
-  image: string
-  imageAlt: string
-}
-
-export default function HomeHero({ image, imageAlt }: HomeHeroProps) {
+export default function HomeHero() {
   return (
-    <section className="home-hero">
-      <div className="home-hero-left">
-        <div className="home-hero-top" data-scroll-reveal>
-          <span className="home-hero-eyebrow">Academic Year / 2026–27</span>
-          <span className="home-hero-admissions">Admissions Open</span>
+    <section className="home-hero" id="hero">
+      <Navbar />
+      <div className="site-container home-hero__grid">
+        <div className="home-hero__text">
+          <p className="home-hero__kicker">Est. 2013, Pala, Kerala</p>
+          <h1 className="home-hero__title">
+            Board exam coaching for CBSE, ICSE and SCERT students
+          </h1>
+          <p className="home-hero__body">
+            Weekly tests, chapter tracking and monthly progress reports. Small batches
+            from Grade 3 through Grade 12.
+          </p>
+          <div className="home-hero__actions">
+            <Link href="/contact" className="home-btn home-btn--fill">
+              Enquire for admission
+            </Link>
+            <Link href="/courses" className="home-btn home-btn--line">
+              View courses
+            </Link>
+          </div>
         </div>
 
-        <h1 className="home-hero-title">
-          <span className="hero-line">
-            <span className="hero-word">Results are</span>
-          </span>
-          <span className="hero-line">
-            <span className="hero-word">structured.</span>
-          </span>
-        </h1>
-
-        <p className="home-hero-tagline" data-scroll-reveal data-delay="0.15">
-          where discipline becomes measurable progress
-        </p>
-
-        <p className="home-hero-sub" data-scroll-reveal data-delay="0.25">
-          Structured tuition for students who need clarity, revision, and
-          exam-ready confidence — not another coaching factory.
-        </p>
-
-        <div className="home-hero-actions" data-scroll-reveal data-delay="0.35">
-          <Link href="/courses" className="btn btn-secondary btn-motion">
-            View Courses →
-          </Link>
-          <Link href="/contact" className="btn btn-solid btn-motion">
-            Enquire →
-          </Link>
-        </div>
-      </div>
-
-      <div className="home-hero-right">
-        <div className="home-hero-photo fly-card" data-tilt data-float>
-          <Image
-            src={image}
-            alt={imageAlt}
-            fill
-            priority
-            style={{ objectFit: 'cover', objectPosition: 'center 35%' }}
-          />
-          <div className="home-hero-photo-caption">
-            <span>Christ Study Centre</span>
-            <span>Pala · Est. 2013</span>
+        <div className="home-hero__visual">
+          <div className="home-hero__photo-wrap">
+            <div className="home-hero__photo-bg" aria-hidden="true" />
+            <div className="home-hero__photo">
+              <Image
+                src={images.heroClassroom}
+                alt="Students at Christ Study Centre"
+                fill
+                priority
+                sizes="(max-width: 767px) 100vw, 46vw"
+                className="home-hero__img"
+              />
+            </div>
           </div>
         </div>
       </div>

@@ -1,7 +1,16 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next'
+import path from 'path'
 
 const nextConfig: NextConfig = {
-  serverExternalPackages: ['@prisma/client', '@prisma/adapter-neon', '@neondatabase/serverless'],
+  // Prevent Next from using C:\Users\eathe\ as the workspace root (wrong lockfile).
+  turbopack: {
+    root: path.resolve(__dirname),
+  },
+  serverExternalPackages: [
+    '@prisma/client',
+    '@prisma/adapter-neon',
+    '@neondatabase/serverless',
+  ],
   images: {
     remotePatterns: [
       {
@@ -14,6 +23,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-};
+}
 
-export default nextConfig;
+export default nextConfig

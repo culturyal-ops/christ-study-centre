@@ -17,29 +17,16 @@ export default function SectionSpread({
   title,
   lede,
   description,
-  dark = false,
   className = '',
 }: SectionSpreadProps) {
   return (
-    <header
-      className={`spread-header ${dark ? 'spread-header-dark' : ''} ${className}`}
-      data-scroll-reveal
-    >
-      <div className="spread-rail">
-        <span className="spread-index">{index}</span>
-        <span className="spread-label">
-          {category} / {index}
-        </span>
-      </div>
-      <div className="spread-main">
-        <h2 className="spread-title">{title}</h2>
-        {lede && <p className="spread-lede">{lede}</p>}
-      </div>
-      {description && (
-        <div className="spread-aside">
-          <p>{description}</p>
-        </div>
-      )}
+    <header className={`csc-section__head ${className}`}>
+      <p className="csc-section__label">
+        {category} / {index}
+      </p>
+      <h2 className="csc-section__title">{title}</h2>
+      {lede && <p className="csc-section__lede">{lede}</p>}
+      {description && <p className="csc-section__desc">{description}</p>}
     </header>
   )
 }
@@ -50,25 +37,26 @@ export function SpreadSection({
   title,
   lede,
   description,
-  dark = false,
   id,
   children,
   alt = false,
-}: SectionSpreadProps & { children: ReactNode; alt?: boolean }) {
+  className = '',
+}: SectionSpreadProps & { children: ReactNode; alt?: boolean; className?: string }) {
   return (
     <section
       id={id}
-      className={`spread-section ${dark ? 'panel-dark' : ''} ${alt && !dark ? 'spread-section-alt' : ''}`}
+      className={`csc-section spread-section ${alt ? 'csc-section--alt spread-section-alt' : ''} ${className}`}
     >
-      <SectionSpread
-        index={index}
-        category={category}
-        title={title}
-        lede={lede}
-        description={description}
-        dark={dark}
-      />
-      {children}
+      <div className="site-container">
+        <SectionSpread
+          index={index}
+          category={category}
+          title={title}
+          lede={lede}
+          description={description}
+        />
+        {children}
+      </div>
     </section>
   )
 }

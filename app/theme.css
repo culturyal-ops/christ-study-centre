@@ -1,0 +1,685 @@
+/* ═══════════════════════════════════════════════════════════
+   THEME — light / dark via html[data-theme]
+   Import last so overrides win. Toggle in nav.
+   ═══════════════════════════════════════════════════════════ */
+
+html[data-theme='dark'] {
+  color-scheme: dark;
+  --theme-page-bg: #070b16;
+  --theme-hero-bg: #070b16;
+  --theme-hero-bg-end: #0a0e18;
+  --theme-hero-fg: #ffffff;
+  --theme-hero-fg-muted: rgba(255, 255, 255, 0.78);
+  --theme-hero-fg-subtle: rgba(255, 255, 255, 0.58);
+  --theme-nav-fg: #ffffff;
+  --theme-nav-fg-muted: rgba(255, 255, 255, 0.62);
+  --theme-nav-glass: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.14) 0%,
+    rgba(255, 255, 255, 0.04) 45%,
+    rgba(255, 255, 255, 0.08) 100%
+  );
+  --theme-nav-border: rgba(255, 255, 255, 0.18);
+  --theme-surface: #0f172a;
+  --theme-surface-alt: #1e293b;
+  --theme-surface-card: rgba(255, 255, 255, 0.06);
+  --theme-surface-card-solid: #111827;
+  --theme-text: #f8fafc;
+  --theme-text-muted: #94a3b8;
+  --theme-text-body: #cbd5e1;
+  --theme-heading: #ffffff;
+  --theme-label: #93c5fd;
+  --theme-accent: #3d7dff;
+  --theme-accent-dark: #2563eb;
+  --theme-border: rgba(255, 255, 255, 0.12);
+  --theme-border-strong: rgba(255, 255, 255, 0.22);
+  --theme-input-bg: #070b16;
+  --theme-input-fg: #ffffff;
+  --theme-input-border: rgba(61, 125, 255, 0.45);
+  --theme-section-bg: #0f172a;
+  --theme-section-bg-alt: #111827;
+  --theme-section-mesh: linear-gradient(180deg, #0f172a 0%, #111827 100%);
+  --theme-features-bg: linear-gradient(180deg, #0f172a 0%, #111827 100%);
+  --theme-footer-bg: #070b16;
+  --theme-footer-fg: #ffffff;
+  --theme-footer-muted: #94a3b8;
+  --theme-ui-card-bg: rgba(255, 255, 255, 0.08);
+  --theme-ui-card-fg: #f8fafc;
+  --theme-ui-card-muted: #94a3b8;
+  --theme-mobile-overlay: rgba(7, 11, 22, 0.72);
+  --theme-toggle-bg: rgba(255, 255, 255, 0.1);
+  --theme-toggle-fg: #ffffff;
+  --theme-toggle-border: rgba(255, 255, 255, 0.22);
+}
+
+html[data-theme='light'] {
+  color-scheme: light;
+  --theme-page-bg: #f8fafc;
+  --theme-hero-bg: #eef2fa;
+  --theme-hero-bg-end: #f8fafc;
+  --theme-hero-fg: #0f172a;
+  --theme-hero-fg-muted: #334155;
+  --theme-hero-fg-subtle: #64748b;
+  --theme-nav-fg: #0f172a;
+  --theme-nav-fg-muted: #475569;
+  --theme-nav-glass: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.92) 0%,
+    rgba(255, 255, 255, 0.78) 100%
+  );
+  --theme-nav-border: rgba(15, 23, 42, 0.1);
+  --theme-surface: #ffffff;
+  --theme-surface-alt: #f1f5f9;
+  --theme-surface-card: #ffffff;
+  --theme-surface-card-solid: #ffffff;
+  --theme-text: #0f172a;
+  --theme-text-muted: #64748b;
+  --theme-text-body: #334155;
+  --theme-heading: #0f172a;
+  --theme-label: #2563eb;
+  --theme-accent: #3d7dff;
+  --theme-accent-dark: #2563eb;
+  --theme-border: rgba(15, 23, 42, 0.1);
+  --theme-border-strong: rgba(15, 23, 42, 0.14);
+  --theme-input-bg: #ffffff;
+  --theme-input-fg: #0f172a;
+  --theme-input-border: rgba(61, 125, 255, 0.35);
+  --theme-section-bg: #ffffff;
+  --theme-section-bg-alt: #f1f5f9;
+  --theme-section-mesh:
+    radial-gradient(ellipse 80% 50% at 15% 0%, rgba(147, 197, 253, 0.35), transparent 55%),
+    radial-gradient(ellipse 65% 45% at 95% 20%, rgba(196, 181, 253, 0.18), transparent 50%),
+    linear-gradient(180deg, #eef2fa 0%, #f8fafc 100%);
+  --theme-features-bg:
+    radial-gradient(ellipse 80% 50% at 20% 0%, rgba(147, 197, 253, 0.35), transparent 55%),
+    linear-gradient(180deg, #eef2fa 0%, #f8fafc 100%);
+  --theme-footer-bg: #f8fafc;
+  --theme-footer-fg: #0f172a;
+  --theme-footer-muted: #475569;
+  --theme-ui-card-bg: rgba(255, 255, 255, 0.88);
+  --theme-ui-card-fg: #0f172a;
+  --theme-ui-card-muted: #64748b;
+  --theme-mobile-overlay: rgba(248, 250, 252, 0.96);
+  --theme-toggle-bg: rgba(15, 23, 42, 0.06);
+  --theme-toggle-fg: #0f172a;
+  --theme-toggle-border: rgba(15, 23, 42, 0.12);
+}
+
+.modern-body {
+  background: var(--theme-page-bg);
+  color: var(--theme-text);
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+/* ── Theme toggle ── */
+.csc-theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: 1px solid var(--theme-toggle-border);
+  border-radius: 999px;
+  background: var(--theme-toggle-bg);
+  color: var(--theme-toggle-fg);
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.csc-theme-toggle:hover {
+  background: color-mix(in srgb, var(--theme-toggle-bg) 70%, var(--theme-accent) 30%);
+}
+
+.csc-theme-toggle__icon {
+  display: grid;
+  place-items: center;
+  line-height: 0;
+}
+
+.csc-theme-toggle--mobile {
+  width: 100%;
+  justify-content: center;
+  margin-top: 8px;
+  padding: 14px 18px;
+  font-size: 14px;
+}
+
+@media (max-width: 959px) {
+  .csc-theme-toggle--nav .csc-theme-toggle__label {
+    display: none;
+  }
+
+  .csc-theme-toggle--nav {
+    padding: 8px;
+  }
+
+  .csc-landing__header-actions .csc-theme-toggle--nav {
+    display: none;
+  }
+
+  .csc-theme-toggle--mobile-bar {
+    display: inline-flex;
+    margin-left: auto;
+    margin-right: 8px;
+  }
+}
+
+@media (min-width: 960px) {
+  .csc-theme-toggle--mobile-bar {
+    display: none;
+  }
+
+  .csc-landing__header-actions .csc-theme-toggle--nav {
+    margin-right: 4px;
+  }
+}
+
+/* ── Landing shell ── */
+.csc-landing {
+  background: var(--theme-page-bg);
+  color: var(--theme-text);
+}
+
+.csc-landing__header {
+  background: var(--theme-nav-glass);
+  border-bottom-color: var(--theme-nav-border);
+}
+
+@media (min-width: 960px) {
+  .csc-landing__header {
+    border-color: var(--theme-nav-border);
+  }
+}
+
+html[data-theme='light'] .csc-landing__header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.5) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.csc-landing__brand {
+  color: var(--theme-nav-fg);
+}
+
+.csc-landing__brand-mark {
+  color: #3d7dff;
+}
+
+html[data-theme='light'] .csc-landing__brand-mark {
+  color: #2563eb;
+}
+
+.csc-landing__nav a,
+.csc-landing__login {
+  color: var(--theme-nav-fg-muted);
+}
+
+.csc-landing__nav a:hover,
+.csc-landing__nav a.is-active,
+.csc-landing__login:hover {
+  color: var(--theme-nav-fg);
+}
+
+html[data-theme='light'] .csc-landing__nav a:hover,
+html[data-theme='light'] .csc-landing__nav a.is-active {
+  background: rgba(61, 125, 255, 0.08);
+  border-color: rgba(61, 125, 255, 0.15);
+}
+
+.csc-landing__menu-btn {
+  background: var(--theme-toggle-bg);
+  border-color: var(--theme-toggle-border);
+}
+
+.csc-landing__menu-btn span {
+  background: var(--theme-nav-fg);
+}
+
+.csc-landing__hero {
+  color: var(--theme-hero-fg);
+}
+
+.csc-landing__hero-bg {
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(120, 160, 255, 0.07) 0,
+      rgba(120, 160, 255, 0.07) 1px,
+      transparent 1px,
+      transparent 18px
+    ),
+    radial-gradient(ellipse 80% 60% at 50% -10%, rgba(61, 125, 255, 0.18), transparent 55%),
+    radial-gradient(ellipse 55% 50% at 95% 35%, rgba(61, 125, 255, 0.12), transparent 52%),
+    linear-gradient(180deg, #0c1224 0%, var(--theme-hero-bg) 55%, var(--theme-hero-bg-end) 100%);
+}
+
+html[data-theme='light'] .csc-landing__hero-bg {
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(61, 125, 255, 0.06) 0,
+      rgba(61, 125, 255, 0.06) 1px,
+      transparent 1px,
+      transparent 18px
+    ),
+    radial-gradient(ellipse 80% 60% at 50% -10%, rgba(147, 197, 253, 0.4), transparent 55%),
+    radial-gradient(ellipse 55% 50% at 95% 35%, rgba(147, 197, 253, 0.25), transparent 52%),
+    linear-gradient(180deg, #eef2fa 0%, var(--theme-hero-bg) 55%, var(--theme-hero-bg-end) 100%);
+}
+
+html[data-theme='light'] .csc-landing__hero-shot {
+  border-color: rgba(255, 255, 255, 0.85);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    0 24px 60px rgba(15, 23, 42, 0.12),
+    0 0 0 1px rgba(61, 125, 255, 0.1);
+}
+
+.csc-landing__eyebrow {
+  color: var(--theme-hero-fg-muted);
+  border-color: var(--theme-border-strong);
+}
+
+html[data-theme='light'] .csc-landing__eyebrow {
+  color: var(--theme-label);
+  background: rgba(61, 125, 255, 0.08);
+  border-color: rgba(61, 125, 255, 0.2);
+}
+
+.csc-landing__hero-lead {
+  color: var(--theme-hero-fg-muted);
+}
+
+.csc-landing__ui {
+  background: var(--theme-ui-card-bg);
+  color: var(--theme-ui-card-fg);
+  border-color: var(--theme-border-strong);
+}
+
+html[data-theme='dark'] .csc-landing__ui {
+  backdrop-filter: var(--lg-blur);
+  -webkit-backdrop-filter: var(--lg-blur);
+}
+
+.csc-landing__ui-label,
+.csc-landing__ui-meta,
+.csc-landing__ui-scan {
+  color: var(--theme-ui-card-muted);
+}
+
+.csc-landing__ui--glass {
+  color: var(--theme-hero-fg);
+}
+
+html[data-theme='light'] .csc-landing__ui--glass {
+  background: linear-gradient(145deg, rgba(61, 125, 255, 0.12) 0%, rgba(255, 255, 255, 0.9) 100%);
+  color: var(--theme-heading);
+}
+
+html[data-theme='light'] .csc-landing__ui--glass .csc-landing__ui-label,
+html[data-theme='light'] .csc-landing__ui--glass .csc-landing__ui-meta {
+  color: var(--theme-text-muted);
+}
+
+.csc-landing__features {
+  background: var(--theme-features-bg);
+}
+
+.csc-landing__features-title {
+  color: var(--theme-heading);
+}
+
+.csc-landing__feature-list {
+  border-top-color: var(--theme-border);
+}
+
+.csc-landing__feature-row {
+  border-bottom-color: var(--theme-border);
+}
+
+.csc-landing__feature-row:hover {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+html[data-theme='light'] .csc-landing__feature-row:hover {
+  background: rgba(61, 125, 255, 0.05);
+}
+
+.csc-landing__feature-body h3 {
+  color: var(--theme-heading);
+}
+
+.csc-landing__feature-body p {
+  color: var(--theme-text-muted);
+}
+
+.csc-landing__feature-row:hover .csc-landing__feature-body p {
+  color: var(--theme-text);
+}
+
+.csc-landing__feature-arrow {
+  border-color: var(--theme-border-strong);
+  color: var(--theme-text-muted);
+}
+
+.csc-landing__feature-row:hover .csc-landing__feature-arrow {
+  color: var(--theme-accent);
+  border-color: rgba(61, 125, 255, 0.35);
+  background: rgba(61, 125, 255, 0.1);
+}
+
+html[data-theme='light'] .csc-landing__feature-row:hover .csc-landing__feature-arrow {
+  color: #ffffff;
+  background: var(--theme-accent);
+  border-color: var(--theme-accent);
+}
+
+html[data-theme='light'] .csc-landing__footer-links a:hover {
+  color: var(--theme-accent-dark);
+}
+
+html[data-theme='dark'] .csc-landing__footer-links a:hover {
+  color: #ffffff;
+}
+
+.csc-landing__mobile {
+  background: var(--theme-mobile-overlay);
+}
+
+html[data-theme='light'] .csc-landing__mobile-panel a {
+  color: var(--theme-heading);
+  background: #ffffff;
+  border-color: var(--theme-border);
+}
+
+html[data-theme='dark'] .csc-landing__mobile-panel a {
+  color: var(--theme-hero-fg);
+}
+
+.csc-landing__header.is-menu-open {
+  background: var(--theme-nav-glass);
+}
+
+/* ── Subpages ── */
+.csc-site {
+  background: var(--theme-page-bg);
+  color: var(--theme-text);
+}
+
+.csc-site__hero {
+  color: var(--theme-hero-fg);
+}
+
+.csc-site__hero::before {
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(120, 160, 255, 0.07) 0,
+      rgba(120, 160, 255, 0.07) 1px,
+      transparent 1px,
+      transparent 18px
+    ),
+    radial-gradient(ellipse 80% 60% at 50% -20%, rgba(61, 125, 255, 0.2), transparent 55%),
+    linear-gradient(180deg, #0c1224 0%, var(--theme-hero-bg) 100%);
+}
+
+html[data-theme='light'] .csc-site__hero::before {
+  background:
+    radial-gradient(ellipse 80% 60% at 50% -20%, rgba(147, 197, 253, 0.4), transparent 55%),
+    linear-gradient(180deg, #eef2fa 0%, #f8fafc 100%);
+}
+
+html[data-theme='light'] .csc-site__hero {
+  color: var(--theme-heading);
+}
+
+.csc-site__hero-label {
+  color: var(--theme-hero-fg-muted);
+  border-color: var(--theme-border-strong);
+}
+
+html[data-theme='light'] .csc-site__hero-label {
+  color: var(--theme-label);
+  background: rgba(61, 125, 255, 0.08);
+}
+
+.csc-site__hero-lede {
+  color: var(--theme-hero-fg-muted);
+}
+
+html[data-theme='light'] .csc-site__hero-lede {
+  color: var(--theme-text-body);
+}
+
+.csc-site__hero-sub {
+  color: var(--theme-hero-fg-subtle);
+}
+
+html[data-theme='light'] .csc-site__hero-sub {
+  color: var(--theme-text-muted);
+}
+
+.csc-site .csc-section:first-of-type,
+.csc-site .csc-section,
+.csc-site .csc-section--alt,
+.csc-site .csc-cta {
+  background: var(--theme-section-mesh);
+}
+
+html[data-theme='dark'] .csc-site .csc-section:first-of-type,
+html[data-theme='dark'] .csc-site .csc-section,
+html[data-theme='dark'] .csc-site .csc-section--alt,
+html[data-theme='dark'] .csc-site .csc-cta {
+  background: var(--theme-section-bg);
+}
+
+html[data-theme='dark'] .csc-site .csc-section--alt,
+html[data-theme='dark'] .csc-site .csc-cta {
+  background: var(--theme-section-bg-alt);
+}
+
+.csc-site .csc-section__label,
+.csc-site .spread-label,
+.csc-site .cta-label {
+  color: var(--theme-label);
+}
+
+.csc-site .csc-section__title,
+.csc-site .spread-title,
+.csc-site .csc-cta__title {
+  color: var(--theme-heading);
+}
+
+.csc-site .csc-section__desc,
+.csc-site .page-section-desc,
+.csc-site .csc-section__lede,
+.csc-site .csc-lead,
+.csc-site .story p {
+  color: var(--theme-text-body);
+}
+
+.csc-site .csc-card,
+.csc-site .feature-card,
+.csc-site .course-detail-card,
+.csc-site .timing-list,
+.csc-site .map-wrap,
+.csc-site .enquiry-form-card {
+  background: var(--theme-surface-card);
+  border-color: var(--theme-border);
+  color: var(--theme-text);
+}
+
+html[data-theme='dark'] .csc-site .csc-card,
+html[data-theme='dark'] .csc-site .feature-card,
+html[data-theme='dark'] .csc-site .course-detail-card,
+html[data-theme='dark'] .csc-site .enquiry-form-card {
+  backdrop-filter: var(--lg-blur);
+  -webkit-backdrop-filter: var(--lg-blur);
+}
+
+.csc-site .csc-card__title,
+.csc-site .feature-card-title {
+  color: var(--theme-heading);
+}
+
+.csc-site .csc-card__desc,
+.csc-site .feature-card-desc {
+  color: var(--theme-text-muted);
+}
+
+.csc-site .form-label {
+  color: var(--theme-text-body);
+}
+
+.csc-site .form-input {
+  background: var(--theme-input-bg);
+  border-color: var(--theme-input-border);
+  color: var(--theme-input-fg);
+}
+
+.csc-site .form-input::placeholder {
+  color: var(--theme-accent);
+  opacity: 0.45;
+}
+
+.csc-site .csc-quote,
+.csc-site .story blockquote {
+  background: var(--theme-surface-alt);
+  color: var(--theme-text);
+  border-color: var(--theme-border);
+}
+
+.csc-site .csc-quote span,
+.csc-site .story blockquote span {
+  color: var(--theme-text-muted);
+}
+
+.csc-site .course-detail-tag {
+  background: var(--theme-surface-alt);
+  color: var(--theme-text-body);
+}
+
+.csc-site .csc-btn--text {
+  color: var(--theme-text-muted);
+}
+
+.csc-site .csc-btn--text:hover {
+  color: var(--theme-heading);
+}
+
+.csc-site .csc-cta__desc {
+  color: var(--theme-text-muted);
+}
+
+html[data-theme='dark'] .csc-site .csc-cta__inner {
+  background: linear-gradient(145deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 58, 95, 0.9) 100%);
+}
+
+html[data-theme='dark'] .csc-site .csc-cta__title,
+html[data-theme='dark'] .csc-site .csc-cta__desc {
+  color: #ffffff;
+}
+
+html[data-theme='dark'] .csc-site .csc-cta__desc {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+html[data-theme='dark'] .csc-site .csc-cta .csc-section__label {
+  color: #93c5fd;
+}
+
+html[data-theme='light'] .csc-site .csc-cta__inner {
+  background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
+}
+
+html[data-theme='light'] .csc-site .csc-cta__title,
+html[data-theme='light'] .csc-site .csc-cta__desc {
+  color: #ffffff;
+}
+
+/* Login glass portal overrides theme toggle — always frosted over photo */
+html[data-theme='light'] .csc-site.csc-site--login .csc-login-panel,
+html[data-theme='light'] .csc-site.csc-site--login .login-form-panel,
+html[data-theme='light'] .csc-site.csc-site--login .login-glass-card {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+html[data-theme='light'] .csc-site.csc-site--login .login-glass-form .form-input,
+html[data-theme='light'] .csc-site.csc-site--login .login-glass-form .form-label {
+  color: #ffffff;
+}
+
+/* Prevent legacy globals footer styles from bleeding in */
+footer.csc-landing__footer {
+  background: var(--theme-footer-bg);
+  color: var(--theme-footer-fg);
+}
+
+html[data-theme='light'] .csc-site.csc-site--login {
+  background: #070b16;
+}
+
+.csc-site .csc-strip__label {
+  color: var(--theme-hero-fg);
+}
+
+.csc-site .csc-strip__num {
+  color: var(--theme-accent);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   DARK MODE — force readable text on all content surfaces
+   ═══════════════════════════════════════════════════════════ */
+
+html[data-theme='dark'] .csc-site .timing-list,
+html[data-theme='dark'] .csc-site .timing-row,
+html[data-theme='dark'] .csc-site .course-detail-body,
+html[data-theme='dark'] .csc-site .course-detail-feature,
+html[data-theme='dark'] .csc-site .course-detail-label,
+html[data-theme='dark'] .csc-site .form-section-title {
+  color: var(--theme-text-body);
+}
+
+html[data-theme='dark'] .csc-site .timing-row span:first-child,
+html[data-theme='dark'] .csc-site .csc-card__title,
+html[data-theme='dark'] .csc-site .feature-card-title,
+html[data-theme='dark'] .csc-site .form-section-title,
+html[data-theme='dark'] .csc-site .form-label {
+  color: #ffffff;
+}
+
+html[data-theme='dark'] .csc-site .timing-row span:last-child,
+html[data-theme='dark'] .csc-site .course-detail-feature .idx,
+html[data-theme='dark'] .csc-site .csc-card__num,
+html[data-theme='dark'] .csc-site .feature-card-num {
+  color: #93c5fd;
+}
+
+html[data-theme='dark'] .csc-site .csc-card__desc,
+html[data-theme='dark'] .csc-site .feature-card-desc,
+html[data-theme='dark'] .csc-site .course-detail-tag {
+  color: #94a3b8;
+}
+
+/* Light mode — dark text on light surfaces */
+html[data-theme='light'] .csc-site .timing-row span:first-child,
+html[data-theme='light'] .csc-site .form-section-title,
+html[data-theme='light'] .csc-site .form-label {
+  color: #0f172a;
+}
+
+html[data-theme='light'] .csc-site .timing-row,
+html[data-theme='light'] .csc-site .course-detail-feature {
+  color: #334155;
+}
+
+html[data-theme='light'] .csc-site .timing-row span:last-child {
+  color: #2563eb;
+}

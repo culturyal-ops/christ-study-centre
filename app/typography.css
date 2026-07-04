@@ -1,0 +1,67 @@
+/* Editorial type stack — Cormorant headlines, Pinyon accents, Inter UI/body */
+
+:root {
+  --font-display: var(--font-cormorant), Georgia, 'Times New Roman', serif;
+  --font-serif: var(--font-cormorant), Georgia, serif;
+  --font-script-accent: var(--font-script), 'Segoe Script', cursive;
+  --font-ui: var(--font-inter), system-ui, sans-serif;
+  --font-body: var(--font-inter), system-ui, sans-serif;
+}
+
+.csc-script {
+  font-family: var(--font-script-accent);
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* Site wordmark — bold sans like the original site */
+.csc-brand-name {
+  display: inline;
+  font-family: var(--font-ui);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  color: inherit;
+  white-space: nowrap;
+}
+
+.csc-brand-name--nav {
+  font-family: var(--font-display);
+  font-size: 1.08em;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.csc-brand-name--footer {
+  font-size: 1.35rem;
+}
+
+.csc-brand-name--hero {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.csc-brand-name--compact {
+  font-size: 0.95em;
+}
+
+.csc-serif-italic,
+.csc-serif em,
+em.csc-serif {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+}
+
+/* Display serif — large headings only */
+.csc-landing__hero-title,
+.csc-landing__features-title,
+.csc-site__hero-title,
+.csc-site .csc-section__title,
+.csc-site .spread-title,
+.csc-site .csc-cta__title,
+.csc-site .login-head-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}

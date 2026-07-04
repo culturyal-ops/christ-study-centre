@@ -1,0 +1,41 @@
+/* Shared scroll-reveal — content visible by default; animates when .revealed is added */
+
+html.motion-on [data-scroll-reveal],
+html.motion-on [data-reveal] {
+  transition:
+    opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html.motion-on [data-scroll-reveal]:not(.revealed),
+html.motion-on [data-reveal]:not(.revealed) {
+  opacity: 0;
+  transform: translateY(28px);
+}
+
+html.motion-on [data-scroll-reveal][data-reveal='left']:not(.revealed) {
+  transform: translateX(-32px) translateY(16px);
+}
+
+html.motion-on [data-scroll-reveal][data-reveal='right']:not(.revealed) {
+  transform: translateX(32px) translateY(16px);
+}
+
+html.motion-on [data-scroll-reveal][data-reveal='scale']:not(.revealed) {
+  transform: scale(0.96) translateY(20px);
+}
+
+html.motion-on [data-scroll-reveal].revealed,
+html.motion-on [data-reveal].revealed {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-scroll-reveal],
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}

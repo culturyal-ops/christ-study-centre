@@ -9,7 +9,9 @@ export function middleware(request: NextRequest) {
   const isPublicRoute = publicRoutes.some(route => pathname === route) || 
                        pathname.startsWith('/api/auth') ||
                        pathname.startsWith('/_next') ||
-                       pathname.startsWith('/favicon')
+                       pathname.startsWith('/favicon') ||
+                       pathname.startsWith('/videos/') ||
+                       pathname.startsWith('/images/')
 
   if (isPublicRoute) {
     return NextResponse.next()
@@ -32,5 +34,5 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)'],
+  matcher: ['/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|mp4|webm|mov)$).*)'],
 }

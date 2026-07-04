@@ -5,7 +5,7 @@ export default function Footer() {
     <footer>
       <div className="footer-masthead">
         <h2>Christ Study Centre</h2>
-        <p className="masthead-sub">Structured tuition. Measurable progress. Since 2013.</p>
+        <p className="masthead-sub">Tuition in Pala since 2013. CBSE, ICSE and SCERT.</p>
       </div>
 
       <div className="footer-grid">
@@ -21,8 +21,7 @@ export default function Footer() {
           <h4>Navigate</h4>
           <Link href="/courses">Courses</Link>
           <Link href="/#results">Results</Link>
-          <Link href="/#faculty">Faculty</Link>
-          <Link href="/#batches">Batches</Link>
+          <Link href="/#method">Method</Link>
           <Link href="/about">About</Link>
           <Link href="/contact">Contact</Link>
           <Link href="/login">Portal</Link>
