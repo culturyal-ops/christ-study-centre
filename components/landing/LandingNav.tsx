@@ -110,17 +110,19 @@ export default function LandingNav() {
               </a>
             </div>
 
-            <ThemeToggle variant="nav" className="csc-theme-toggle--mobile-bar" />
-            <button
-              type="button"
-              className={`csc-landing__menu-btn ${open ? 'is-open' : ''}`}
-              aria-label={open ? 'Close menu' : 'Open menu'}
-              aria-expanded={open}
-              onClick={() => setOpen(!open)}
-            >
-              <span />
-              <span />
-            </button>
+            <div className="csc-landing__header-mobile-actions">
+              <ThemeToggle variant="nav" className="csc-theme-toggle--mobile-bar" />
+              <button
+                type="button"
+                className={`csc-landing__menu-btn ${open ? 'is-open' : ''}`}
+                aria-label={open ? 'Close menu' : 'Open menu'}
+                aria-expanded={open}
+                onClick={() => setOpen(!open)}
+              >
+                <span />
+                <span />
+              </button>
+            </div>
           </div>
         </header>
       </div>

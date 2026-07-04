@@ -12,10 +12,11 @@ export function useNavScrollSolid(shellRef: RefObject<HTMLElement | null>) {
 
     const update = () => {
       const y = window.scrollY
-      const linear = Math.min(1, Math.max(0, (y - 4) / 56))
+      const linear = Math.min(1, Math.max(0, (y - 2) / 32))
       const progress = 1 - (1 - linear) ** 2
       shell.style.setProperty('--nav-scroll', progress.toFixed(3))
-      shell.classList.toggle('is-scrolled', progress > 0.04)
+      shell.classList.toggle('is-scrolled', progress > 0.03)
+      shell.classList.toggle('is-solid', progress > 0.72)
     }
 
     const onScroll = () => {
@@ -30,7 +31,7 @@ export function useNavScrollSolid(shellRef: RefObject<HTMLElement | null>) {
       window.removeEventListener('scroll', onScroll)
       cancelAnimationFrame(raf)
       shell.style.removeProperty('--nav-scroll')
-      shell.classList.remove('is-scrolled')
+      shell.classList.remove('is-scrolled', 'is-solid')
     }
   }, [shellRef])
 }

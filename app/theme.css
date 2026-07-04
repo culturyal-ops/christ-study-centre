@@ -161,8 +161,7 @@ html[data-theme='light'] {
 
   .csc-theme-toggle--mobile-bar {
     display: inline-flex;
-    margin-left: auto;
-    margin-right: 8px;
+    margin: 0;
   }
 }
 
@@ -192,7 +191,7 @@ html[data-theme='light'] {
 }
 
 html[data-theme='light'] .csc-landing__nav-shell.is-scrolled .csc-landing__header {
-  background: rgba(255, 255, 255, calc(0.62 + var(--nav-scroll) * 0.36));
+  background: rgba(255, 255, 255, calc(0.72 + var(--nav-scroll) * 0.26));
 }
 
 @media (min-width: 960px) {
@@ -215,8 +214,9 @@ html[data-theme='light'] .csc-landing__header::before {
   color: var(--theme-nav-fg);
 }
 
-html[data-theme='light'] .csc-landing__brand-mark {
-  box-shadow: 0 1px 4px rgba(15, 23, 42, 0.08);
+.csc-landing__brand-mark {
+  background: transparent;
+  box-shadow: none;
 }
 
 .csc-landing__nav a,
