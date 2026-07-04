@@ -1,10 +1,7 @@
 import Link from 'next/link'
-import { requireAuth } from '@/lib/auth-utils'
 import { getAdminDashboardStats } from '@/lib/actions/register'
 
 export default async function AdminDashboardPage() {
-  await requireAuth(['ADMIN'])
-
   const stats = await getAdminDashboardStats()
 
   const modules = [

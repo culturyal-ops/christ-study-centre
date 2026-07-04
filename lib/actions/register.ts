@@ -59,14 +59,27 @@ export async function ensureBatches() {
   )
 }
 
-async function ensureBatchesIfNeeded() {
-  const expectedBatchCount = ALL_BATCH_NAMES.length
-  const [batchCount, subjectCount] = await Promise.all([
-    prisma.batch.count(),
-    prisma.subject.count(),
-  ])
+async function ensureSubjectsIfNeeded() {
+  const existing = await prisma.subject.findMany({ select: { name: true } })
+  const have = new Set(existing.map((s) => s.name))
+  const missing = DEFAULT_SUBJECTS.filter((name) => !have.has(name))
+  if (missing.length === 0) return
 
-  if (batchCount >= expectedBatchCount && subjectCount >= DEFAULT_SUBJECTS.length) {
+  await Promise.all(
+    missing.map((name) =>
+      prisma.subject.upsert({
+        where: { name },
+        update: {},
+        create: { name },
+      })
+    )
+  )
+}
+
+async function ensureBatchesIfNeeded() {
+  const batchCount = await prisma.batch.count()
+  if (batchCount >= ALL_BATCH_NAMES.length) {
+    await ensureSubjectsIfNeeded()
     return
   }
 
@@ -100,7 +113,6 @@ export async function getAdminDashboardStats() {
 
 export async function getRegisterBootstrap() {
   await requireAdmin()
-  await ensureBatchesIfNeeded()
 
   const batches = await prisma.batch.findMany({
     orderBy: { sortOrder: 'asc' },
