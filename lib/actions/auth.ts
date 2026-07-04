@@ -36,7 +36,7 @@ export async function loginAction(
       const user = await prisma.user.findUnique({ where: { username } })
       if (user && (await bcryptjs.compare(password, user.passwordHash))) {
         redirectTo =
-          user.role === 'ADMIN' ? '/admin/dashboard' : '/student/dashboard'
+          user.role === 'ADMIN' ? '/admin/register' : '/student/dashboard'
       }
     } catch (error) {
       console.error('Login redirect lookup failed:', error)

@@ -1,7 +1,6 @@
 import RegisterApp from '@/components/register/RegisterApp'
 import { getRegisterBootstrap } from '@/lib/actions/register'
 import { requireAuth } from '@/lib/auth-utils'
-import '@/app/portal-register.css'
 
 export default async function AdminRegisterPage() {
   await requireAuth(['ADMIN'])

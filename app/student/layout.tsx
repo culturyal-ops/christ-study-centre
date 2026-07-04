@@ -2,6 +2,9 @@ import Link from 'next/link'
 import { signOut } from '@/auth'
 import { requireAuth } from '@/lib/auth-utils'
 import BrandName from '@/components/BrandName'
+import ThemeToggle from '@/components/ThemeToggle'
+import '@/app/portal.css'
+import '@/app/portal-register.css'
 
 export default async function StudentLayout({
   children,
@@ -11,7 +14,7 @@ export default async function StudentLayout({
   const session = await requireAuth(['STUDENT'])
 
   return (
-    <div className="portal-shell">
+    <div className="csc-portal portal-shell">
       <header className="portal-header">
         <div className="portal-header-inner">
           <Link href="/student/dashboard" className="portal-brand">
@@ -23,18 +26,21 @@ export default async function StudentLayout({
             <Link href="/student/register">My profile</Link>
             <Link href="/">Public site</Link>
           </nav>
-          <div className="portal-user">
-            <span>{session.user.username}</span>
-            <form
-              action={async () => {
-                'use server'
-                await signOut({ redirectTo: '/login' })
-              }}
-            >
-              <button type="submit" className="portal-signout">
-                Sign out
-              </button>
-            </form>
+          <div className="portal-header-actions">
+            <ThemeToggle variant="nav" />
+            <div className="portal-user">
+              <span>{session.user.username}</span>
+              <form
+                action={async () => {
+                  'use server'
+                  await signOut({ redirectTo: '/login' })
+                }}
+              >
+                <button type="submit" className="portal-signout">
+                  Sign out
+                </button>
+              </form>
+            </div>
           </div>
         </div>
       </header>

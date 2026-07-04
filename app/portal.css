@@ -1,0 +1,359 @@
+/* Admin / student portal — matches dark landing site */
+
+.csc-portal.portal-shell {
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse 80% 50% at 50% -20%, rgba(61, 125, 255, 0.14), transparent 55%),
+    var(--theme-page-bg, #070b16);
+  color: var(--theme-text, #f8fafc);
+  font-family: var(--font-inter), system-ui, sans-serif;
+}
+
+.csc-portal .portal-header {
+  border-bottom: 1px solid var(--theme-nav-border, rgba(255, 255, 255, 0.18));
+  background: var(
+    --theme-nav-glass,
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.14) 0%,
+      rgba(255, 255, 255, 0.04) 45%,
+      rgba(255, 255, 255, 0.08) 100%
+    )
+  );
+  backdrop-filter: var(--lg-blur-nav, blur(40px) saturate(180%));
+  -webkit-backdrop-filter: var(--lg-blur-nav, blur(40px) saturate(180%));
+}
+
+.csc-portal .portal-header-inner {
+  max-width: 1240px;
+  gap: 20px;
+}
+
+.csc-portal .portal-brand {
+  color: var(--theme-text, #f8fafc);
+}
+
+.csc-portal .portal-brand .csc-brand-name {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: -0.01em;
+}
+
+.csc-portal .portal-brand span {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: var(--theme-accent, #3d7dff);
+}
+
+.csc-portal .portal-nav {
+  gap: 20px;
+}
+
+.csc-portal .portal-nav a {
+  color: var(--theme-text-muted, #94a3b8);
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
+  transition: color 0.2s;
+}
+
+.csc-portal .portal-nav a:hover {
+  color: var(--theme-text, #f8fafc);
+}
+
+.csc-portal .portal-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto;
+}
+
+.csc-portal .portal-user {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--theme-text-muted, #94a3b8);
+}
+
+.csc-portal .portal-signout {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--theme-accent, #3d7dff);
+}
+
+.csc-portal .portal-signout:hover {
+  border-bottom-color: var(--theme-accent, #3d7dff);
+}
+
+.csc-portal .portal-main {
+  max-width: 1240px;
+  padding: 40px 24px 80px;
+}
+
+.csc-portal .portal-page-head {
+  margin-bottom: 32px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--theme-border, rgba(255, 255, 255, 0.12));
+}
+
+.csc-portal .portal-page-head .spread-label {
+  color: var(--theme-label, #93c5fd);
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+}
+
+.csc-portal .portal-page-head h1 {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(1.75rem, 4vw, 2.35rem);
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: -0.02em;
+  color: var(--theme-heading, #ffffff);
+}
+
+.csc-portal .portal-page-head p {
+  color: var(--theme-text-muted, #94a3b8);
+  max-width: 52ch;
+}
+
+.csc-portal .portal-stats {
+  gap: 12px;
+  background: transparent;
+  border: none;
+  margin-bottom: 32px;
+}
+
+.csc-portal .portal-stat {
+  background: var(--theme-surface-card, rgba(255, 255, 255, 0.08));
+  border: 1px solid var(--theme-border, rgba(255, 255, 255, 0.12));
+  border-radius: 16px;
+  padding: 24px 20px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.csc-portal .portal-stat-num {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(1.75rem, 4vw, 2rem);
+  font-weight: 600;
+  color: var(--theme-heading, #ffffff);
+}
+
+.csc-portal .portal-stat-lbl {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--theme-text-muted, #94a3b8);
+}
+
+.csc-portal .portal-modules {
+  gap: 12px;
+  background: transparent;
+  border: none;
+}
+
+.csc-portal .portal-module {
+  background: var(--theme-surface-card, rgba(255, 255, 255, 0.08));
+  border: 1px solid var(--theme-border, rgba(255, 255, 255, 0.12));
+  border-radius: 16px;
+  padding: 24px 22px;
+  transition: border-color 0.2s, background 0.2s, transform 0.2s;
+}
+
+.csc-portal a.portal-module:hover {
+  border-color: rgba(61, 125, 255, 0.35);
+  background: rgba(61, 125, 255, 0.1);
+  transform: translateY(-1px);
+}
+
+.csc-portal .portal-module-head h2 {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--theme-heading, #ffffff);
+}
+
+.csc-portal .portal-module-status {
+  color: var(--theme-accent, #3d7dff);
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+}
+
+.csc-portal .portal-module p {
+  color: var(--theme-text-muted, #94a3b8);
+  font-size: 14px;
+}
+
+.csc-portal .portal-note {
+  color: var(--theme-text-muted, #94a3b8);
+}
+
+.csc-portal .portal-note a {
+  color: var(--theme-accent, #3d7dff);
+  font-weight: 600;
+}
+
+.csc-portal .portal-note a:hover {
+  border-bottom-color: var(--theme-accent, #3d7dff);
+}
+
+/* Register app — dark portal theme */
+.csc-portal .register-layout {
+  margin: -40px -24px -80px;
+}
+
+.csc-portal .register-sidebar {
+  background: rgba(255, 255, 255, 0.05);
+  border-right: 1px solid var(--theme-border, rgba(255, 255, 255, 0.12));
+}
+
+.csc-portal .register-sidebar h2 {
+  color: var(--theme-text-muted, #94a3b8);
+}
+
+.csc-portal .register-nav-btn {
+  color: var(--theme-text, #f8fafc);
+}
+
+.csc-portal .register-nav-btn:hover,
+.csc-portal .register-nav-btn.is-active {
+  background: rgba(61, 125, 255, 0.12);
+  color: var(--theme-accent, #3d7dff);
+}
+
+.csc-portal .register-toolbar h1 {
+  font-family: var(--font-display), Georgia, serif;
+  font-weight: 600;
+  color: var(--theme-heading, #ffffff);
+}
+
+.csc-portal .register-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--theme-border, rgba(255, 255, 255, 0.15));
+  color: var(--theme-text, #f8fafc);
+}
+
+.csc-portal .register-btn:hover {
+  border-color: rgba(61, 125, 255, 0.45);
+}
+
+.csc-portal .register-btn--primary {
+  background: var(--theme-accent, #3d7dff);
+  border-color: var(--theme-accent, #3d7dff);
+  color: #fff;
+}
+
+.csc-portal .register-btn--danger {
+  border-color: rgba(248, 113, 113, 0.45);
+  color: #fca5a5;
+}
+
+.csc-portal .register-stat {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--theme-border, rgba(255, 255, 255, 0.12));
+}
+
+.csc-portal .register-stat strong {
+  color: var(--theme-heading, #ffffff);
+}
+
+.csc-portal .register-stat span {
+  color: var(--theme-text-muted, #94a3b8);
+  opacity: 1;
+}
+
+.csc-portal .register-table-wrap {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: var(--theme-border, rgba(255, 255, 255, 0.12));
+}
+
+.csc-portal .register-table th {
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--theme-text-muted, #94a3b8);
+  opacity: 1;
+}
+
+.csc-portal .register-table td {
+  color: var(--theme-text-body, #cbd5e1);
+  border-bottom-color: var(--theme-border, rgba(255, 255, 255, 0.08));
+}
+
+.csc-portal .register-table tr:hover td {
+  background: rgba(61, 125, 255, 0.06);
+}
+
+.csc-portal .register-empty,
+.csc-portal .register-loading {
+  color: var(--theme-text-muted, #94a3b8);
+  opacity: 1;
+}
+
+.csc-portal .register-modal {
+  background: #111827;
+  border: 1px solid var(--theme-border, rgba(255, 255, 255, 0.12));
+  color: var(--theme-text, #f8fafc);
+}
+
+.csc-portal .register-form-grid input,
+.csc-portal .register-form-grid select,
+.csc-portal .register-form-grid textarea {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--theme-border, rgba(255, 255, 255, 0.15));
+  color: var(--theme-text, #f8fafc);
+}
+
+.csc-portal .register-expand {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: var(--theme-border, rgba(255, 255, 255, 0.1));
+}
+
+.csc-portal .register-chip {
+  background: rgba(61, 125, 255, 0.15);
+  color: var(--theme-text, #f8fafc);
+}
+
+.csc-portal .register-error {
+  color: #fca5a5;
+}
+
+@media (max-width: 640px) {
+  .csc-portal .portal-header-inner {
+    padding: 12px 16px;
+  }
+
+  .csc-portal .portal-nav {
+    display: flex;
+    order: 3;
+    width: 100%;
+    gap: 16px;
+    padding-top: 10px;
+    border-top: 1px solid var(--theme-border, rgba(255, 255, 255, 0.12));
+  }
+
+  .csc-portal .portal-header-actions {
+    margin-left: 0;
+  }
+
+  .csc-portal .portal-main {
+    padding: 28px 16px 64px;
+  }
+
+  .csc-portal .register-layout {
+    margin: -28px -16px -64px;
+  }
+}
