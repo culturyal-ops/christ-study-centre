@@ -3,7 +3,7 @@
 import { revalidatePath } from 'next/cache'
 import { auth } from '@/auth'
 import { prisma } from '@/lib/prisma'
-import { BATCH_GROUPS, DEFAULT_SUBJECTS } from '@/lib/register/constants'
+import { BATCH_GROUPS, ALL_BATCH_NAMES, DEFAULT_SUBJECTS } from '@/lib/register/constants'
 import { MAX_DOCUMENT_BYTES, parseBatchName } from '@/lib/register/utils'
 import { PaymentStatus, Prisma } from '@prisma/client'
 
@@ -31,25 +31,46 @@ function revalidateRegister() {
 }
 
 export async function ensureBatches() {
+  const batchOps: Promise<unknown>[] = []
   let order = 0
   for (const group of BATCH_GROUPS) {
     for (const name of group.batches) {
-      await prisma.batch.upsert({
-        where: { name },
-        update: { groupTitle: group.title, sortOrder: order },
-        create: { name, groupTitle: group.title, sortOrder: order },
-      })
+      const sortOrder = order
+      batchOps.push(
+        prisma.batch.upsert({
+          where: { name },
+          update: { groupTitle: group.title, sortOrder },
+          create: { name, groupTitle: group.title, sortOrder },
+        })
+      )
       order += 1
     }
   }
+  await Promise.all(batchOps)
 
-  for (const name of DEFAULT_SUBJECTS) {
-    await prisma.subject.upsert({
-      where: { name },
-      update: {},
-      create: { name },
-    })
+  await Promise.all(
+    DEFAULT_SUBJECTS.map((name) =>
+      prisma.subject.upsert({
+        where: { name },
+        update: {},
+        create: { name },
+      })
+    )
+  )
+}
+
+async function ensureBatchesIfNeeded() {
+  const expectedBatchCount = ALL_BATCH_NAMES.length
+  const [batchCount, subjectCount] = await Promise.all([
+    prisma.batch.count(),
+    prisma.subject.count(),
+  ])
+
+  if (batchCount >= expectedBatchCount && subjectCount >= DEFAULT_SUBJECTS.length) {
+    return
   }
+
+  await ensureBatches()
 }
 
 const studentInclude = {
@@ -58,9 +79,28 @@ const studentInclude = {
   registerDocuments: { orderBy: { uploadedAt: 'desc' as const } },
 } satisfies Prisma.StudentInclude
 
+export async function getAdminDashboardStats() {
+  await requireAdmin()
+
+  const [totalStudents, pendingCount, feesAgg] = await Promise.all([
+    prisma.student.count({ where: { deletedAt: null } }),
+    prisma.pendingAdmission.count(),
+    prisma.student.aggregate({
+      where: { deletedAt: null },
+      _sum: { feesAmountPaid: true },
+    }),
+  ])
+
+  return {
+    totalStudents,
+    pendingCount,
+    feesReceived: feesAgg._sum.feesAmountPaid ?? 0,
+  }
+}
+
 export async function getRegisterBootstrap() {
   await requireAdmin()
-  await ensureBatches()
+  await ensureBatchesIfNeeded()
 
   const batches = await prisma.batch.findMany({
     orderBy: { sortOrder: 'asc' },
@@ -355,7 +395,7 @@ export async function submitPendingAdmission(data: {
     throw new Error('Please fill required fields')
   }
 
-  await ensureBatches()
+  await ensureBatchesIfNeeded()
 
   const admission = await prisma.pendingAdmission.create({
     data: {
