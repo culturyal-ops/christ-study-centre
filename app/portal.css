@@ -56,7 +56,8 @@
   --portal-expand-border: rgba(255, 255, 255, 0.1);
 
   min-height: 100vh;
-  height: 100vh;
+  height: 100dvh;
+  max-height: 100dvh;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -185,11 +186,8 @@ html[data-theme='light'] .csc-portal.portal-shell {
   overflow-y: auto;
 }
 
-.csc-portal .portal-main:has(.register-layout) {
-  display: flex;
-  flex-direction: column;
+html.portal-register-active .csc-portal .portal-main {
   overflow: hidden;
-  padding-bottom: 24px;
 }
 
 .csc-portal .portal-page-head {

@@ -71,6 +71,14 @@ export default function RegisterApp({ bootstrap, mode, student: studentProp, ini
   })
   const [isSaving, startSaving] = useTransition()
 
+  useEffect(() => {
+    if (mode === 'student' && studentProp) return
+    document.documentElement.classList.add('portal-register-active')
+    return () => {
+      document.documentElement.classList.remove('portal-register-active')
+    }
+  }, [mode, studentProp])
+
   const currentBatch = view.startsWith('batch:') ? view.replace('batch:', '') : null
 
   const filterStudents = useCallback(

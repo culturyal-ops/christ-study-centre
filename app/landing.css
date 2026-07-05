@@ -1061,11 +1061,11 @@ html[data-theme='light'] .csc-landing__hero-portal-meta {
 @media (min-width: 960px) {
   .csc-landing__deck {
     grid-template-columns: 1fr 1.12fr 1fr;
-    align-items: end;
+    align-items: center;
     gap: 20px;
-    padding-top: 48px;
-    padding-bottom: 72px;
-    margin-bottom: -96px;
+    padding-top: 40px;
+    padding-bottom: 64px;
+    margin-bottom: -40px;
   }
 }
 
@@ -1328,7 +1328,7 @@ html[data-theme='light'] .csc-landing__hero-portal-meta {
 
 .csc-landing__ui-photo {
   position: relative;
-  height: 130px;
+  height: 112px;
   margin: 0 -22px;
 }
 
@@ -1420,14 +1420,14 @@ html[data-theme='light'] .csc-landing__hero-portal-meta {
 .csc-landing__video-section {
   position: relative;
   z-index: 1;
-  padding: 120px 0 80px;
+  padding: 100px 0 80px;
   overflow: visible;
   background: #0a0e1a;
 }
 
 @media (min-width: 960px) {
   .csc-landing__video-section {
-    padding: 140px 0 96px;
+    padding: 128px 0 96px;
   }
 }
 

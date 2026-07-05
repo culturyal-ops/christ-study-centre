@@ -33,7 +33,6 @@ export default function CoursesInteractive() {
     setSelectedSpecial(null)
     setBoard(course.boards[0] ?? '')
     setGrade(course.gradeOptions[0] ?? '')
-    document.getElementById('courses-enquiry')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }, [])
 
   const pickSpecial = useCallback((title: string) => {
@@ -41,6 +40,9 @@ export default function CoursesInteractive() {
     setSelectedCourse(null)
     setBoard('')
     setGrade('')
+  }, [])
+
+  const scrollToEnquiry = useCallback(() => {
     document.getElementById('courses-enquiry')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }, [])
 
@@ -60,19 +62,33 @@ export default function CoursesInteractive() {
         <p className="csc-section__desc csc-section__desc--spaced">
           Tap a programme to select it — your choice carries into the enquiry form below.
         </p>
+        {(selectedCourse || selectedSpecial) && (
+          <div className="courses-selection-bar">
+            <span>
+              Selected: <strong>{selectedCourse?.title ?? selectedSpecial}</strong>
+            </span>
+            <button type="button" className="courses-selection-bar__link" onClick={scrollToEnquiry}>
+              Go to enquiry form ↓
+            </button>
+          </div>
+        )}
         <div className="courses-detail-grid">
-          {courseProgrammes.map((course, idx) => (
-            <button
+          {courseProgrammes.map((course) => (
+            <div
               key={course.id}
-              type="button"
+              role="button"
+              tabIndex={0}
               className={`course-detail-card course-detail-card--selectable${selectedCourse?.id === course.id ? ' is-selected' : ''}`}
-              data-scroll-reveal
-              data-delay={String(idx * 0.08)}
               onClick={() => pickCourse(course)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault()
+                  pickCourse(course)
+                }
+              }}
             >
               <div className="course-detail-header">
-                <h3>{course.title}</h3>
-                <div className="grade">{course.grades}</div>
+                <div className="course-detail-grade-badge">{course.grades}</div>
                 <div className="course-detail-boards">
                   {course.boards.map((b) => (
                     <span key={b} className="course-detail-board">
@@ -100,10 +116,13 @@ export default function CoursesInteractive() {
                   ))}
                 </ul>
               </div>
-              <span className="course-detail-select-hint">
-                {selectedCourse?.id === course.id ? 'Selected ✓' : 'Select programme →'}
-              </span>
-            </button>
+              <div className="course-detail-footer">
+                <span className="course-detail-programme">{course.title}</span>
+                <span className="course-detail-select-hint">
+                  {selectedCourse?.id === course.id ? 'Selected ✓' : 'Select programme →'}
+                </span>
+              </div>
+            </div>
           ))}
         </div>
       </PageSection>
@@ -133,9 +152,12 @@ export default function CoursesInteractive() {
                 description={prog.desc}
                 delay={i}
               />
-              <span className="course-detail-select-hint">
-                {selectedSpecial === prog.title ? 'Selected ✓' : 'Select →'}
-              </span>
+              <div className="course-detail-footer course-detail-footer--special">
+                <span className="course-detail-programme">{prog.title}</span>
+                <span className="course-detail-select-hint">
+                  {selectedSpecial === prog.title ? 'Selected ✓' : 'Select →'}
+                </span>
+              </div>
             </div>
           ))}
         </div>

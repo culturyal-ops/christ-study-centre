@@ -842,9 +842,17 @@
 
 /* Course detail cards */
 .csc-site .courses-detail-grid {
-  gap: 20px;
+  gap: 24px;
   background: transparent;
   border: none;
+  grid-template-columns: 1fr;
+  align-items: stretch;
+}
+
+@media (min-width: 768px) {
+  .csc-site .courses-detail-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 .csc-site .course-detail-card {
@@ -852,11 +860,86 @@
   flex-direction: column;
   overflow: hidden;
   padding: 0;
+  min-height: 100%;
+  height: 100%;
+  border-radius: var(--lg-radius);
+  border: 1px solid var(--theme-border);
+}
+
+.csc-site .course-detail-card--selectable {
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.csc-site .course-detail-card--selectable:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--lg-glow-soft), 0 16px 40px rgba(61, 125, 255, 0.12);
+}
+
+.csc-site .course-detail-card--selectable.is-selected {
+  border-color: rgba(61, 125, 255, 0.55);
+  box-shadow:
+    0 0 0 2px rgba(61, 125, 255, 0.2),
+    var(--lg-glow-soft),
+    0 16px 48px rgba(61, 125, 255, 0.14);
+}
+
+.csc-site .course-detail-header {
+  background: linear-gradient(135deg, rgba(15, 23, 42, 0.92) 0%, rgba(30, 58, 95, 0.88) 100%);
+  backdrop-filter: blur(24px);
+  color: #fff;
+  border-radius: var(--lg-radius) var(--lg-radius) 0 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: var(--lg-rim);
+  padding: 28px 28px 24px;
+}
+
+.csc-site .course-detail-grade-badge {
+  font-family: var(--font-display), Georgia, serif;
+  font-size: clamp(1.35rem, 2.5vw, 1.75rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+.csc-site .course-detail-card.is-selected .course-detail-grade-badge {
+  color: #93c5fd;
 }
 
 .csc-site .course-detail-body {
-  padding: 28px 28px 32px;
+  padding: 28px 28px 24px;
   flex: 1;
+}
+
+.csc-site .course-detail-footer {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 28px 20px;
+  border-top: 1px solid var(--theme-border);
+  background: var(--theme-surface-alt);
+}
+
+.csc-site .course-detail-programme {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--theme-text-muted);
+}
+
+.csc-site .course-detail-card.is-selected .course-detail-programme {
+  color: var(--theme-accent);
 }
 
 .csc-site .course-detail-label {
@@ -890,7 +973,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-top: 14px;
+  margin-top: 16px;
 }
 
 .csc-site .course-detail-feature {
