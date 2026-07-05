@@ -768,10 +768,14 @@ html[data-theme='light'] .csc-landing__header-mobile-actions .csc-landing__menu-
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: 14px;
+  gap: 18px;
   width: 100%;
   max-width: 420px;
   margin: 36px auto 0;
+}
+
+.csc-landing__hero-portal + .csc-landing__batch-quiz {
+  margin-top: 14px;
 }
 
 @media (min-width: 960px) {
