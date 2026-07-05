@@ -187,7 +187,10 @@ html[data-theme='light'] .csc-portal.portal-shell {
 }
 
 html.portal-register-active .csc-portal .portal-main {
-  overflow: hidden;
+  overflow: hidden !important;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
 }
 
 .csc-portal .portal-page-head {

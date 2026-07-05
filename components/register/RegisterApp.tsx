@@ -227,21 +227,23 @@ export default function RegisterApp({ bootstrap, mode, student: studentProp, ini
 
   if (mode === 'student' && studentProp) {
     return (
-      <div className="register-main">
-        <div className="register-toolbar">
-          <h1>{studentProp.fullName}</h1>
-          <p style={{ opacity: 0.6, margin: 0 }}>
-            {studentProp.batch?.name ?? 'Student'} · Roll {studentProp.rollNo}
-          </p>
+      <div className="register-layout register-layout--solo">
+        <div className="register-main">
+          <div className="register-toolbar">
+            <h1>{studentProp.fullName}</h1>
+            <p style={{ opacity: 0.6, margin: 0 }}>
+              {studentProp.batch?.name ?? 'Student'} · Roll {studentProp.rollNo}
+            </p>
+          </div>
+          <StudentProfile student={studentProp} canEditMarks={false} canUploadDocs />
         </div>
-        <StudentProfile student={studentProp} canEditMarks={false} canUploadDocs />
       </div>
     )
   }
 
   return (
     <div className="register-layout">
-      <aside className="register-sidebar">
+      <aside className="register-sidebar" aria-label="Register navigation">
         <input
           type="search"
           className="register-search"
@@ -607,10 +609,13 @@ export default function RegisterApp({ bootstrap, mode, student: studentProp, ini
             aria-modal="true"
           >
             <h2>{editing ? 'Edit student' : 'Add student'}</h2>
-            <div className="register-form-grid">
-              <label>
-                Batch
+            <div className="register-form-grid register-form-grid--modal">
+              <div className="register-form-field">
+                <label className="register-form-label" htmlFor="reg-batch">
+                  Batch
+                </label>
                 <select
+                  id="reg-batch"
                   value={form.batchName}
                   onChange={(e) =>
                     setForm((f) => ({ ...f, batchName: e.target.value }))
@@ -622,57 +627,80 @@ export default function RegisterApp({ bootstrap, mode, student: studentProp, ini
                     </option>
                   ))}
                 </select>
-              </label>
-              <label>
-                Roll no.
+              </div>
+              <div className="register-form-field">
+                <label className="register-form-label" htmlFor="reg-roll">
+                  Roll no.
+                </label>
                 <input
+                  id="reg-roll"
                   type="number"
+                  min={1}
                   value={form.rollNo}
                   onChange={(e) =>
                     setForm((f) => ({ ...f, rollNo: Number(e.target.value) }))
                   }
                 />
-              </label>
-              <label>
-                Full name
+              </div>
+              <div className="register-form-field">
+                <label className="register-form-label" htmlFor="reg-name">
+                  Full name
+                </label>
                 <input
+                  id="reg-name"
                   value={form.fullName}
                   onChange={(e) =>
                     setForm((f) => ({ ...f, fullName: e.target.value }))
                   }
+                  placeholder="Student full name"
                   required
                 />
-              </label>
-              <label>
-                School
+              </div>
+              <div className="register-form-field">
+                <label className="register-form-label" htmlFor="reg-school">
+                  School
+                </label>
                 <input
+                  id="reg-school"
                   value={form.schoolName}
                   onChange={(e) =>
                     setForm((f) => ({ ...f, schoolName: e.target.value }))
                   }
+                  placeholder="School name"
                 />
-              </label>
-              <label>
-                Subjects
+              </div>
+              <div className="register-form-field">
+                <label className="register-form-label" htmlFor="reg-subjects">
+                  Subjects
+                </label>
                 <input
+                  id="reg-subjects"
                   value={form.subjectsText}
                   onChange={(e) =>
                     setForm((f) => ({ ...f, subjectsText: e.target.value }))
                   }
+                  placeholder="e.g. Physics, Chemistry, Maths"
                 />
-              </label>
-              <label>
-                Contact
+              </div>
+              <div className="register-form-field">
+                <label className="register-form-label" htmlFor="reg-contact">
+                  Contact
+                </label>
                 <input
+                  id="reg-contact"
                   value={form.contact}
                   onChange={(e) =>
                     setForm((f) => ({ ...f, contact: e.target.value }))
                   }
+                  placeholder="Phone or WhatsApp number"
                 />
-              </label>
-              <label>
-                Fees status
+              </div>
+              <div className="register-form-field">
+                <label className="register-form-label" htmlFor="reg-fees-status">
+                  Fees status
+                </label>
                 <select
+                  id="reg-fees-status"
                   value={form.feesStatus}
                   onChange={(e) =>
                     setForm((f) => ({
@@ -686,27 +714,37 @@ export default function RegisterApp({ bootstrap, mode, student: studentProp, ini
                   <option value="PARTIAL">Partial</option>
                   <option value="OVERDUE">Overdue</option>
                 </select>
-              </label>
-              <label>
-                Amount paid (₹)
+              </div>
+              <div className="register-form-field">
+                <label className="register-form-label" htmlFor="reg-amount-paid">
+                  Amount paid (₹)
+                </label>
                 <input
+                  id="reg-amount-paid"
                   type="number"
+                  min={0}
                   value={form.feesAmountPaid}
                   onChange={(e) =>
                     setForm((f) => ({ ...f, feesAmountPaid: e.target.value }))
                   }
+                  placeholder="0"
                 />
-              </label>
-              <label>
-                Remaining (₹)
+              </div>
+              <div className="register-form-field">
+                <label className="register-form-label" htmlFor="reg-remaining">
+                  Remaining (₹)
+                </label>
                 <input
+                  id="reg-remaining"
                   type="number"
+                  min={0}
                   value={form.feesRemaining}
                   onChange={(e) =>
                     setForm((f) => ({ ...f, feesRemaining: e.target.value }))
                   }
+                  placeholder="0"
                 />
-              </label>
+              </div>
             </div>
             {error && <p className="register-error">{error}</p>}
             <div className="register-modal-actions">

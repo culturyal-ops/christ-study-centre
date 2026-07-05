@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import FindYourBatch from '@/components/landing/FindYourBatch'
 
 export default function LandingHeroCopy() {
   return (
@@ -50,20 +51,26 @@ export default function LandingHeroCopy() {
         </Link>
 
         <Link href="/login" className="csc-landing__hero-portal csc-landing__hero-portal--highlight">
-          <span className="csc-landing__hero-portal-badge">Already enrolled?</span>
-          <span className="csc-landing__hero-portal-icon" aria-hidden="true">
-            ◉
+          <span className="csc-landing__hero-portal-head">
+            <span className="csc-landing__hero-portal-badge">Already enrolled?</span>
           </span>
-          <span className="csc-landing__hero-portal-body">
-            <span className="csc-landing__hero-portal-label">Student portal</span>
-            <span className="csc-landing__hero-portal-meta">
-              Marks, attendance &amp; fee status
+          <span className="csc-landing__hero-portal-row">
+            <span className="csc-landing__hero-portal-icon" aria-hidden="true">
+              ◉
+            </span>
+            <span className="csc-landing__hero-portal-body">
+              <span className="csc-landing__hero-portal-label">Student portal</span>
+              <span className="csc-landing__hero-portal-meta">
+                Marks, attendance &amp; fee status
+              </span>
+            </span>
+            <span className="csc-landing__hero-portal-arrow" aria-hidden="true">
+              →
             </span>
           </span>
-          <span className="csc-landing__hero-portal-arrow" aria-hidden="true">
-            →
-          </span>
         </Link>
+
+        <FindYourBatch />
       </div>
     </div>
   )

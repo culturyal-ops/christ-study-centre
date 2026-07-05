@@ -42,6 +42,20 @@ export const DEFAULT_SUBJECTS = [
   'All Subjects',
 ] as const
 
+/** Display label for batch group titles in public UI */
+export function batchGroupLabel(title: (typeof BATCH_GROUPS)[number]['title']) {
+  if (title === 'STATE') return 'State Syllabus'
+  return title
+}
+
+export const BATCH_TIME_OPTIONS = [
+  { id: 'morning', label: 'Morning', detail: '5:30 AM – 12:00 PM' },
+  { id: 'afternoon', label: 'Afternoon', detail: '12:00 PM – 4:00 PM' },
+  { id: 'evening', label: 'Evening', detail: '4:00 PM – 8:30 PM' },
+] as const
+
+export type BatchTimeOption = (typeof BATCH_TIME_OPTIONS)[number]['id']
+
 export type RegisterView =
   | 'home'
   | 'fees'

@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { motion, useReducedMotion } from 'framer-motion'
 import LandingFeaturesTitle from '@/components/landing/LandingFeaturesTitle'
 import SectionReveal from '@/components/motion/SectionReveal'
 
@@ -48,24 +49,41 @@ const items = [
 ]
 
 export default function LandingFeatures() {
+  const reduced = useReducedMotion()
+
   return (
     <SectionReveal className="csc-landing__features" id="features">
       <div className="csc-landing__wrap">
         <p className="csc-landing__eyebrow">Why families choose us</p>
         <LandingFeaturesTitle />
 
-        <div className="csc-landing__feature-list">
-          {items.map((item, i) => (
-            <Link key={item.title} href={item.href} className="csc-landing__feature-row">
-              <span className="csc-landing__feature-num">{String(i + 1).padStart(2, '0')}</span>
-              <div className="csc-landing__feature-body">
-                <h3>{item.title}</h3>
-                <p>{item.desc}</p>
-              </div>
-              <span className="csc-landing__feature-arrow" aria-hidden="true">
-                ↗
-              </span>
-            </Link>
+        <div className="csc-landing__feature-grid">
+          {items.map((item, index) => (
+            <motion.div
+              key={item.title}
+              className="csc-landing__feature-card-wrap"
+              initial={reduced ? false : { opacity: 0, y: 20 }}
+              whileInView={reduced ? undefined : { opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{
+                duration: 0.5,
+                delay: index * 0.15,
+                ease: 'easeOut',
+              }}
+            >
+              <Link href={item.href} className="csc-landing__feature-card">
+                <span className="csc-landing__feature-num">
+                  {String(index + 1).padStart(2, '0')}
+                </span>
+                <div className="csc-landing__feature-body">
+                  <h3>{item.title}</h3>
+                  <p>{item.desc}</p>
+                </div>
+                <span className="csc-landing__feature-arrow" aria-hidden="true">
+                  ↗
+                </span>
+              </Link>
+            </motion.div>
           ))}
         </div>
       </div>

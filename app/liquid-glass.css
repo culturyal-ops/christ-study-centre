@@ -1,37 +1,209 @@
-/* Liquid glass — frosted depth, rim light, soft blue glow */
+/* Liquid Glass — Apple iOS-style refractive material
+   Thick curved glass: strong blur + specular highlight + layered depth */
 
-:root {
-  --lg-blur: blur(48px) saturate(200%);
-  --lg-blur-heavy: blur(64px) saturate(220%);
-  --lg-blur-nav: blur(40px) saturate(180%);
-  --lg-radius: 24px;
+:root,
+html[data-theme='dark'] {
+  --lg-blur: blur(40px) saturate(200%);
+  --lg-blur-heavy: blur(64px) saturate(240%);
+  --lg-blur-nav: blur(44px) saturate(190%);
+  --lg-radius: 32px;
+  --lg-radius-sm: 28px;
   --lg-radius-pill: 999px;
-  --lg-rim: inset 0 1px 0 rgba(255, 255, 255, 0.55);
-  --lg-rim-strong: inset 0 1px 0 rgba(255, 255, 255, 0.85);
-  --lg-glow-blue: 0 12px 40px rgba(61, 125, 255, 0.18);
-  --lg-glow-soft: 0 8px 32px rgba(15, 23, 42, 0.08);
+
+  /* Specular streak — diagonal light reflection */
+  --lg-specular: linear-gradient(
+    128deg,
+    rgba(255, 255, 255, 0.38) 0%,
+    rgba(255, 255, 255, 0.14) 16%,
+    rgba(255, 255, 255, 0.04) 32%,
+    transparent 52%,
+    transparent 100%
+  );
+
+  /* Inner rim + curved surface catch-light */
+  --lg-rim: inset 0 1px 1px rgba(255, 255, 255, 0.42);
+  --lg-rim-strong: inset 0 1px 1px rgba(255, 255, 255, 0.55);
+  --lg-rim-top: inset 0 14px 28px rgba(255, 255, 255, 0.07);
+  --lg-rim-bottom: inset 0 -1px 0 rgba(0, 0, 0, 0.12);
+
+  /* Outer depth */
+  --lg-glow-blue: 0 0 32px rgba(61, 125, 255, 0.22);
+  --lg-glow-soft: 0 8px 32px rgba(0, 0, 0, 0.14), 0 2px 8px rgba(0, 0, 0, 0.08);
+  --lg-glow-lift: 0 16px 48px rgba(61, 125, 255, 0.2), 0 8px 32px rgba(0, 0, 0, 0.12);
+
+  /* Material fill — blue ambient bleed at edges */
+  --lg-glass-bg: linear-gradient(
+    148deg,
+    rgba(255, 255, 255, 0.16) 0%,
+    rgba(147, 197, 253, 0.08) 38%,
+    rgba(255, 255, 255, 0.05) 68%,
+    rgba(61, 125, 255, 0.1) 100%
+  );
+  --lg-glass-bg-card: linear-gradient(
+    148deg,
+    rgba(255, 255, 255, 0.11) 0%,
+    rgba(61, 125, 255, 0.07) 42%,
+    rgba(15, 23, 42, 0.42) 100%
+  );
+  --lg-glass-bg-card-hover: linear-gradient(
+    148deg,
+    rgba(255, 255, 255, 0.14) 0%,
+    rgba(61, 125, 255, 0.1) 40%,
+    rgba(15, 23, 42, 0.52) 100%
+  );
+  --lg-glass-bg-portal: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.12) 0%,
+    rgba(61, 125, 255, 0.08) 55%,
+    rgba(255, 255, 255, 0.06) 100%
+  );
+  --lg-glass-bg-portal-highlight: linear-gradient(
+    135deg,
+    rgba(61, 125, 255, 0.24) 0%,
+    rgba(255, 255, 255, 0.12) 48%,
+    rgba(110, 231, 183, 0.07) 100%
+  );
+  --lg-glass-bg-nav: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.14) 0%,
+    rgba(255, 255, 255, 0.04) 45%,
+    rgba(255, 255, 255, 0.08) 100%
+  );
+  --lg-glass-bg-overlay: rgba(6, 10, 20, 0.88);
+  --lg-glass-bg-menu-item: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.12) 0%,
+    rgba(61, 125, 255, 0.06) 55%,
+    rgba(255, 255, 255, 0.06) 100%
+  );
+
+  --lg-glass-border: rgba(255, 255, 255, 0.4);
+  --lg-glass-border-strong: rgba(255, 255, 255, 0.48);
+
+  --lg-glass-shadow: var(--lg-glow-blue), var(--lg-glow-soft), var(--lg-rim), var(--lg-rim-top), var(--lg-rim-bottom);
+  --lg-glass-shadow-soft: var(--lg-glow-blue), var(--lg-glow-soft), var(--lg-rim), var(--lg-rim-top);
+  --lg-glass-shadow-hover: var(--lg-glow-lift), var(--lg-rim-strong), var(--lg-rim-top), var(--lg-rim-bottom);
+
+  --lg-nav-float-shadow: 0 8px 32px rgba(0, 0, 0, 0.28), 0 2px 8px rgba(0, 0, 0, 0.14);
+
+  --lg-cta-glow: 0 0 40px rgba(59, 130, 246, 0.35), 0 12px 48px rgba(61, 125, 255, 0.45), var(--lg-rim);
+  --lg-cta-glow-hover: 0 0 48px rgba(59, 130, 246, 0.42), 0 16px 52px rgba(61, 125, 255, 0.5), var(--lg-rim-strong);
+  --lg-accent-ambient: 0 0 40px rgba(59, 130, 246, 0.3);
 }
 
 html[data-theme='light'] {
-  --lg-rim: inset 0 1px 0 rgba(255, 255, 255, 0.92);
-  --lg-rim-strong: inset 0 1px 0 rgba(255, 255, 255, 1);
-  --lg-glow-blue: 0 14px 44px rgba(61, 125, 255, 0.22);
-  --lg-glow-soft: 0 10px 36px rgba(61, 125, 255, 0.1);
+  --lg-specular: linear-gradient(
+    128deg,
+    rgba(255, 255, 255, 0.72) 0%,
+    rgba(255, 255, 255, 0.28) 18%,
+    rgba(255, 255, 255, 0.08) 34%,
+    transparent 54%,
+    rgba(147, 197, 253, 0.04) 100%
+  );
+
+  --lg-rim: inset 0 1px 1px rgba(255, 255, 255, 0.95);
+  --lg-rim-strong: inset 0 1px 1px rgba(255, 255, 255, 1);
+  --lg-rim-top: inset 0 12px 24px rgba(255, 255, 255, 0.55);
+  --lg-rim-bottom: inset 0 -1px 0 rgba(15, 23, 42, 0.06);
+
+  --lg-glow-blue: 0 0 30px rgba(59, 130, 246, 0.14), 0 14px 44px rgba(61, 125, 255, 0.12);
+  --lg-glow-soft: 0 8px 32px rgba(15, 23, 42, 0.08), 0 2px 8px rgba(15, 23, 42, 0.04);
+  --lg-glow-lift: 0 0 36px rgba(59, 130, 246, 0.18), 0 16px 40px rgba(61, 125, 255, 0.14);
+
+  --lg-glass-bg: linear-gradient(
+    148deg,
+    rgba(255, 255, 255, 0.88) 0%,
+    rgba(224, 242, 254, 0.55) 40%,
+    rgba(248, 250, 252, 0.72) 68%,
+    rgba(196, 181, 253, 0.08) 100%
+  );
+  --lg-glass-bg-card: linear-gradient(
+    148deg,
+    rgba(255, 255, 255, 0.86) 0%,
+    rgba(224, 242, 254, 0.45) 45%,
+    rgba(241, 245, 249, 0.72) 100%
+  );
+  --lg-glass-bg-card-hover: linear-gradient(
+    148deg,
+    rgba(255, 255, 255, 0.94) 0%,
+    rgba(224, 242, 254, 0.52) 42%,
+    rgba(248, 250, 252, 0.86) 100%
+  );
+  --lg-glass-bg-portal: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.82) 0%,
+    rgba(224, 242, 254, 0.48) 52%,
+    rgba(255, 255, 255, 0.68) 100%
+  );
+  --lg-glass-bg-portal-highlight: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.78) 0%,
+    rgba(224, 242, 254, 0.55) 48%,
+    rgba(61, 125, 255, 0.1) 100%
+  );
+  --lg-glass-bg-nav: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.82) 0%,
+    rgba(248, 250, 252, 0.62) 48%,
+    rgba(255, 255, 255, 0.72) 100%
+  );
+  --lg-glass-bg-overlay: rgba(248, 250, 252, 0.92);
+  --lg-glass-bg-menu-item: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.86) 0%,
+    rgba(224, 242, 254, 0.42) 52%,
+    rgba(255, 255, 255, 0.72) 100%
+  );
+
+  --lg-glass-border: rgba(255, 255, 255, 0.65);
+  --lg-glass-border-strong: rgba(255, 255, 255, 0.78);
+
+  --lg-glass-shadow: var(--lg-glow-blue), var(--lg-glow-soft), var(--lg-rim), var(--lg-rim-top), var(--lg-rim-bottom);
+  --lg-glass-shadow-soft: var(--lg-glow-blue), var(--lg-glow-soft), var(--lg-rim), var(--lg-rim-top);
+  --lg-glass-shadow-hover: var(--lg-glow-lift), var(--lg-rim-strong), var(--lg-rim-top), var(--lg-rim-bottom);
+
+  --lg-nav-float-shadow: 0 8px 32px rgba(15, 23, 42, 0.08), 0 2px 8px rgba(15, 23, 42, 0.04);
+
+  --lg-cta-glow: 0 0 30px rgba(59, 130, 246, 0.2), 0 12px 48px rgba(61, 125, 255, 0.28), var(--lg-rim);
+  --lg-cta-glow-hover: 0 0 40px rgba(59, 130, 246, 0.26), 0 16px 52px rgba(61, 125, 255, 0.34), var(--lg-rim-strong);
+  --lg-accent-ambient: 0 0 30px rgba(59, 130, 246, 0.15);
 }
 
+/* ── Shared specular overlay on glass surfaces ──
+   NOTE: do NOT include ::after on header — that pseudo is reserved for scroll/solid overlay */
 .lg-shine::before,
-.csc-landing__header::after,
-.csc-site__hero-label::after {
+.csc-landing__header::before,
+.csc-landing__ui::before,
+.csc-landing__hero-portal::before,
+.csc-landing__batch-quiz::before,
+.csc-landing__feature-card::before,
+.csc-landing__mobile-panel a::before,
+.csc-landing__header-mobile-actions::before,
+.csc-site__hero-label::before,
+.csc-site .csc-card::before,
+.csc-site .feature-card::before,
+.csc-site .course-detail-card::before,
+.csc-site .enquiry-form-card::before,
+.csc-site .csc-cta__inner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--lg-specular);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.csc-landing__hero-cta::before {
   content: '';
   position: absolute;
   inset: 0;
   border-radius: inherit;
   background: linear-gradient(
-    145deg,
-    rgba(255, 255, 255, 0.42) 0%,
-    rgba(255, 255, 255, 0.06) 38%,
-    transparent 55%,
-    rgba(255, 255, 255, 0.12) 100%
+    128deg,
+    rgba(255, 255, 255, 0.35) 0%,
+    rgba(255, 255, 255, 0.1) 28%,
+    transparent 52%
   );
   pointer-events: none;
 }

@@ -1,6 +1,5 @@
-/* Register app — scoped liquid glass (must stay under .csc-portal) */
+/* Register app — independent scroll: shell fixed, sidebar + main each overflow-y-auto */
 
-/* Lock page scroll: only .register-main (and sidebar nav) scroll inside the shell */
 html.portal-register-active,
 html.portal-register-active body {
   overflow: hidden !important;
@@ -11,28 +10,73 @@ html.portal-register-active .csc-portal.portal-shell {
   height: 100dvh;
   max-height: 100dvh;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
+html.portal-register-active .csc-portal .portal-nav-shell {
+  position: relative;
+  flex-shrink: 0;
+}
+
+/* Below navbar: row wrapper — no page scroll */
 html.portal-register-active .csc-portal .portal-main {
   flex: 1;
   min-height: 0;
   overflow: hidden !important;
   display: flex;
   flex-direction: column;
-  padding-top: 16px;
-  padding-bottom: 16px;
+  max-width: 1240px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 12px 20px 16px;
 }
 
 .csc-portal .register-layout {
-  display: grid;
-  grid-template-columns: minmax(240px, 280px) minmax(0, 1fr);
-  grid-template-rows: minmax(0, 1fr);
-  gap: 18px;
+  display: flex;
   flex: 1;
+  flex-direction: row;
+  align-items: stretch;
+  gap: 18px;
   min-height: 0;
-  height: auto;
-  margin: 0;
   overflow: hidden;
+  width: 100%;
+}
+
+.csc-portal .register-sidebar {
+  width: 16rem;
+  flex-shrink: 0;
+  height: 100%;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  padding: 18px 14px 24px;
+  border-radius: 22px;
+  background: var(--portal-panel);
+  border: 1px solid var(--portal-panel-border);
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+  box-shadow: var(--portal-shadow), var(--portal-rim);
+}
+
+.csc-portal .register-main {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+  overflow-x: auto;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  padding: 26px 26px 40px;
+  border-radius: 22px;
+  background: var(--portal-panel);
+  border: 1px solid var(--portal-panel-border);
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
+  box-shadow: var(--portal-shadow), var(--portal-rim);
 }
 
 @media (max-width: 960px) {
@@ -49,47 +93,35 @@ html.portal-register-active .csc-portal .portal-main {
   }
 
   html.portal-register-active .csc-portal .portal-main {
-    overflow-y: auto !important;
-    display: block;
+    overflow: hidden !important;
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100dvh - 72px);
   }
 
   .csc-portal .register-layout {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto minmax(0, 1fr);
+    flex-direction: column;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .csc-portal .register-sidebar {
+    width: 100%;
     height: auto;
-    overflow: visible;
+    max-height: min(42vh, 320px);
+    flex-shrink: 0;
+  }
+
+  .csc-portal .register-main {
+    flex: 1;
+    min-height: 0;
+    height: auto;
   }
 }
 
-.csc-portal .register-sidebar {
-  align-self: stretch;
-  min-height: 0;
-  max-height: none;
-  height: 100%;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  padding: 18px 14px 24px;
-  border-radius: 22px;
-  background: var(--portal-panel);
-  border: 1px solid var(--portal-panel-border);
-  backdrop-filter: blur(40px) saturate(180%);
-  -webkit-backdrop-filter: blur(40px) saturate(180%);
-  box-shadow: var(--portal-shadow), var(--portal-rim);
-}
-
-.csc-portal .register-main {
-  padding: 26px 26px 40px;
-  border-radius: 22px;
-  min-height: 0;
-  height: 100%;
-  overflow-x: auto;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  background: var(--portal-panel);
-  border: 1px solid var(--portal-panel-border);
-  backdrop-filter: blur(40px) saturate(180%);
-  -webkit-backdrop-filter: blur(40px) saturate(180%);
-  box-shadow: var(--portal-shadow), var(--portal-rim);
+.csc-portal .register-layout--solo .register-main {
+  width: 100%;
 }
 
 .csc-portal .register-search {
@@ -803,44 +835,40 @@ html[data-theme='light'] .csc-portal .register-row-btn:hover {
 .csc-portal .register-form-grid,
 .admission-card .register-form-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 14px 16px;
+  gap: 16px;
 }
 
-.admission-card .register-form-grid {
-  grid-template-columns: repeat(2, 1fr);
-}
-
-.csc-portal .register-modal .register-form-grid {
+.csc-portal .register-form-grid--modal {
+  grid-template-columns: 1fr;
   margin-top: 18px;
 }
 
-.csc-portal .register-form-grid label,
-.admission-card .register-form-grid label {
+@media (min-width: 640px) {
+  .csc-portal .register-form-grid--modal {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.admission-card .register-form-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.csc-portal .register-form-field {
   display: flex;
   flex-direction: column;
   gap: 6px;
+  min-width: 0;
+}
+
+.csc-portal .register-form-label,
+.csc-portal .register-form-grid label,
+.admission-card .register-form-grid label {
+  display: block;
   font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--portal-fg-muted);
-}
-
-.csc-portal .register-modal-actions {
-  display: flex;
-  gap: 10px;
-  justify-content: flex-end;
-  margin-top: 20px;
-  padding-top: 16px;
-  border-top: 1px solid var(--portal-divider);
-}
-
-@media (max-width: 640px) {
-  .csc-portal .register-form-grid,
-  .admission-card .register-form-grid {
-    grid-template-columns: 1fr;
-  }
 }
 
 .csc-portal .register-form-grid input,
@@ -856,14 +884,23 @@ html[data-theme='light'] .csc-portal .register-row-btn:hover {
   font: inherit;
 }
 
-@media (max-width: 960px) {
-  .csc-portal .register-main {
-    max-height: none;
-    overflow-y: visible;
-  }
+.csc-portal .register-form-grid input::placeholder {
+  color: var(--portal-input-placeholder);
+  opacity: 1;
+}
 
-  .csc-portal .register-sidebar {
-    max-height: min(42vh, 320px);
+.csc-portal .register-modal-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--portal-divider);
+}
+
+@media (max-width: 640px) {
+  .admission-card .register-form-grid {
+    grid-template-columns: 1fr;
   }
 }
 
