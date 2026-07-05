@@ -36,7 +36,7 @@ export default function Footer() {
 
         <div className="footer-col">
           <h4>Hours</h4>
-          <p>Mon – Sat: 4:00 PM – 8:00 PM</p>
+          <p>Mon – Sat: 5:30 AM – 8:30 PM</p>
           <p>Sunday: Closed</p>
         </div>
       </div>

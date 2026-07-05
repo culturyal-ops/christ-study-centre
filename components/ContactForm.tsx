@@ -1,8 +1,19 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
-export default function ContactForm() {
+export type ContactFormPreset = {
+  studentGrade?: string
+  board?: string
+  subjects?: string
+  programme?: string
+}
+
+type ContactFormProps = {
+  preset?: ContactFormPreset
+}
+
+export default function ContactForm({ preset }: ContactFormProps = {}) {
   const [formData, setFormData] = useState({
     parentName: '',
     phone: '',
@@ -11,7 +22,19 @@ export default function ContactForm() {
     subjects: '',
     preferredTime: '',
     additionalDetails: '',
+    programme: '',
   })
+
+  useEffect(() => {
+    if (!preset) return
+    setFormData((prev) => ({
+      ...prev,
+      ...(preset.studentGrade !== undefined ? { studentGrade: preset.studentGrade } : {}),
+      ...(preset.board !== undefined ? { board: preset.board } : {}),
+      ...(preset.subjects !== undefined ? { subjects: preset.subjects } : {}),
+      ...(preset.programme !== undefined ? { programme: preset.programme } : {}),
+    }))
+  }, [preset?.studentGrade, preset?.board, preset?.subjects, preset?.programme])
 
   const isComplete =
     formData.parentName &&
@@ -25,7 +48,7 @@ export default function ContactForm() {
 
 Parent Name: ${formData.parentName || '_____'}
 Phone: ${formData.phone || '_____'}
-Student Grade: ${formData.studentGrade || '_____'}
+${formData.programme ? `Programme: ${formData.programme}\n` : ''}Student Grade: ${formData.studentGrade || '_____'}
 Board: ${formData.board || '_____'}
 Subjects Needed: ${formData.subjects || '_____'}
 Preferred Timing: ${formData.preferredTime || '_____'}
@@ -162,10 +185,10 @@ ${formData.additionalDetails ? `Additional Details:\n${formData.additionalDetail
               style={selectStyle}
             >
               <option value="">Select preferred timing</option>
-              <option value="4:00 PM - 5:00 PM">4:00 PM - 5:00 PM</option>
-              <option value="5:00 PM - 6:00 PM">5:00 PM - 6:00 PM</option>
-              <option value="6:00 PM - 7:00 PM">6:00 PM - 7:00 PM</option>
-              <option value="7:00 PM - 8:00 PM">7:00 PM - 8:00 PM</option>
+              <option value="5:30 AM - 8:00 AM">5:30 AM - 8:00 AM (Morning)</option>
+              <option value="8:00 AM - 12:00 PM">8:00 AM - 12:00 PM</option>
+              <option value="12:00 PM - 4:00 PM">12:00 PM - 4:00 PM</option>
+              <option value="4:00 PM - 8:30 PM">4:00 PM - 8:30 PM (Evening)</option>
               <option value="Flexible">Flexible / Any timing</option>
             </select>
           </div>

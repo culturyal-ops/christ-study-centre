@@ -7,7 +7,7 @@ import { images } from '@/lib/images'
 
 export default function LandingHero() {
   return (
-    <section className="csc-landing__hero overflow-x-hidden" id="hero">
+    <section className="csc-landing__hero" id="hero">
       <div className="csc-landing__hero-bg" aria-hidden="true" />
 
       <div className="csc-landing__wrap csc-landing__hero-shell">

@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import BrandName from '@/components/BrandName'
 import SectionReveal from '@/components/motion/SectionReveal'
+import { CENTRE_HOURS_FOOTER } from '@/lib/site-info'
 
 const programmes = [
   'CBSE & ICSE coaching',
@@ -8,7 +9,7 @@ const programmes = [
   'Chapter-wise tracking',
   'Monthly parent reports',
   'Grades 3 to Plus Two',
-  'Small evening batches',
+  'Small batch coaching',
 ]
 
 export default function LandingFooter() {
@@ -26,7 +27,7 @@ export default function LandingFooter() {
           <p className="csc-landing__footer-tagline">
             Structured coaching with progress families can see every week.
           </p>
-          <p className="csc-landing__footer-meta">Pala, Kerala · Mon to Sat, 4pm to 8pm</p>
+          <p className="csc-landing__footer-meta">{CENTRE_HOURS_FOOTER}</p>
         </div>
 
         <div className="csc-landing__footer-col">

@@ -1658,6 +1658,106 @@ footer { padding: 0; background: var(--ink); color: var(--chalk); }
   flex-shrink: 0; padding-top: 2px;
 }
 
+.course-detail-card--selectable {
+  cursor: pointer;
+  border: none;
+  text-align: left;
+  width: 100%;
+  font: inherit;
+  color: inherit;
+  position: relative;
+}
+.course-detail-card--selectable.is-selected {
+  outline: 2px solid rgba(61, 125, 255, 0.55);
+  outline-offset: -2px;
+  box-shadow: 0 12px 40px rgba(61, 125, 255, 0.14);
+}
+.course-detail-select-hint {
+  display: block;
+  padding: 12px 32px 20px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted-gold);
+}
+.course-detail-card--selectable.is-selected .course-detail-select-hint,
+.courses-special-pick.is-selected .course-detail-select-hint {
+  color: #2563eb;
+}
+
+.courses-special-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+@media (max-width: 1024px) {
+  .courses-special-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .courses-special-grid { grid-template-columns: 1fr; }
+}
+.courses-special-pick {
+  cursor: pointer;
+  border-radius: inherit;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.courses-special-pick:hover { transform: translateY(-2px); }
+.courses-special-pick.is-selected {
+  outline: 2px solid rgba(61, 125, 255, 0.55);
+  outline-offset: 2px;
+  border-radius: 16px;
+}
+.courses-special-pick .csc-card { height: 100%; }
+
+.courses-enquiry-wrap {
+  display: grid;
+  gap: 24px;
+}
+.courses-enquiry-picks {
+  padding: 24px 28px;
+  border: 1px solid var(--line);
+  background: var(--warm-white);
+}
+.courses-enquiry-picks__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.courses-enquiry-picks__head .form-section-title { margin-bottom: 0; padding-bottom: 0; border: none; }
+.courses-enquiry-clear {
+  border: none;
+  background: none;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted-gold);
+  cursor: pointer;
+}
+.courses-enquiry-empty {
+  margin: 0;
+  color: rgba(17, 17, 17, 0.55);
+  font-size: 15px;
+  line-height: 1.6;
+}
+.courses-enquiry-summary { display: grid; gap: 16px; }
+.courses-enquiry-chip {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(61, 125, 255, 0.12);
+  color: #1d4ed8;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
 .contact-cards-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));

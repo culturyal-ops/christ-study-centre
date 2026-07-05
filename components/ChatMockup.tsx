@@ -6,7 +6,7 @@ type Bubble = { id: number; type: 'parent' | 'centre'; text: string }
 
 const SCRIPT: Omit<Bubble, 'id'>[] = [
   { type: 'parent', text: 'Hi — need Class X tuition for Maths & Science' },
-  { type: 'centre', text: 'Hello! Mon–Sat batches, 4–8 PM. CBSE or SCERT?' },
+  { type: 'centre', text: 'Hello! Mon–Sat, 5:30 AM–8:30 PM. CBSE or SCERT?' },
   { type: 'parent', text: 'CBSE please' },
   { type: 'centre', text: '✅ Noted! Batch details on WhatsApp shortly.' },
 ]

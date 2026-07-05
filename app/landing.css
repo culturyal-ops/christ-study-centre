@@ -440,11 +440,17 @@ html[data-theme='light'] .csc-landing__header-mobile-actions .csc-landing__menu-
 
 @media (max-width: 959px) {
   html[data-theme='light'] .csc-landing__header {
-    background: #ffffff;
-    backdrop-filter: blur(24px) saturate(180%);
-    -webkit-backdrop-filter: blur(24px) saturate(180%);
-    border-bottom: 1px solid rgba(15, 23, 42, 0.1);
-    box-shadow: 0 1px 0 rgba(15, 23, 42, 0.06), 0 8px 28px rgba(15, 23, 42, 0.08);
+    background: linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.82) 0%,
+      rgba(255, 255, 255, 0.62) 100%
+    );
+    backdrop-filter: var(--lg-blur-nav);
+    -webkit-backdrop-filter: var(--lg-blur-nav);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.72);
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.9),
+      0 8px 32px rgba(61, 125, 255, 0.1);
   }
 
   html[data-theme='light'] .csc-landing__brand {
@@ -457,7 +463,11 @@ html[data-theme='light'] .csc-landing__header-mobile-actions .csc-landing__menu-
   }
 
   html[data-theme='light'] .csc-landing__nav-shell.is-scrolled .csc-landing__header {
-    background: #ffffff;
+    background: linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.9) 0%,
+      rgba(255, 255, 255, 0.72) 100%
+    );
   }
 
   html[data-theme='dark'] .csc-landing__nav-shell.is-scrolled .csc-landing__header {
@@ -465,9 +475,11 @@ html[data-theme='light'] .csc-landing__header-mobile-actions .csc-landing__menu-
   }
 
   html[data-theme='light'] .csc-landing__header-mobile-actions {
-    background: rgba(15, 23, 42, 0.05);
-    border-color: rgba(15, 23, 42, 0.14);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.55);
+    border-color: rgba(255, 255, 255, 0.78);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    box-shadow: var(--lg-glow-soft), var(--lg-rim);
   }
 
   html[data-theme='dark'] .csc-landing__header-mobile-actions {
@@ -572,9 +584,8 @@ html[data-theme='light'] .csc-landing__header-mobile-actions .csc-landing__menu-
   position: relative;
   z-index: 5;
   padding-top: calc(var(--csc-nav-h) + env(safe-area-inset-top, 0px));
-  padding-bottom: 48px;
-  overflow-x: hidden;
-  overflow-y: visible;
+  padding-bottom: 0;
+  overflow: visible;
   color: var(--csc-white);
 }
 
@@ -998,21 +1009,30 @@ html[data-theme='light'] .csc-landing__header-mobile-actions .csc-landing__menu-
 html[data-theme='light'] .csc-landing__hero-portal--highlight {
   background: linear-gradient(
     135deg,
-    rgba(61, 125, 255, 0.14) 0%,
-    rgba(255, 255, 255, 0.88) 55%,
-    rgba(110, 231, 183, 0.1) 100%
+    rgba(255, 255, 255, 0.72) 0%,
+    rgba(255, 255, 255, 0.48) 52%,
+    rgba(61, 125, 255, 0.14) 100%
   );
-  border-color: rgba(61, 125, 255, 0.35);
+  backdrop-filter: var(--lg-blur);
+  -webkit-backdrop-filter: var(--lg-blur);
+  border-color: rgba(255, 255, 255, 0.82);
   box-shadow:
+    var(--lg-glow-blue),
     var(--lg-glow-soft),
-    0 0 0 1px rgba(61, 125, 255, 0.12),
-    0 12px 36px rgba(61, 125, 255, 0.18);
+    var(--lg-rim-strong),
+    0 0 0 1px rgba(61, 125, 255, 0.12);
 }
 
 html[data-theme='light'] .csc-landing__hero-portal {
-  background: rgba(255, 255, 255, 0.72);
-  border-color: rgba(255, 255, 255, 0.85);
-  box-shadow: var(--lg-glow-soft), var(--lg-rim-strong);
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.72) 0%,
+    rgba(255, 255, 255, 0.48) 100%
+  );
+  backdrop-filter: var(--lg-blur);
+  -webkit-backdrop-filter: var(--lg-blur);
+  border-color: rgba(255, 255, 255, 0.82);
+  box-shadow: var(--lg-glow-blue), var(--lg-glow-soft), var(--lg-rim-strong);
 }
 
 html[data-theme='light'] .csc-landing__hero-portal-label {
@@ -1026,11 +1046,16 @@ html[data-theme='light'] .csc-landing__hero-portal-meta {
 /* ── Floating cards ── */
 .csc-landing__deck {
   position: relative;
-  z-index: 20;
+  z-index: 30;
   display: grid;
   gap: 16px;
-  padding: 32px 24px 48px;
-  margin-bottom: -120px;
+  padding: 32px 24px 56px;
+  margin-bottom: 0;
+  pointer-events: none;
+}
+
+.csc-landing__deck .csc-landing__ui {
+  pointer-events: auto;
 }
 
 @media (min-width: 960px) {
@@ -1039,8 +1064,8 @@ html[data-theme='light'] .csc-landing__hero-portal-meta {
     align-items: end;
     gap: 20px;
     padding-top: 48px;
-    padding-bottom: 64px;
-    margin-bottom: -140px;
+    padding-bottom: 72px;
+    margin-bottom: -96px;
   }
 }
 
@@ -1338,7 +1363,7 @@ html[data-theme='light'] .csc-landing__hero-portal-meta {
 /* ── Section dividers & scroll glow ── */
 .csc-section-divider {
   position: relative;
-  z-index: 3;
+  z-index: 25;
   width: 100%;
   height: 1px;
   overflow: hidden;
@@ -1395,14 +1420,14 @@ html[data-theme='light'] .csc-landing__hero-portal-meta {
 .csc-landing__video-section {
   position: relative;
   z-index: 1;
-  padding: 72px 0 80px;
-  overflow: hidden;
+  padding: 120px 0 80px;
+  overflow: visible;
   background: #0a0e1a;
 }
 
 @media (min-width: 960px) {
   .csc-landing__video-section {
-    padding: 80px 0 96px;
+    padding: 140px 0 96px;
   }
 }
 

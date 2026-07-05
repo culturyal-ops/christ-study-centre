@@ -9,6 +9,7 @@ import FeatureCard from '@/components/FeatureCard'
 import CTABand from '@/components/CTABand'
 import { delayAttr } from '@/lib/motion'
 import { images } from '@/lib/images'
+import { CENTRE_HOURS, CENTRE_HOURS_LINE } from '@/lib/site-info'
 
 export default function ContactPage() {
   return (
@@ -17,7 +18,7 @@ export default function ContactPage() {
         category="Admissions / Enquiries"
         title="Get in touch"
         lede="Send an enquiry directly to WhatsApp."
-        subtitle="We reply during centre hours. Mon to Sat, 4 PM to 8 PM. 52A, RV Road, Njondimakkal, Pala."
+        subtitle={`We reply during centre hours. ${CENTRE_HOURS_LINE}. 52A, RV Road, Njondimakkal, Pala.`}
         image={images.contactHero}
         imageAlt="Students collaborating at Christ Study Centre"
       />
@@ -25,7 +26,7 @@ export default function ContactPage() {
       <InstitutionalStrip
         items={[
           { num: '01', label: 'WhatsApp Enquiries' },
-          { num: '02', label: 'Mon – Sat · 4–8 PM' },
+          { num: '02', label: `Mon – Sat · 5:30 AM – 8:30 PM` },
           { num: '03', label: 'RV Road, Pala' },
           { num: '04', label: 'All Boards' },
         ]}
@@ -65,7 +66,7 @@ export default function ContactPage() {
           <FeatureCard
             index="03"
             title="Hours"
-            description="Mon to Sat: 4:00 PM to 8:00 PM. Sunday: Closed."
+            description={`${CENTRE_HOURS.daysShort}: ${CENTRE_HOURS.range}. ${CENTRE_HOURS.closed}`}
             delay={2}
           />
           <FeatureCard

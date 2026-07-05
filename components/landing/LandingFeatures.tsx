@@ -32,7 +32,7 @@ const items = [
   },
   {
     title: 'Fixed timetable',
-    desc: 'Mon to Sat evening batches. One hour per subject. Sunday closed.',
+    desc: 'Mon to Sat batches from 5:30 AM to 8:30 PM. One hour per subject. Sunday closed.',
     href: '/contact',
   },
   {
