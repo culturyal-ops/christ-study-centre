@@ -204,7 +204,17 @@ html.portal-register-active .csc-portal .portal-main {
   font-family: var(--font-inter), system-ui, sans-serif;
   font-size: 11px;
   font-weight: 600;
-  letter-spacing: 0.12em;
+}
+
+.csc-portal .portal-page-head .spread-label,
+.csc-portal .register-toolbar .spread-label,
+.csc-portal .dashboard-toolbar .spread-label {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.4em;
+  letter-spacing: 0.1em;
+  word-spacing: 0.05em;
 }
 
 .csc-portal .portal-page-head h1 {

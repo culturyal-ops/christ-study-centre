@@ -33,7 +33,11 @@ export default function PageSection({
           <header className="csc-section__head">
             {category && index && (
               <p className="csc-section__label">
-                {category} / {index}
+                <span>{category}</span>
+                <span className="csc-section__label-sep" aria-hidden="true">
+                  /
+                </span>
+                <span>{index}</span>
               </p>
             )}
             {category && !index && (

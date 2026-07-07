@@ -22,7 +22,11 @@ export default function SectionSpread({
   return (
     <header className={`csc-section__head ${className}`}>
       <p className="csc-section__label">
-        {category} / {index}
+        <span>{category}</span>
+        <span className="csc-section__label-sep" aria-hidden="true">
+          /
+        </span>
+        <span>{index}</span>
       </p>
       <h2 className="csc-section__title">{title}</h2>
       {lede && <p className="csc-section__lede">{lede}</p>}
