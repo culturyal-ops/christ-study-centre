@@ -926,6 +926,47 @@ html[data-theme='light'] .csc-landing__hero-portal--highlight {
   box-shadow: var(--lg-glass-shadow), var(--lg-accent-ambient);
 }
 
+/* Parent review cards — light glass + readable text (loads after landing.css) */
+html[data-theme='light'] .csc-landing .csc-hero-3d {
+  --review-quote: #334155;
+  --review-name: #0f172a;
+  --review-detail: #64748b;
+  --review-label: #1d4ed8;
+}
+
+html[data-theme='light'] .csc-landing .csc-hero-3d__card {
+  background: #ffffff;
+  border-color: rgba(15, 23, 42, 0.1);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  box-shadow:
+    calc(var(--card-yaw, 0) * -0.85px) 16px 36px rgba(15, 23, 42, 0.12),
+    calc(var(--card-yaw, 0) * -0.35px) 6px 14px rgba(15, 23, 42, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+html[data-theme='light'] .csc-landing .csc-hero-3d__card[data-side='true'] {
+  filter: brightness(0.96) saturate(0.94);
+}
+
+html[data-theme='light'] .csc-landing .csc-hero-3d__card[data-active='true'].csc-hero-3d__review:hover {
+  background: #ffffff;
+  filter: none;
+  box-shadow: var(--lg-glass-shadow-hover);
+}
+
+html[data-theme='light'] .csc-landing .csc-hero-3d__name {
+  color: #0f172a;
+}
+
+html[data-theme='light'] .csc-landing .csc-hero-3d__quote {
+  color: #334155;
+}
+
+html[data-theme='light'] .csc-landing .csc-hero-3d__detail {
+  color: #64748b;
+}
+
 html[data-theme='light'] .csc-landing__batch-quiz {
   background: var(--lg-glass-bg-portal);
   border-color: var(--lg-glass-border-strong);

@@ -16,7 +16,7 @@ export default function ThemeToggle({ className, variant = 'nav' }: ThemeToggleP
       type="button"
       className={`csc-theme-toggle csc-theme-toggle--${variant}${className ? ` ${className}` : ''}`}
       onClick={toggleTheme}
-      aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+      aria-label={isDark ? 'Dark mode. Switch to light mode' : 'Light mode. Switch to dark mode'}
       aria-pressed={isDark}
       title={isDark ? 'Light mode' : 'Dark mode'}
     >
@@ -42,7 +42,7 @@ export default function ThemeToggle({ className, variant = 'nav' }: ThemeToggleP
           </svg>
         )}
       </span>
-      <span className="csc-theme-toggle__label">{isDark ? 'Light' : 'Dark'}</span>
+      <span className="csc-theme-toggle__label">{isDark ? 'Dark' : 'Light'}</span>
     </button>
   )
 }

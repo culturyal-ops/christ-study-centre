@@ -1,8 +1,8 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import BrandName from '@/components/BrandName'
+import Hero3DCarousel from '@/components/landing/Hero3DCarousel'
 import LandingHeroCopy from '@/components/landing/LandingHeroCopy'
-import LandingHeroVisual from '@/components/landing/LandingHeroVisual'
 import { images } from '@/lib/images'
 
 export default function LandingHero() {
@@ -11,8 +11,12 @@ export default function LandingHero() {
       <div className="csc-landing__hero-bg" aria-hidden="true" />
 
       <div className="csc-landing__wrap csc-landing__hero-shell">
-        <LandingHeroCopy />
-        <LandingHeroVisual />
+        <div className="csc-landing__hero-main">
+          <LandingHeroCopy />
+        </div>
+        <aside className="csc-landing__hero-aside" aria-label="Parent reviews">
+          <Hero3DCarousel />
+        </aside>
       </div>
 
       <div className="csc-landing__wrap csc-landing__deck">

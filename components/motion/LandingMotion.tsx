@@ -31,40 +31,12 @@ function animateCount(el: Element, delay = 0) {
   })
 }
 
-const HERO_SHOT_TILT = {
-  back: -10,
-  main: 4,
-  front: 9,
-} as const
-
-function animateHeroShots(tl: gsap.core.Timeline, landing: ParentNode, at = 0.18) {
-  ;(
-    [
-      ['.csc-landing__hero-shot--back', HERO_SHOT_TILT.back],
-      ['.csc-landing__hero-shot--main', HERO_SHOT_TILT.main],
-      ['.csc-landing__hero-shot--front', HERO_SHOT_TILT.front],
-    ] as const
-  ).forEach(([selector, rotation], index) => {
-    tl.fromTo(
-      landing.querySelector(selector),
-      {
-        y: 52,
-        opacity: 0,
-        rotation: rotation * 0.35,
-        scale: 0.9,
-      },
-      {
-        rotation,
-        y: 0,
-        opacity: 1,
-        scale: 1,
-        duration: 1.05,
-        ease: 'power3.out',
-        transformOrigin: '50% 50%',
-      },
-      at + index * 0.11
-    )
-  })
+function animateHero3D(tl: gsap.core.Timeline, at = 0.2) {
+  tl.from(
+    '[data-hero-3d]',
+    { y: 28, opacity: 0, duration: 0.9, ease: 'power3.out' },
+    at
+  )
 }
 
 export default function LandingMotion() {
@@ -110,7 +82,7 @@ export default function LandingMotion() {
           0.34
         )
 
-        animateHeroShots(tl, landing, 0.2)
+        animateHero3D(tl, 0.2)
 
         tl.from(
           '.csc-landing__deck .csc-landing__ui',
@@ -150,50 +122,6 @@ export default function LandingMotion() {
         if (routePath) {
           drawPath(routePath, 1.05)
         }
-
-        landing.querySelectorAll<HTMLElement>('.csc-landing__hero-shot-inner').forEach((el, i) => {
-          gsap.to(el, {
-            y: 9,
-            duration: 2.6 + i * 0.35,
-            ease: 'sine.inOut',
-            yoyo: true,
-            repeat: -1,
-            delay: 1.4 + i * 0.18,
-          })
-        })
-
-        const floaters = [...landing.querySelectorAll<HTMLElement>('.csc-cursor-float')]
-        if (floaters.length && window.matchMedia('(min-width: 769px)').matches) {
-          const state = floaters.map((el, i) => ({
-            el,
-            x: window.innerWidth / 2,
-            y: window.innerHeight / 2,
-            ease: 0.07 + i * 0.02,
-          }))
-          let mx = state[0].x
-          let my = state[0].y
-
-          const onMove = (e: MouseEvent) => {
-            mx = e.clientX
-            my = e.clientY
-          }
-          window.addEventListener('mousemove', onMove)
-
-          let rafId = 0
-          const tick = () => {
-            state.forEach((s, i) => {
-              s.x += (mx + (i - 1) * 40 - s.x) * s.ease
-              s.y += (my + (i % 2 ? 28 : -28) - s.y) * s.ease
-              gsap.set(s.el, { x: s.x, y: s.y, xPercent: -50, yPercent: -50 })
-            })
-            rafId = requestAnimationFrame(tick)
-          }
-          rafId = requestAnimationFrame(tick)
-          cleanups.push(() => {
-            window.removeEventListener('mousemove', onMove)
-            cancelAnimationFrame(rafId)
-          })
-        }
       }, landing)
 
       cleanups.push(() => ctx.revert())
@@ -202,13 +130,13 @@ export default function LandingMotion() {
       const safety = window.setTimeout(() => {
         landing
           .querySelectorAll(
-            '[data-hero-fade], .csc-split-line, .csc-landing__hero-portal--highlight, .csc-landing__deck .csc-landing__ui, .csc-landing__hero-shot'
+            '[data-hero-fade], .csc-split-line, .csc-landing__hero-portal--highlight, .csc-landing__deck .csc-landing__ui'
           )
           .forEach((el) => {
             gsap.set(el, { clearProps: 'opacity,transform,clipPath,scale' })
           })
-        landing.querySelectorAll('.csc-landing__hero-shot-inner').forEach((el) => {
-          gsap.set(el, { clearProps: 'clipPath,scale,transform' })
+        landing.querySelectorAll('[data-hero-3d]').forEach((el) => {
+          gsap.set(el, { clearProps: 'opacity,transform,y' })
         })
       }, 2800)
       cleanups.push(() => window.clearTimeout(safety))
@@ -224,11 +152,5 @@ export default function LandingMotion() {
     }
   }, [])
 
-  return (
-    <>
-      <div className="csc-cursor-float csc-cursor-float--1" aria-hidden="true" />
-      <div className="csc-cursor-float csc-cursor-float--2" aria-hidden="true" />
-      <div className="csc-cursor-float csc-cursor-float--3" aria-hidden="true" />
-    </>
-  )
+  return null
 }

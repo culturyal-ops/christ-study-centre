@@ -182,6 +182,7 @@ html[data-theme='light'] {
 .csc-landing__batch-quiz-time::before,
 .csc-landing__batch-quiz-summary div::before,
 .csc-landing__feature-card::before,
+.csc-hero-3d__card::before,
 .csc-landing__mobile-panel a::before,
 .csc-landing__header-mobile-actions::before,
 .csc-site__hero-label::before,
@@ -211,6 +212,17 @@ html[data-theme='light'] {
     transparent 52%
   );
   pointer-events: none;
+}
+
+/* Review cards — inner edge catch-light (separate from specular streak) */
+.csc-hero-3d__card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 0;
+  box-shadow: var(--lg-rim), var(--lg-rim-top);
 }
 
 .lg-mesh-bg {
