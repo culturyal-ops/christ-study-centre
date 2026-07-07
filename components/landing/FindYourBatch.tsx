@@ -3,26 +3,30 @@
 import { useMemo, useState } from 'react'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import {
-  BATCH_GROUPS,
+  BATCH_BOARD_OPTIONS,
   BATCH_TIME_OPTIONS,
   DEFAULT_SUBJECTS,
-  batchGroupLabel,
+  batchNameForBoardGrade,
+  getGradesForBoard,
+  type BatchBoard,
   type BatchTimeOption,
 } from '@/lib/register/constants'
 import { ownerWhatsAppUrl } from '@/lib/site-info'
 
-type Step = 'batch' | 'subjects' | 'time' | 'review'
+type Step = 'board' | 'grade' | 'subjects' | 'time' | 'review'
 
-const STEPS: Step[] = ['batch', 'subjects', 'time', 'review']
+const STEPS: Step[] = ['board', 'grade', 'subjects', 'time', 'review']
 
 const stepTitles: Record<Step, string> = {
-  batch: 'Which class?',
+  board: 'Which board?',
+  grade: 'Which class?',
   subjects: 'Which subjects?',
   time: 'Preferred batch time?',
   review: 'Review & send',
 }
 
 function buildWhatsAppMessage(input: {
+  board: string
   batch: string
   subjects: string[]
   timeLabel: string
@@ -31,6 +35,7 @@ function buildWhatsAppMessage(input: {
   const lines = [
     '*Find Your Batch — Christ Study Centre*',
     '',
+    `Board: ${input.board}`,
     `Class / Batch: ${input.batch}`,
     `Subjects: ${input.subjects.join(', ')}`,
     `Preferred time: ${input.timeLabel}`,
@@ -44,7 +49,8 @@ function buildWhatsAppMessage(input: {
 export default function FindYourBatch() {
   const reduced = useReducedMotion()
   const [stepIndex, setStepIndex] = useState(0)
-  const [batch, setBatch] = useState<string | null>(null)
+  const [board, setBoard] = useState<BatchBoard | null>(null)
+  const [grade, setGrade] = useState<string | null>(null)
   const [subjects, setSubjects] = useState<string[]>([])
   const [time, setTime] = useState<BatchTimeOption | null>(null)
   const [notes, setNotes] = useState('')
@@ -52,16 +58,38 @@ export default function FindYourBatch() {
   const step = STEPS[stepIndex]
   const progress = ((stepIndex + 1) / STEPS.length) * 100
 
+  const batch = useMemo(() => {
+    if (!board || !grade) return null
+    return batchNameForBoardGrade(board, grade)
+  }, [board, grade])
+
+  const grades = useMemo(() => (board ? getGradesForBoard(board) : []), [board])
+
+  const boardLabel = useMemo(
+    () => BATCH_BOARD_OPTIONS.find((b) => b.id === board)?.label ?? '',
+    [board]
+  )
+
   const timeLabel = useMemo(
     () => BATCH_TIME_OPTIONS.find((t) => t.id === time)?.label ?? '',
     [time]
   )
 
   const canContinue =
-    (step === 'batch' && batch !== null) ||
+    (step === 'board' && board !== null) ||
+    (step === 'grade' && grade !== null) ||
     (step === 'subjects' && subjects.length > 0) ||
     (step === 'time' && time !== null) ||
     step === 'review'
+
+  const selectBoard = (next: BatchBoard) => {
+    setBoard(next)
+    setGrade(null)
+  }
+
+  const selectGrade = (next: string) => {
+    setGrade(next)
+  }
 
   const toggleSubject = (subject: string) => {
     setSubjects((prev) => {
@@ -86,8 +114,9 @@ export default function FindYourBatch() {
   }
 
   const sendWhatsApp = () => {
-    if (!batch || subjects.length === 0 || !time) return
+    if (!board || !batch || subjects.length === 0 || !time) return
     const message = buildWhatsAppMessage({
+      board: boardLabel,
       batch,
       subjects,
       timeLabel: `${timeLabel} (${BATCH_TIME_OPTIONS.find((t) => t.id === time)?.detail ?? ''})`,
@@ -105,13 +134,21 @@ export default function FindYourBatch() {
         transition: { duration: 0.35, ease: 'easeOut' as const },
       }
 
+  const chipMotion = reduced
+    ? {}
+    : {
+        whileHover: { y: -2, scale: 1.02 },
+        whileTap: { scale: 0.97 },
+        transition: { type: 'spring' as const, stiffness: 420, damping: 28 },
+      }
+
   return (
     <div className="csc-landing__batch-quiz" data-hero-fade>
       <div className="csc-landing__batch-quiz-head">
         <span className="csc-landing__batch-quiz-badge">New here?</span>
         <p className="csc-landing__batch-quiz-title">Find your batch</p>
         <p className="csc-landing__batch-quiz-sub">
-          Tap through — we&apos;ll open WhatsApp with everything filled in.
+          Board, class, subjects — we&apos;ll open WhatsApp with everything filled in.
         </p>
       </div>
 
@@ -133,27 +170,42 @@ export default function FindYourBatch() {
       <div className="csc-landing__batch-quiz-body">
         <AnimatePresence mode="wait">
           <motion.div key={step} className="csc-landing__batch-quiz-panel" {...slide}>
-            {step === 'batch' && (
-              <div className="csc-landing__batch-quiz-groups">
-                {BATCH_GROUPS.map((group) => (
-                  <div key={group.title} className="csc-landing__batch-quiz-group">
-                    <p className="csc-landing__batch-quiz-group-label">
-                      {batchGroupLabel(group.title)}
-                    </p>
-                    <div className="csc-landing__batch-quiz-options">
-                      {group.batches.map((name) => (
-                        <button
-                          key={name}
-                          type="button"
-                          className={`csc-landing__batch-quiz-chip${batch === name ? ' is-selected' : ''}`}
-                          onClick={() => setBatch(name)}
-                          aria-pressed={batch === name}
-                        >
-                          {name}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
+            {step === 'board' && (
+              <div className="csc-landing__batch-quiz-boards">
+                {BATCH_BOARD_OPTIONS.map((option) => (
+                  <motion.button
+                    key={option.id}
+                    type="button"
+                    className={`csc-landing__batch-quiz-board-card${
+                      board === option.id ? ' is-selected' : ''
+                    }`}
+                    onClick={() => selectBoard(option.id)}
+                    aria-pressed={board === option.id}
+                    {...chipMotion}
+                  >
+                    <span className="csc-landing__batch-quiz-board-label">{option.label}</span>
+                    <span className="csc-landing__batch-quiz-board-detail">{option.detail}</span>
+                  </motion.button>
+                ))}
+              </div>
+            )}
+
+            {step === 'grade' && board && (
+              <div className="csc-landing__batch-quiz-grades">
+                {grades.map((g) => (
+                  <motion.button
+                    key={g}
+                    type="button"
+                    className={`csc-landing__batch-quiz-grade-chip${
+                      grade === g ? ' is-selected' : ''
+                    }`}
+                    onClick={() => selectGrade(g)}
+                    aria-pressed={grade === g}
+                    {...chipMotion}
+                  >
+                    <span className="csc-landing__batch-quiz-grade-num">{g}</span>
+                    <span className="csc-landing__batch-quiz-grade-label">Class</span>
+                  </motion.button>
                 ))}
               </div>
             )}
@@ -161,15 +213,18 @@ export default function FindYourBatch() {
             {step === 'subjects' && (
               <div className="csc-landing__batch-quiz-options csc-landing__batch-quiz-options--wrap">
                 {DEFAULT_SUBJECTS.map((subject) => (
-                  <button
+                  <motion.button
                     key={subject}
                     type="button"
-                    className={`csc-landing__batch-quiz-chip${subjects.includes(subject) ? ' is-selected' : ''}`}
+                    className={`csc-landing__batch-quiz-chip${
+                      subjects.includes(subject) ? ' is-selected' : ''
+                    }`}
                     onClick={() => toggleSubject(subject)}
                     aria-pressed={subjects.includes(subject)}
+                    {...chipMotion}
                   >
                     {subject}
-                  </button>
+                  </motion.button>
                 ))}
               </div>
             )}
@@ -177,16 +232,17 @@ export default function FindYourBatch() {
             {step === 'time' && (
               <div className="csc-landing__batch-quiz-options csc-landing__batch-quiz-options--stack">
                 {BATCH_TIME_OPTIONS.map((option) => (
-                  <button
+                  <motion.button
                     key={option.id}
                     type="button"
                     className={`csc-landing__batch-quiz-time${time === option.id ? ' is-selected' : ''}`}
                     onClick={() => setTime(option.id)}
                     aria-pressed={time === option.id}
+                    {...chipMotion}
                   >
                     <span className="csc-landing__batch-quiz-time-label">{option.label}</span>
                     <span className="csc-landing__batch-quiz-time-detail">{option.detail}</span>
-                  </button>
+                  </motion.button>
                 ))}
               </div>
             )}
@@ -194,6 +250,10 @@ export default function FindYourBatch() {
             {step === 'review' && (
               <div className="csc-landing__batch-quiz-review">
                 <dl className="csc-landing__batch-quiz-summary">
+                  <div>
+                    <dt>Board</dt>
+                    <dd>{boardLabel}</dd>
+                  </div>
                   <div>
                     <dt>Class / batch</dt>
                     <dd>{batch}</dd>

@@ -42,10 +42,33 @@ export const DEFAULT_SUBJECTS = [
   'All Subjects',
 ] as const
 
+export type BatchBoard = (typeof BATCH_GROUPS)[number]['title']
+
 /** Display label for batch group titles in public UI */
-export function batchGroupLabel(title: (typeof BATCH_GROUPS)[number]['title']) {
-  if (title === 'STATE') return 'State Syllabus'
+export function batchGroupLabel(title: BatchBoard) {
+  if (title === 'STATE') return 'SCERT'
   return title
+}
+
+export const BATCH_BOARD_OPTIONS: {
+  id: BatchBoard
+  label: string
+  detail: string
+}[] = [
+  { id: 'CBSE', label: 'CBSE', detail: 'Central Board' },
+  { id: 'ICSE', label: 'ICSE', detail: 'Indian Certificate' },
+  { id: 'STATE', label: 'SCERT', detail: 'Kerala State syllabus' },
+]
+
+export function getGradesForBoard(board: BatchBoard): string[] {
+  const group = BATCH_GROUPS.find((g) => g.title === board)
+  if (!group) return []
+  return group.batches.map((name) => name.split(/\s+/)[0])
+}
+
+export function batchNameForBoardGrade(board: BatchBoard, grade: string): string | null {
+  const group = BATCH_GROUPS.find((g) => g.title === board)
+  return group?.batches.find((name) => name.startsWith(`${grade} `)) ?? null
 }
 
 export const BATCH_TIME_OPTIONS = [
