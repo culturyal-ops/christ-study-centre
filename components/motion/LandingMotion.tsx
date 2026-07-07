@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react'
 import { gsap, registerGsap, ScrollTrigger } from '@/lib/motion/engine'
-import { prefersReducedMotion, setupScrollReveal } from '@/lib/motion/reveal'
+import { prefersReducedMotion } from '@/lib/motion/reveal'
 
 function drawPath(path: SVGPathElement, delay = 0) {
   const length = path.getTotalLength()
@@ -48,7 +48,6 @@ export default function LandingMotion() {
     root.classList.add('motion-on')
 
     const cleanups: Array<() => void> = []
-    const revealCleanup = setupScrollReveal()
 
     if (!prefersReducedMotion()) {
       registerGsap()
@@ -56,24 +55,24 @@ export default function LandingMotion() {
       const ctx = gsap.context(() => {
         const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
 
-        tl.from('.csc-split-line', {
-          yPercent: 105,
+        tl.from('.csc-split-word', {
+          yPercent: 115,
           opacity: 0,
-          duration: 1,
+          duration: 0.82,
           ease: 'power4.out',
-          stagger: 0.1,
-        }, 0.1)
+          stagger: { each: 0.045, from: 'start' },
+        }, 0.08)
 
-        tl.from('.csc-scribble-wrap', { y: 20, opacity: 0, duration: 0.8 }, 0.45)
+        tl.from('.csc-scribble-wrap', { y: 20, opacity: 0, duration: 0.8 }, 0.52)
 
         landing.querySelectorAll<SVGPathElement>('.csc-scribble-path').forEach((path, i) => {
-          drawPath(path, 0.65 + i * 0.12)
+          drawPath(path, 0.72 + i * 0.12)
         })
 
         tl.from(
           '[data-hero-fade]',
           { y: 28, opacity: 0, stagger: 0.09, duration: 0.9 },
-          0.12
+          0.18
         )
 
         tl.from(
@@ -130,7 +129,7 @@ export default function LandingMotion() {
       const safety = window.setTimeout(() => {
         landing
           .querySelectorAll(
-            '[data-hero-fade], .csc-split-line, .csc-landing__hero-portal--highlight, .csc-landing__deck .csc-landing__ui'
+            '[data-hero-fade], .csc-split-word, .csc-landing__hero-portal--highlight, .csc-landing__deck .csc-landing__ui'
           )
           .forEach((el) => {
             gsap.set(el, { clearProps: 'opacity,transform,clipPath,scale' })
@@ -144,7 +143,6 @@ export default function LandingMotion() {
       root.classList.add('motion-on')
     }
 
-    cleanups.push(revealCleanup)
     cleanups.push(() => root.classList.remove('motion-on'))
 
     return () => {

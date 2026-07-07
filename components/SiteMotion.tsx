@@ -2,7 +2,8 @@
 
 import { useEffect } from 'react'
 import { usePathname } from 'next/navigation'
-import { prefersReducedMotion, setupScrollReveal, setupSmoothScroll } from '@/lib/motion/reveal'
+import { initSmoothScroll, subscribeScroll } from '@/lib/motion/scroll'
+import { setupScrollReveal } from '@/lib/motion/reveal'
 
 export default function SiteMotion() {
   const pathname = usePathname()
@@ -19,29 +20,28 @@ export default function SiteMotion() {
 
     const root = document.documentElement
     const progress = document.getElementById('scrollProgress')
+    let scrollCleanup = () => {}
     let lenisCleanup = () => {}
 
-    const onScroll = () => {
-      const y = window.scrollY
+    const onScroll = (y: number) => {
       const height = document.documentElement.scrollHeight - window.innerHeight
       const pct = height > 0 ? (y / height) * 100 : 0
       if (progress) progress.style.width = `${pct}%`
       document.getElementById('siteNav')?.classList.toggle('nav-scrolled', y > 32)
     }
 
-    window.addEventListener('scroll', onScroll, { passive: true })
-    onScroll()
+    scrollCleanup = subscribeScroll(onScroll)
 
     const revealCleanup = setupScrollReveal()
     root.classList.add('motion-on')
 
-    setupSmoothScroll(onScroll).then((cleanup) => {
+    initSmoothScroll().then((cleanup) => {
       lenisCleanup = cleanup ?? (() => {})
     })
 
     return () => {
       root.classList.remove('motion-on')
-      window.removeEventListener('scroll', onScroll)
+      scrollCleanup()
       revealCleanup()
       lenisCleanup()
     }

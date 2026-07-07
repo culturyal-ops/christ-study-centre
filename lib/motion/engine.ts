@@ -21,6 +21,7 @@ export { gsap, ScrollTrigger }
 export type LenisInstance = {
   raf: (time: number) => void
   on: (event: string, cb: () => void) => void
+  off: (event: string, cb: () => void) => void
   destroy: () => void
   scrollTo: (value: number, options?: { immediate?: boolean }) => void
   scroll: number

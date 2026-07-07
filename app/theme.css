@@ -35,7 +35,7 @@ html[data-theme='dark'] {
   --theme-section-bg-alt: #111827;
   --theme-section-mesh: linear-gradient(180deg, #0f172a 0%, #111827 100%);
   --theme-features-bg: linear-gradient(180deg, #0f172a 0%, #111827 100%);
-  --theme-footer-bg: #070b16;
+  --theme-footer-bg: #030332;
   --theme-footer-fg: #ffffff;
   --theme-footer-muted: #94a3b8;
   --theme-ui-card-bg: rgba(255, 255, 255, 0.08);
@@ -683,13 +683,13 @@ html[data-theme='light'] .csc-site.csc-site--login .login-glass-form .form-label
 
 /* Prevent legacy globals footer styles from bleeding in */
 footer.csc-landing__footer {
-  background: #070b12;
+  background: linear-gradient(152deg, #0a0a4a 0%, #030332 52%, #00001a 100%);
   color: #ffffff;
 }
 
 html[data-theme='light'] footer.csc-landing__footer,
 html[data-theme='dark'] footer.csc-landing__footer {
-  background: #070b12;
+  background: linear-gradient(152deg, #0a0a4a 0%, #030332 52%, #00001a 100%);
   color: #ffffff;
 }
 

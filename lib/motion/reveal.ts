@@ -90,25 +90,3 @@ export function setupScrollReveal(onMount?: () => void) {
     window.clearTimeout(safety)
   }
 }
-
-export async function setupSmoothScroll(onScroll: () => void) {
-  if (prefersReducedMotion() || window.matchMedia('(max-width: 768px)').matches) {
-    return () => {}
-  }
-
-  const { default: Lenis } = await import('lenis')
-  const lenis = new Lenis({ duration: 1.15, smoothWheel: true })
-  let rafId = 0
-
-  const raf = (time: number) => {
-    lenis.raf(time)
-    rafId = requestAnimationFrame(raf)
-  }
-  rafId = requestAnimationFrame(raf)
-  lenis.on('scroll', onScroll)
-
-  return () => {
-    cancelAnimationFrame(rafId)
-    lenis.destroy()
-  }
-}
