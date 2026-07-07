@@ -604,8 +604,22 @@ html[data-theme='dark'] .csc-site .enquiry-form-card {
 }
 
 .csc-site .form-input::placeholder {
-  color: var(--theme-accent);
-  opacity: 0.45;
+  color: var(--theme-text-muted);
+  opacity: 0.72;
+}
+
+.csc-site .form-hint {
+  margin: 12px 0 0;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.55);
+  font-family: var(--font-mono);
+  letter-spacing: 0.02em;
+}
+
+html[data-theme='light'] .csc-site .form-hint {
+  color: #64748b;
 }
 
 .csc-site .csc-quote,
@@ -652,15 +666,6 @@ html[data-theme='dark'] .csc-site .csc-cta__desc {
 
 html[data-theme='dark'] .csc-site .csc-cta .csc-section__label {
   color: #93c5fd;
-}
-
-html[data-theme='light'] .csc-site .csc-cta__inner {
-  background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
-}
-
-html[data-theme='light'] .csc-site .csc-cta__title,
-html[data-theme='light'] .csc-site .csc-cta__desc {
-  color: #ffffff;
 }
 
 /* Login glass portal overrides theme toggle — always frosted over photo */
@@ -1151,4 +1156,124 @@ html[data-theme='light'] .csc-landing__batch-quiz-wa:hover:not(:disabled) {
 
 html[data-theme='light'] .csc-landing__batch-quiz-wa:disabled {
   opacity: 0.4;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   LIGHT MODE — readable text on glass (final pass)
+   ═══════════════════════════════════════════════════════════ */
+
+html[data-theme='light'] .csc-site .csc-cta__inner {
+  background: var(--lg-glass-bg-card);
+  border-color: var(--lg-glass-border-strong);
+  box-shadow: var(--lg-glass-shadow-soft);
+}
+
+html[data-theme='light'] .csc-site .csc-cta__title {
+  color: #0f172a;
+}
+
+html[data-theme='light'] .csc-site .csc-cta__desc {
+  color: #475569;
+}
+
+html[data-theme='light'] .csc-site .csc-cta .csc-section__label {
+  color: #2563eb;
+}
+
+html[data-theme='light'] .csc-site .csc-cta .csc-btn--text {
+  color: #2563eb;
+}
+
+html[data-theme='light'] .csc-site .csc-cta .csc-btn--text:hover {
+  color: #1d4ed8;
+}
+
+html[data-theme='light'] .csc-site .csc-strip__item {
+  background: var(--lg-glass-bg-card);
+  border-color: var(--lg-glass-border);
+  box-shadow: var(--lg-glass-shadow-soft);
+}
+
+html[data-theme='light'] .csc-site .csc-strip__label {
+  color: #0f172a;
+}
+
+html[data-theme='light'] .csc-site .csc-strip__num {
+  color: #2563eb;
+}
+
+html[data-theme='light'] .csc-site__hero-title {
+  color: #0f172a;
+}
+
+html[data-theme='light'] .csc-landing__hero-title,
+html[data-theme='light'] .csc-landing__hero-title .csc-split-inner {
+  color: #0f172a;
+}
+
+html[data-theme='light'] .csc-landing__hero-lead {
+  color: #334155;
+}
+
+html[data-theme='light'] .csc-site .enquiry-form-card,
+html[data-theme='light'] .csc-site .enquiry-form-card .form-label {
+  color: #0f172a;
+}
+
+html[data-theme='light'] .csc-site .form-section-title {
+  color: #2563eb;
+}
+
+html[data-theme='light'] .csc-site .form-input::placeholder {
+  color: #94a3b8;
+  opacity: 1;
+}
+
+html[data-theme='light'] .csc-site .courses-enquiry-picks {
+  background: var(--lg-glass-bg-card);
+  border-color: var(--lg-glass-border);
+  backdrop-filter: var(--lg-blur);
+  -webkit-backdrop-filter: var(--lg-blur);
+  box-shadow: var(--lg-glass-shadow-soft);
+}
+
+html[data-theme='light'] .csc-site .courses-enquiry-empty {
+  color: #475569;
+}
+
+html[data-theme='light'] .csc-site .courses-enquiry-clear {
+  color: #2563eb;
+}
+
+html[data-theme='light'] .csc-site .csc-card__title,
+html[data-theme='light'] .csc-site .feature-card-title {
+  color: #0f172a;
+}
+
+html[data-theme='light'] .csc-site .csc-card__desc,
+html[data-theme='light'] .csc-site .feature-card-desc {
+  color: #475569;
+}
+
+html[data-theme='light'] .csc-site .csc-section .csc-btn--text {
+  color: #2563eb;
+}
+
+html[data-theme='light'] .csc-site .csc-section .csc-btn--text:hover {
+  color: #1d4ed8;
+}
+
+html[data-theme='light'] .csc-site .contact-card {
+  background: var(--lg-glass-bg-card);
+  color: #0f172a;
+}
+
+html[data-theme='light'] .csc-site .page-section-desc,
+html[data-theme='light'] .csc-site .csc-section__lede {
+  color: #334155;
+}
+
+html[data-theme='light'] .csc-site .spread-title,
+html[data-theme='light'] .csc-site .csc-section__title {
+  color: #0f172a;
 }

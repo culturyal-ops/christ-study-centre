@@ -1,7 +1,6 @@
 'use client'
 
-import { useCallback, useEffect, useState, useTransition } from 'react'
-import type { PaymentStatus } from '@prisma/client'
+import { useCallback, useEffect, useMemo, useState, useTransition } from 'react'
 import {
   admitPendingAdmission,
   createRegisterStudent,
@@ -21,7 +20,7 @@ import {
 } from '@/lib/actions/register'
 import { BATCH_GROUPS } from '@/lib/register/constants'
 import type { RegisterView } from '@/lib/register/constants'
-import { countStudentSubjects, feesStatusClass, formatFeesStatus } from '@/lib/register/utils'
+import { countStudentSubjects, feesStatusClass, formatFeesStatus, computeFeesRemaining, deriveFeesStatus } from '@/lib/register/utils'
 import RegisterChart from '@/components/register/RegisterChart'
 import StudentProfile from '@/components/register/StudentProfile'
 import type {
@@ -39,9 +38,10 @@ const emptyForm = (batchName = '12 CBSE'): StudentForm => ({
   subjectsText: '',
   subjectCount: '',
   contact: '',
-  feesStatus: 'PENDING',
+  username: '',
+  password: '',
+  feesTotal: '',
   feesAmountPaid: '',
-  feesRemaining: '',
   feesDatePaid: '',
 })
 
@@ -145,6 +145,12 @@ export default function RegisterApp({ bootstrap, mode, student: studentProp, ini
   }
 
   const openEdit = (s: RegisterStudent) => {
+    const inferredTotal =
+      s.feesTotal ??
+      (s.feesAmountPaid != null && s.feesRemaining != null
+        ? s.feesAmountPaid + s.feesRemaining
+        : null)
+
     setEditing(s)
     setForm({
       batchName: s.batch?.name ?? currentBatch ?? '12 CBSE',
@@ -154,9 +160,10 @@ export default function RegisterApp({ bootstrap, mode, student: studentProp, ini
       subjectsText: s.subjectsText ?? '',
       subjectCount: s.subjectCount?.toString() ?? '',
       contact: s.contact ?? '',
-      feesStatus: s.feesStatus,
+      username: s.user?.username ?? '',
+      password: '',
+      feesTotal: inferredTotal?.toString() ?? '',
       feesAmountPaid: s.feesAmountPaid?.toString() ?? '',
-      feesRemaining: s.feesRemaining?.toString() ?? '',
       feesDatePaid: s.feesDatePaid
         ? new Date(s.feesDatePaid).toISOString().slice(0, 10)
         : '',
@@ -165,7 +172,48 @@ export default function RegisterApp({ bootstrap, mode, student: studentProp, ini
     setError('')
   }
 
+  const computedFeesRemaining = useMemo(() => {
+    const total = form.feesTotal ? Number(form.feesTotal) : null
+    const paid = form.feesAmountPaid ? Number(form.feesAmountPaid) : 0
+    const remaining = computeFeesRemaining(
+      total != null && !Number.isNaN(total) ? total : null,
+      Number.isNaN(paid) ? 0 : paid
+    )
+    return remaining != null ? String(remaining) : ''
+  }, [form.feesTotal, form.feesAmountPaid])
+
+  const computedFeesStatus = useMemo(() => {
+    const total = form.feesTotal ? Number(form.feesTotal) : null
+    const paid = form.feesAmountPaid ? Number(form.feesAmountPaid) : 0
+    return deriveFeesStatus(
+      total != null && !Number.isNaN(total) ? total : null,
+      Number.isNaN(paid) ? 0 : paid
+    )
+  }, [form.feesTotal, form.feesAmountPaid])
+
   const saveStudent = () => {
+    if (!form.fullName.trim()) {
+      setError('Full name is required')
+      return
+    }
+
+    if (!editing) {
+      if (!form.username.trim()) {
+        setError('Login ID is required')
+        return
+      }
+      if (!form.password.trim()) {
+        setError('Password is required')
+        return
+      }
+    } else if (form.password.trim() && !form.username.trim()) {
+      setError('Login ID is required when changing password')
+      return
+    }
+
+    const feesTotal = form.feesTotal ? Number(form.feesTotal) : null
+    const feesAmountPaid = form.feesAmountPaid ? Number(form.feesAmountPaid) : null
+
     startSaving(async () => {
       try {
         const payload = {
@@ -176,9 +224,12 @@ export default function RegisterApp({ bootstrap, mode, student: studentProp, ini
           subjectsText: form.subjectsText,
           subjectCount: form.subjectCount ? Number(form.subjectCount) : undefined,
           contact: form.contact,
-          feesStatus: form.feesStatus,
-          feesAmountPaid: form.feesAmountPaid ? Number(form.feesAmountPaid) : null,
-          feesRemaining: form.feesRemaining ? Number(form.feesRemaining) : null,
+          username: form.username.trim() || undefined,
+          password: form.password.trim() || undefined,
+          feesStatus: computedFeesStatus,
+          feesTotal: feesTotal != null && !Number.isNaN(feesTotal) ? feesTotal : null,
+          feesAmountPaid:
+            feesAmountPaid != null && !Number.isNaN(feesAmountPaid) ? feesAmountPaid : null,
           feesDatePaid: form.feesDatePaid || null,
         }
 
@@ -642,7 +693,7 @@ export default function RegisterApp({ bootstrap, mode, student: studentProp, ini
                   }
                 />
               </div>
-              <div className="register-form-field">
+              <div className="register-form-field register-form-field--full">
                 <label className="register-form-label" htmlFor="reg-name">
                   Full name
                 </label>
@@ -670,19 +721,6 @@ export default function RegisterApp({ bootstrap, mode, student: studentProp, ini
                 />
               </div>
               <div className="register-form-field">
-                <label className="register-form-label" htmlFor="reg-subjects">
-                  Subjects
-                </label>
-                <input
-                  id="reg-subjects"
-                  value={form.subjectsText}
-                  onChange={(e) =>
-                    setForm((f) => ({ ...f, subjectsText: e.target.value }))
-                  }
-                  placeholder="e.g. Physics, Chemistry, Maths"
-                />
-              </div>
-              <div className="register-form-field">
                 <label className="register-form-label" htmlFor="reg-contact">
                   Contact
                 </label>
@@ -695,29 +733,84 @@ export default function RegisterApp({ bootstrap, mode, student: studentProp, ini
                   placeholder="Phone or WhatsApp number"
                 />
               </div>
-              <div className="register-form-field">
-                <label className="register-form-label" htmlFor="reg-fees-status">
-                  Fees status
+              <div className="register-form-field register-form-field--full">
+                <label className="register-form-label" htmlFor="reg-subjects">
+                  Subjects
                 </label>
-                <select
-                  id="reg-fees-status"
-                  value={form.feesStatus}
+                <input
+                  id="reg-subjects"
+                  value={form.subjectsText}
                   onChange={(e) =>
-                    setForm((f) => ({
-                      ...f,
-                      feesStatus: e.target.value as PaymentStatus,
-                    }))
+                    setForm((f) => ({ ...f, subjectsText: e.target.value }))
                   }
-                >
-                  <option value="PENDING">Pending</option>
-                  <option value="PAID">Paid</option>
-                  <option value="PARTIAL">Partial</option>
-                  <option value="OVERDUE">Overdue</option>
-                </select>
+                  placeholder="e.g. Physics, Chemistry, Maths"
+                />
+              </div>
+
+              <div className="register-form-section register-form-field--full">
+                <p className="register-form-section-title">Portal login</p>
+                <p className="register-form-section-hint">
+                  {editing
+                    ? 'Leave password blank to keep the current one. Add login details if this student has no portal account yet.'
+                    : 'Create the student’s portal username and password.'}
+                </p>
+              </div>
+              <div className="register-form-field">
+                <label className="register-form-label" htmlFor="reg-username">
+                  Login ID
+                </label>
+                <input
+                  id="reg-username"
+                  value={form.username}
+                  onChange={(e) =>
+                    setForm((f) => ({ ...f, username: e.target.value }))
+                  }
+                  placeholder="e.g. CSC2026-042"
+                  autoComplete="off"
+                  required={!editing}
+                />
+              </div>
+              <div className="register-form-field">
+                <label className="register-form-label" htmlFor="reg-password">
+                  Password{editing ? ' (optional)' : ''}
+                </label>
+                <input
+                  id="reg-password"
+                  type="password"
+                  value={form.password}
+                  onChange={(e) =>
+                    setForm((f) => ({ ...f, password: e.target.value }))
+                  }
+                  placeholder={editing ? 'Leave blank to keep current' : 'Set password'}
+                  autoComplete="new-password"
+                  required={!editing}
+                />
+              </div>
+
+              <div className="register-form-section register-form-field--full">
+                <p className="register-form-section-title">Fees</p>
+                <p className="register-form-section-hint">
+                  Remaining is calculated automatically from total and paid.
+                </p>
+              </div>
+              <div className="register-form-field">
+                <label className="register-form-label" htmlFor="reg-fees-total">
+                  Total fee (₹)
+                </label>
+                <input
+                  id="reg-fees-total"
+                  type="number"
+                  min={0}
+                  value={form.feesTotal}
+                  onChange={(e) =>
+                    setForm((f) => ({ ...f, feesTotal: e.target.value }))
+                  }
+                  placeholder="0"
+                />
               </div>
               <div className="register-form-field">
                 <label className="register-form-label" htmlFor="reg-amount-paid">
-                  Amount paid (₹)
+                  Paid (₹)
                 </label>
                 <input
                   id="reg-amount-paid"
@@ -736,13 +829,25 @@ export default function RegisterApp({ bootstrap, mode, student: studentProp, ini
                 </label>
                 <input
                   id="reg-remaining"
-                  type="number"
-                  min={0}
-                  value={form.feesRemaining}
-                  onChange={(e) =>
-                    setForm((f) => ({ ...f, feesRemaining: e.target.value }))
-                  }
-                  placeholder="0"
+                  type="text"
+                  readOnly
+                  className="register-form-readonly"
+                  value={computedFeesRemaining}
+                  placeholder="—"
+                  aria-live="polite"
+                />
+              </div>
+              <div className="register-form-field">
+                <label className="register-form-label" htmlFor="reg-fees-status">
+                  Fees status
+                </label>
+                <input
+                  id="reg-fees-status"
+                  type="text"
+                  readOnly
+                  className="register-form-readonly"
+                  value={formatFeesStatus(computedFeesStatus)}
+                  aria-live="polite"
                 />
               </div>
             </div>

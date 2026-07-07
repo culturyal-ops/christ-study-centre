@@ -1,4 +1,4 @@
-import { Board } from '@prisma/client'
+import { Board, PaymentStatus } from '@prisma/client'
 import { ALL_BATCH_NAMES } from '@/lib/register/constants'
 import type { RegisterView } from '@/lib/register/constants'
 
@@ -38,6 +38,28 @@ export function feesStatusClass(status: string): string {
     default:
       return 'reg-fees--pending'
   }
+}
+
+export function computeFeesRemaining(
+  total: number | null | undefined,
+  paid: number | null | undefined
+): number | null {
+  if (total == null || Number.isNaN(total)) return null
+  const paidAmount = paid ?? 0
+  return Math.max(0, total - paidAmount)
+}
+
+export function deriveFeesStatus(
+  total: number | null | undefined,
+  paid: number | null | undefined
+): PaymentStatus {
+  if (total == null || total <= 0 || Number.isNaN(total)) {
+    return (paid ?? 0) > 0 ? 'PARTIAL' : 'PENDING'
+  }
+  const paidAmount = paid ?? 0
+  if (paidAmount >= total) return 'PAID'
+  if (paidAmount <= 0) return 'PENDING'
+  return 'PARTIAL'
 }
 
 export const MAX_DOCUMENT_BYTES = 2 * 1024 * 1024

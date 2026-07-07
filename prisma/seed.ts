@@ -217,6 +217,7 @@ async function main() {
       subjects: ['Accountancy', 'English', 'Mathematics'],
       subjectsText: 'Accountancy, English, Mathematics',
       feesStatus: PaymentStatus.PAID,
+      feesTotal: 12000,
       feesAmountPaid: 12000,
       feesRemaining: 0,
     },
@@ -233,6 +234,7 @@ async function main() {
       subjects: ['Physics', 'Chemistry', 'Mathematics', 'Computer Science'],
       subjectsText: 'Physics, Chemistry, Mathematics, Computer Science',
       feesStatus: PaymentStatus.PARTIAL,
+      feesTotal: 12000,
       feesAmountPaid: 6000,
       feesRemaining: 6000,
     },
@@ -262,6 +264,7 @@ async function main() {
         subjectsText: data.subjectsText,
         subjectCount: data.subjects.length,
         feesStatus: data.feesStatus ?? PaymentStatus.PENDING,
+        feesTotal: data.feesTotal ?? null,
         feesAmountPaid: data.feesAmountPaid ?? null,
         feesRemaining: data.feesRemaining ?? null,
         enrolledSubjects: {

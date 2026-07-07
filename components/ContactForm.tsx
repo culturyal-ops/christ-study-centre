@@ -219,15 +219,7 @@ ${formData.additionalDetails ? `Additional Details:\n${formData.additionalDetail
           Send Enquiry to WhatsApp
         </button>
 
-        <p
-          style={{
-            textAlign: 'center',
-            fontSize: '12px',
-            color: 'rgba(17,17,17,0.45)',
-            fontFamily: 'var(--font-mono)',
-            letterSpacing: '0.02em',
-          }}
-        >
+        <p className="form-hint">
           Fill all required (*) fields to enable WhatsApp button
         </p>
       </form>

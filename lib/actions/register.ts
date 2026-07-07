@@ -4,8 +4,9 @@ import { revalidatePath } from 'next/cache'
 import { auth } from '@/auth'
 import { prisma } from '@/lib/prisma'
 import { BATCH_GROUPS, ALL_BATCH_NAMES, DEFAULT_SUBJECTS } from '@/lib/register/constants'
-import { MAX_DOCUMENT_BYTES, parseBatchName, countStudentSubjects } from '@/lib/register/utils'
+import { MAX_DOCUMENT_BYTES, parseBatchName, countStudentSubjects, computeFeesRemaining, deriveFeesStatus } from '@/lib/register/utils'
 import { PaymentStatus, Prisma } from '@prisma/client'
+import bcryptjs from 'bcryptjs'
 
 const ADMIN_PATHS = ['/admin/register', '/admin/dashboard']
 
@@ -88,6 +89,7 @@ async function ensureBatchesIfNeeded() {
 
 const studentInclude = {
   batch: { select: { name: true } },
+  user: { select: { id: true, username: true } },
   registerMarks: { orderBy: { date: 'desc' as const } },
   registerDocuments: { orderBy: { uploadedAt: 'desc' as const } },
 } satisfies Prisma.StudentInclude
@@ -218,11 +220,7 @@ export async function getAllRegisterStudents() {
   await requireAdmin()
   return prisma.student.findMany({
     where: { deletedAt: null },
-    include: {
-      batch: { select: { name: true } },
-      registerMarks: { orderBy: { date: 'desc' } },
-      registerDocuments: { orderBy: { uploadedAt: 'desc' } },
-    },
+    include: studentInclude,
     orderBy: [{ rollNo: 'asc' }],
   })
 }
@@ -287,9 +285,59 @@ type StudentInput = {
   subjectCount?: number
   contact?: string
   feesStatus?: PaymentStatus
+  feesTotal?: number | null
   feesAmountPaid?: number | null
   feesRemaining?: number | null
   feesDatePaid?: string | null
+  username?: string
+  password?: string
+}
+
+function normalizeFees(input: Pick<StudentInput, 'feesTotal' | 'feesAmountPaid' | 'feesStatus'>) {
+  const feesTotal = input.feesTotal ?? null
+  const feesAmountPaid = input.feesAmountPaid ?? null
+  const feesRemaining = computeFeesRemaining(feesTotal, feesAmountPaid)
+  const feesStatus = input.feesStatus ?? deriveFeesStatus(feesTotal, feesAmountPaid)
+  return { feesTotal, feesAmountPaid, feesRemaining, feesStatus }
+}
+
+async function assertUsernameAvailable(username: string, excludeUserId?: string | null) {
+  const existing = await prisma.user.findUnique({ where: { username } })
+  if (existing && existing.id !== excludeUserId) {
+    throw new Error('Login ID already in use')
+  }
+}
+
+async function linkStudentUser(
+  studentId: string,
+  existingUserId: string | null | undefined,
+  username: string,
+  password?: string
+) {
+  const trimmedUsername = username.trim()
+  if (!trimmedUsername) throw new Error('Login ID is required')
+
+  await assertUsernameAvailable(trimmedUsername, existingUserId ?? null)
+
+  if (existingUserId) {
+    const userData: { username: string; passwordHash?: string } = { username: trimmedUsername }
+    if (password?.trim()) {
+      userData.passwordHash = await bcryptjs.hash(password.trim(), 10)
+    }
+    await prisma.user.update({ where: { id: existingUserId }, data: userData })
+    return existingUserId
+  }
+
+  if (!password?.trim()) throw new Error('Password is required')
+  const passwordHash = await bcryptjs.hash(password.trim(), 10)
+  const user = await prisma.user.create({
+    data: { username: trimmedUsername, passwordHash, role: 'STUDENT' },
+  })
+  await prisma.student.update({
+    where: { id: studentId },
+    data: { userId: user.id },
+  })
+  return user.id
 }
 
 export async function createRegisterStudent(data: StudentInput) {
@@ -298,24 +346,43 @@ export async function createRegisterStudent(data: StudentInput) {
   if (!batch) throw new Error('Batch not found')
 
   const { grade, board } = parseBatchName(data.batchName)
+  const fees = normalizeFees(data)
 
-  const student = await prisma.student.create({
-    data: {
-      batchId: batch.id,
-      rollNo: data.rollNo,
-      fullName: data.fullName.trim(),
-      schoolName: data.schoolName?.trim() || null,
-      subjectsText: data.subjectsText?.trim() || null,
-      subjectCount: data.subjectCount ?? null,
-      contact: data.contact?.trim() || null,
-      grade,
-      board,
-      feesStatus: data.feesStatus ?? 'PENDING',
-      feesAmountPaid: data.feesAmountPaid ?? null,
-      feesRemaining: data.feesRemaining ?? null,
-      feesDatePaid: data.feesDatePaid ? new Date(data.feesDatePaid) : null,
-    },
-    include: studentInclude,
+  if (!data.username?.trim()) throw new Error('Login ID is required')
+  if (!data.password?.trim()) throw new Error('Password is required')
+  await assertUsernameAvailable(data.username.trim())
+
+  const passwordHash = await bcryptjs.hash(data.password.trim(), 10)
+
+  const student = await prisma.$transaction(async (tx) => {
+    const user = await tx.user.create({
+      data: {
+        username: data.username!.trim(),
+        passwordHash,
+        role: 'STUDENT',
+      },
+    })
+
+    return tx.student.create({
+      data: {
+        userId: user.id,
+        batchId: batch.id,
+        rollNo: data.rollNo,
+        fullName: data.fullName.trim(),
+        schoolName: data.schoolName?.trim() || null,
+        subjectsText: data.subjectsText?.trim() || null,
+        subjectCount: data.subjectCount ?? null,
+        contact: data.contact?.trim() || null,
+        grade,
+        board,
+        feesStatus: fees.feesStatus,
+        feesTotal: fees.feesTotal,
+        feesAmountPaid: fees.feesAmountPaid,
+        feesRemaining: fees.feesRemaining,
+        feesDatePaid: data.feesDatePaid ? new Date(data.feesDatePaid) : null,
+      },
+      include: studentInclude,
+    })
   })
 
   revalidateRegister()
@@ -327,7 +394,20 @@ export async function updateRegisterStudent(id: string, data: StudentInput) {
   const batch = await prisma.batch.findUnique({ where: { name: data.batchName } })
   if (!batch) throw new Error('Batch not found')
 
+  const existing = await prisma.student.findUnique({
+    where: { id },
+    select: { userId: true },
+  })
+  if (!existing) throw new Error('Student not found')
+
   const { grade, board } = parseBatchName(data.batchName)
+  const fees = normalizeFees(data)
+
+  if (data.username?.trim()) {
+    await linkStudentUser(id, existing.userId, data.username, data.password)
+  } else if (!existing.userId && data.password?.trim()) {
+    throw new Error('Login ID is required when setting a password')
+  }
 
   const student = await prisma.student.update({
     where: { id },
@@ -341,9 +421,10 @@ export async function updateRegisterStudent(id: string, data: StudentInput) {
       contact: data.contact?.trim() || null,
       grade,
       board,
-      feesStatus: data.feesStatus ?? 'PENDING',
-      feesAmountPaid: data.feesAmountPaid ?? null,
-      feesRemaining: data.feesRemaining ?? null,
+      feesStatus: fees.feesStatus,
+      feesTotal: fees.feesTotal,
+      feesAmountPaid: fees.feesAmountPaid,
+      feesRemaining: fees.feesRemaining,
       feesDatePaid: data.feesDatePaid ? new Date(data.feesDatePaid) : null,
     },
     include: studentInclude,
@@ -533,7 +614,9 @@ export async function exportAllStudentsCsv() {
     'Subjects',
     'Total Subj',
     'Contact',
+    'Login ID',
     'Fees',
+    'Total',
     'Paid',
     'Remaining',
   ]
@@ -545,7 +628,9 @@ export async function exportAllStudentsCsv() {
     s.subjectsText ?? '',
     countStudentSubjects(s),
     s.contact ?? '',
+    s.user?.username ?? '',
     s.feesStatus,
+    s.feesTotal ?? '',
     s.feesAmountPaid ?? '',
     s.feesRemaining ?? '',
   ])
@@ -558,14 +643,16 @@ export async function exportAllStudentsCsv() {
 export async function exportBatchCsv(batchName: string) {
   await requireAdmin()
   const students = await getBatchStudents(batchName)
-  const header = ['No', 'Name', 'School', 'Subjects', 'Contact', 'Fees', 'Paid', 'Remaining']
+  const header = ['No', 'Name', 'School', 'Subjects', 'Contact', 'Login ID', 'Fees', 'Total', 'Paid', 'Remaining']
   const rows = students.map((s) => [
     s.rollNo,
     s.fullName,
     s.schoolName ?? '',
     s.subjectsText ?? '',
     s.contact ?? '',
+    s.user?.username ?? '',
     s.feesStatus,
+    s.feesTotal ?? '',
     s.feesAmountPaid ?? '',
     s.feesRemaining ?? '',
   ])

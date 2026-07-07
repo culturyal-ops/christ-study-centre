@@ -24,11 +24,13 @@ export type RegisterStudent = {
   subjectCount: number | null
   contact: string | null
   feesStatus: PaymentStatus
+  feesTotal: number | null
   feesAmountPaid: number | null
   feesRemaining: number | null
   feesDatePaid: string | Date | null
   deletedFromBatch?: string | null
   batch: { name: string } | null
+  user?: { id: string; username: string } | null
   registerMarks: RegisterMark[]
   registerDocuments: RegisterDocument[]
 }
@@ -78,8 +80,9 @@ export type StudentForm = {
   subjectsText: string
   subjectCount: string
   contact: string
-  feesStatus: PaymentStatus
+  username: string
+  password: string
+  feesTotal: string
   feesAmountPaid: string
-  feesRemaining: string
   feesDatePaid: string
 }

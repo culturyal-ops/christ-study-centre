@@ -860,6 +860,41 @@ html[data-theme='light'] .csc-portal .register-row-btn:hover {
   min-width: 0;
 }
 
+.csc-portal .register-form-field--full {
+  grid-column: 1 / -1;
+}
+
+.csc-portal .register-form-section {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 4px;
+  padding-top: 12px;
+  border-top: 1px solid var(--portal-line, rgba(148, 163, 184, 0.22));
+}
+
+.csc-portal .register-form-section-title {
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--portal-muted, #64748b);
+}
+
+.csc-portal .register-form-section-hint {
+  margin: 0;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--portal-muted, #64748b);
+}
+
+.csc-portal .register-form-readonly {
+  background: rgba(148, 163, 184, 0.12) !important;
+  color: var(--portal-ink, #0f172a) !important;
+  cursor: default;
+}
+
 .csc-portal .register-form-label,
 .csc-portal .register-form-grid label,
 .admission-card .register-form-grid label {

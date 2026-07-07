@@ -59,6 +59,7 @@ model Student {
   guardianPhone     String              @default("")
   contact           String?
   feesStatus        PaymentStatus       @default(PENDING)
+  feesTotal         Float?
   feesAmountPaid    Float?
   feesRemaining     Float?
   feesDatePaid      DateTime?
